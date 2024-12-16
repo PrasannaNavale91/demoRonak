@@ -119,8 +119,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
       : 0;
 
   return (
-    <Dialog open={open} onOpenChange={handleDialogClose}>
-      <DialogContent className="grid grid-cols-2 sm:grid-cols-1 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
+    <Dialog open={open} onOpenChange={handleDialogClose} className="container mx-auto">
+      <DialogContent className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
         <div className="relative overflow-hidden rounded-lg">
           <img
             src={productDetails?.image}
@@ -132,21 +132,21 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         </div>
         <div className="p-1">
           <div>
-            <h1 className="text-xl md:text-lg font-extrabold">{productDetails?.title}</h1>
-            <p className="text-muted-foreground text-xl mb-5 mt-4">
+            <h1 className="text-lg md:text-xl font-extrabold">{productDetails?.title}</h1>
+            <p className="text-muted-foreground text-lg md:text-xl mb-5 mt-4">
               {productDetails?.description}
             </p>
           </div>
           <div className="flex items-center justify-between">
             <p
-              className={`text-xl md:text-lg font-bold text-primary ${
+              className={`text-lg md:text-xl font-bold text-primary ${
                 productDetails?.salePrice > 0 ? "line-through" : ""
               }`}
             >
               ${productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 ? (
-              <p className="text-xl md:text-lg font-bold text-muted-foreground">
+              <p className="text-lg md:text-xl font-bold text-muted-foreground">
                 ${productDetails?.salePrice}
               </p>
             ) : null}
