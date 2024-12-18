@@ -40,11 +40,6 @@ function App() {
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
-        <Route path="/" element={<ShoppingLayout />} />
-        <Route path="home" element={<ShoppingHome />} />
-        <Route path="listing" element={<ShoppingListing />} />
-        <Route path="search" element={<SearchProducts />} />
-        <Route path="checkout" element={<ShoppingCheckout />} />
         <Route
           path="/"
           element={
@@ -89,6 +84,7 @@ function App() {
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="search" element={<SearchProducts />} />
+          <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
