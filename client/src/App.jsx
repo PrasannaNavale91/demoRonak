@@ -40,7 +40,12 @@ function App() {
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
-      <Route path="/shop" element={<ShoppingLayout />} />
+        <Route path="/shop" element={<ShoppingLayout />} >
+          <Route path="home" element={<ShoppingHome />} />
+          <Route path="listing" element={<ShoppingListing />} />
+          <Route path="search" element={<SearchProducts />} />
+          <Route path="checkout" element={<ShoppingCheckout />} />
+        </Route>
         <Route
           path="/"
           element={
@@ -82,13 +87,9 @@ function App() {
             </CheckAuth>
           }
         >
-          <Route path="home" element={<ShoppingHome />} />
-          <Route path="listing" element={<ShoppingListing />} />
-          <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
-          <Route path="search" element={<SearchProducts />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
