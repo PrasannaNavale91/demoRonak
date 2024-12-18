@@ -86,10 +86,10 @@ function App() {
             </CheckAuth>
           }
         >
-          {/* <Route path="home" element={<ShoppingHome />} />
+          <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="search" element={<SearchProducts />} />
-          <Route path="checkout" element={<ShoppingCheckout />} /> */}
+          <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
