@@ -1,6 +1,11 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-function CheckAuth({ isAuthenticated, user, children }) {
+function CheckAuth({ isAuthenticated, user, children, allowPublic = false }) {
+
+  if (allowPublic) {
+    return <Navigate to="/shop/home" />;
+  }
+
   const location = useLocation();
 
   console.log(location.pathname, isAuthenticated);
