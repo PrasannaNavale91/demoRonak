@@ -2,8 +2,6 @@ import { Button } from "@/components/ui/button";
 import bannerOne from "../../assets/banner_1.png";
 import bannerTwo from "../../assets/banner_2.png";
 import bannerThree from "../../assets/banner_3.png";
-import bannerFour from "../../assets/banner-4.jpg";
-import bannerFive from "../../assets/banner-5.png";
 import {
   Airplay,
   BabyIcon,
@@ -170,6 +168,7 @@ function ShoppingHome() {
           <ChevronRightIcon className="w-4 h-4" />
         </Button>
       </div>
+
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
@@ -235,6 +234,37 @@ function ShoppingHome() {
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
       />
+
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            New Arrivals
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {productList && productList.length > 0
+              ? productList.map((productItem) => (
+                  <ShoppingProductTile
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                    handleAddtoCart={handleAddtoCart}
+                  />
+                ))
+              : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-gray-70">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw]">
+            
+          </div>
+          <div className="p-3 text-center">
+            <p>copy&; TrendCrave</p>
+            <small>Made in India</small>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
