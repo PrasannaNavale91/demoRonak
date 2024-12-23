@@ -260,7 +260,7 @@ function ShoppingHome() {
             
           </div>
           <div className="p-3 text-center">
-            <p>copy&; TrendCrave</p>
+            <p>&copy; &reg; TrendCrave </p>
             <small>Made in India</small>
           </div>
         </div>
