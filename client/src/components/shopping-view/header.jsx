@@ -78,6 +78,7 @@ function HeaderRightContent() {
   }, [dispatch, isAuthenticated, user?.id]);
   
   function handleLogout() {
+    navigate("/shop/home");
     dispatch(logoutUser());
   }
 
