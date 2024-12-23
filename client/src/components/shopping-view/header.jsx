@@ -132,7 +132,7 @@ function HeaderRightContent() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          </>
+        </>
         ) : (
           <Button
             onClick={() => navigate("/auth/login")}
