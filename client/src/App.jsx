@@ -78,6 +78,15 @@ function App() {
           <Route path="features" element={<AdminFeatures />} />
         </Route>
         <Route
+          path="/"
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}
+            ></CheckAuth>
+          }
+        />
+        <Route
           path="/auth"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
