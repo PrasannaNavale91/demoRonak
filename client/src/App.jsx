@@ -46,17 +46,6 @@ function App() {
           <Route path="" element={<SearchProducts />} />
           {/* Restricted routes */}
           <Route
-            path="/auth"
-            element={
-              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-                <AuthLayout />
-              </CheckAuth>
-            }
-          >
-            <Route path="login" element={<AuthLogin />} />
-            <Route path="register" element={<AuthRegister />} />
-          </Route>
-          <Route
             path="checkout"
             element={
               <CheckAuth isAuthenticated={isAuthenticated} user={user}>
@@ -75,7 +64,6 @@ function App() {
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
         </Route>
-
         <Route
           path="/admin"
           element={
@@ -88,6 +76,17 @@ function App() {
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="features" element={<AdminFeatures />} />
+        </Route>
+        <Route
+          path="/auth"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <AuthLayout />
+            </CheckAuth>
+          }
+        >
+          <Route path="login" element={<AuthLogin />} />
+          <Route path="register" element={<AuthRegister />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
