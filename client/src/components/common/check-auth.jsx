@@ -11,8 +11,18 @@ function CheckAuth({ isAuthenticated, user, children }) {
       location.pathname.includes("account") || 
       location.pathname.includes("admin")
     ) {
-      return <Navigate to="/auth/login" state={{ from: location }} />;
+      return <Navigate to="/auth/login" />;
     }
+  }
+
+  if (
+    !isAuthenticated &&
+    !(
+      location.pathname.includes("/login") ||
+      location.pathname.includes("/register")
+    )
+  ) {
+    return <Navigate to="/auth/login" />;
   }
 
   if (
