@@ -276,7 +276,7 @@ function ShoppingHome() {
       />
 
       <section className=" bg-orange-400">
-        <div className="container p-12 text-center">
+        <div className="container py-12 px-10 text-center">
           <p className="text-xs uppercase font-bold text-gray-100 tracking-widest">this weekend only</p>
           <h3 className="text-4xl md:text-6xl lg:text-9xl text-gray-100 py-8 uppercase font-bold tracking-widest">Sale</h3>
           <Link to="/shop/listing" className="bg-white py-3 px-16 rounded-none text-slate-950">
@@ -290,16 +290,43 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8">
             New Arrivals
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
-                  <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    handleAddtoCart={handleAddtoCart}
-                  />
-                ))
-              : null}
+          <div className="relative overflow-hidden">
+            <div className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex}px)` }}
+            >
+              {productList && productList.length > 0
+                ? productList.map((productItem, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2"
+                  >
+                    <ShoppingProductTile
+                      handleGetProductDetails={handleGetProductDetails}
+                      product={productItem}
+                      handleAddtoCart={handleAddtoCart}
+                      className="h-full w-64 flex justify-center items-center"
+                    />
+                  </div>
+                  ))
+                : null}
+            </div>
+            {/* Navigation Buttons */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handlePrev}
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 z-10"
+            >
+              <ChevronLeftIcon className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleNext}
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 z-10"
+            >
+              <ChevronRightIcon className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </section>
