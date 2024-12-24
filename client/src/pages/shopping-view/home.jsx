@@ -240,11 +240,13 @@ function ShoppingHome() {
         productDetails={productDetails}
       />
 
-      <section>
-        <div className="container p-12 bg-orange-400">
-          <p className="uppercase tracking-widest">this weelend only</p>
-          <h3 className="text-3xl uppercase font-bold tracking-widest">Sale</h3>
-          <Link>Shop Now</Link>
+      <section className=" bg-orange-400">
+        <div className="container p-12 text-center text-white-900">
+          <p className="uppercase text-sm tracking-widest">this weekend only</p>
+          <h3 className="text-4xl uppercase font-bold tracking-widest">Sale</h3>
+          <Button onClick={()=> navigate()} className="bg-white py-3 px-16">
+            Shop Now
+          </Button>
         </div>
       </section>
 
