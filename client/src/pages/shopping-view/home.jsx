@@ -240,7 +240,7 @@ function ShoppingHome() {
                     product={productItem}
                     handleAddtoCart={handleAddtoCart}
                     key={index}
-                    className="w-[280px]"
+                    className="w-72"
                   />
                 ))
               : null}
