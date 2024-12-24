@@ -233,7 +233,7 @@ function ShoppingHome() {
           <div className="flex transition-transform duration-500 gap-6"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {items.map((item, index) => (
+            {productList.map((productItem, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 w-full h-full flex justify-center items-center"
