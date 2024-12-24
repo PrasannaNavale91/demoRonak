@@ -290,11 +290,11 @@ function ShoppingHome() {
             <div>
               <h2 className="text-xl py-8 uppercase tracking-widest">sign up and save</h2>
               <small className="py-2">Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
-              <div className="flex py-6 w-90">
+              <div className="flex py-6">
                 <input
                   type="text"
                   placeholder="Enter your mail"
-                  className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950"
+                  className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 w-80"
                 />
                 <Link className="border-0" to="/shop/account">
                   <Mail />
