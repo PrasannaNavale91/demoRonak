@@ -13,6 +13,7 @@ import {
   Images,
   InstagramIcon,
   LinkedinIcon,
+  Mail,
   Shirt,
   ShirtIcon,
   ShoppingBasket,
@@ -262,24 +263,29 @@ function ShoppingHome() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw]">
             <div>
-              <h2 className="text-xl py-8 uppercase tracking-wider">get to know us</h2>
-              <ul className="list-none text-xs py-4">
-                <li>FAQ's</li>
-                <li>Blogs</li>
-                <li>Terms & Conditions</li>
+              <h2 className="text-xl py-8 uppercase tracking-widest">get to know us</h2>
+              <ul className="list-none text-xs">
+                <li className="py-3">FAQ's</li>
+                <li className="py-3">Blogs</li>
+                <li className="py-3">Terms & Conditions</li>
               </ul>
             </div>
             <div>
-              <h2 className="text-xl py-8 uppercase tracking-wider">orders</h2>
-              <ul className="list-none text-xs py-4">
-                <li>Track Order</li>
-                <li>Returns/Exchane Policy</li>
+              <h2 className="text-xl py-8 uppercase tracking-widest">orders</h2>
+              <ul className="list-none text-xs">
+                <li className="py-3">Track Order</li>
+                <li className="py-3">Returns/Exchane Policy</li>
               </ul>
             </div>
             <div>
               <h2 className="py-8 uppercase tracking-wider">sign up and save</h2>
-              <small>Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
-              
+              <small className="py-2">Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
+              <div className="flex border-b-2">
+                <input type="text" placeholder="Enter your mail" className="border-0" />
+                <button className="border-0">
+                  <Mail />
+                </button>
+              </div>
               <ul className="flex justify-items-start">
                 <li className="pr-3"><InstagramIcon /></li>
                 <li className="px-3"><FacebookIcon /></li>
