@@ -264,7 +264,7 @@ function ShoppingHome() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw]">
             <div>
               <h2 className="text-xl py-8 uppercase tracking-wider">get to know us</h2>
-              <ul className="list-none text-sm py-2">
+              <ul className="list-none text-xs py-4">
                 <li>FAQ's</li>
                 <li>Blogs</li>
                 <li>Terms & Conditions</li>
@@ -272,7 +272,7 @@ function ShoppingHome() {
             </div>
             <div>
               <h2 className="text-xl py-8 uppercase tracking-wider">orders</h2>
-              <ul className="list-none text-sm py-2">
+              <ul className="list-none text-xs py-4">
                 <li>Track Order</li>
                 <li>Returns/Exchane Policy</li>
               </ul>
@@ -281,10 +281,10 @@ function ShoppingHome() {
               <h2 className="py-8 uppercase tracking-wider">sign up and save</h2>
               <small>Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
               <ul className="flex justify-items-start">
-                <li><InstagramIcon /></li>
-                <li><FacebookIcon /></li>
-                <li><YoutubeIcon /></li>
-                <li><LinkedinIcon /></li>
+                <li className="pr-3"><InstagramIcon /></li>
+                <li className="px-3"><FacebookIcon /></li>
+                <li className="px-3"><YoutubeIcon /></li>
+                <li className="px-3"><LinkedinIcon /></li>
               </ul>
             </div>
           </div>
