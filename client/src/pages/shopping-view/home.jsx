@@ -8,14 +8,19 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CloudLightning,
+  Copyright,
+  FacebookIcon,
   Heater,
   Images,
+  InstagramIcon,
+  LinkedinIcon,
   Shirt,
   ShirtIcon,
   ShoppingBasket,
   UmbrellaIcon,
   WashingMachine,
   WatchIcon,
+  YoutubeIcon,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -257,10 +262,34 @@ function ShoppingHome() {
       <section className="py-12 bg-gray-70">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw]">
-            
+            <div>
+              <h2 className="text-xl py-8 uppercase tracking-wider">get to know us</h2>
+              <ul className="list-none">
+                <li>FAQ's</li>
+                <li>Blogs</li>
+                <li>Terms & Conditions</li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="text-xl py-8 uppercase tracking-wider">orders</h2>
+              <ul className="list-none">
+                <li>Track Order</li>
+                <li>Returns/Exchane Policy</li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="py-8 uppercase tracking-wider">sign up and save</h2>
+              <small>Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
+              <ul className="flex justify-items-start">
+                <li><InstagramIcon /></li>
+                <li><FacebookIcon /></li>
+                <li><YoutubeIcon /></li>
+                <li><LinkedinIcon /></li>
+              </ul>
+            </div>
           </div>
           <div className="p-3 text-center">
-            <p>&copy; &reg; TrendCrave </p>
+            <p><Copyright/> 2025 TrendCrave&reg;</p>
             <small>Made in India</small>
           </div>
         </div>
