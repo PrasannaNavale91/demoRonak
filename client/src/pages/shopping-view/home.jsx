@@ -230,25 +230,19 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
-          <div className="flex transition-transform duration-500 gap-6"
+          <div className="flex-shrink-0 w-full h-full flex justify-center items-center gap-6"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {productList.map((productItem, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 w-full h-full flex justify-center items-center"
-              >
-                {productList && productList.length > 0
-                  ? productList.map((productItem) => (
-                      <ShoppingProductTile
-                        handleGetProductDetails={handleGetProductDetails}
-                        product={productItem}
-                        handleAddtoCart={handleAddtoCart}
-                      />
-                    ))
-                  : null}
-              </div>
-            ))}
+            {productList && productList.length > 0
+              ? productList.map((productItem, index) => (
+                  <ShoppingProductTile
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                    handleAddtoCart={handleAddtoCart}
+                    key={index}
+                  />
+                ))
+              : null}
           </div>
           <Button
             variant="outline"
