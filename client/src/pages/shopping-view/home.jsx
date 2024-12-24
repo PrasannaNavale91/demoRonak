@@ -240,7 +240,7 @@ function ShoppingHome() {
                     product={productItem}
                     handleAddtoCart={handleAddtoCart}
                     key={index}
-                    className="flex-shrink-0 w-72 h-full flex justify-center items-center mx-6"
+                    className="flex-shrink-0 w-full h-full flex justify-center items-center mx-6"
                   />
                 ))
               : null}
