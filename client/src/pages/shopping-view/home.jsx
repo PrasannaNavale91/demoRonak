@@ -265,32 +265,32 @@ function ShoppingHome() {
             <div>
               <h2 className="text-xl py-8 uppercase tracking-widest">get to know us</h2>
               <ul className="list-none text-xs">
-                <li className="py-3">FAQ's</li>
-                <li className="py-3">Blogs</li>
-                <li className="py-3">Terms & Conditions</li>
+                <li className="py-2">FAQ's</li>
+                <li className="py-2">Blogs</li>
+                <li className="py-2">Terms & Conditions</li>
               </ul>
             </div>
             <div>
               <h2 className="text-xl py-8 uppercase tracking-widest">orders</h2>
               <ul className="list-none text-xs">
-                <li className="py-3">Track Order</li>
-                <li className="py-3">Returns/Exchane Policy</li>
+                <li className="py-2">Track Order</li>
+                <li className="py-2">Returns/Exchane Policy</li>
               </ul>
             </div>
             <div>
               <h2 className="py-8 uppercase tracking-wider">sign up and save</h2>
               <small className="py-2">Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
-              <div className="flex border-b-2">
+              <div className="flex p-1.5 border-b-2 border-slate-950">
                 <input type="text" placeholder="Enter your mail" className="border-0" />
                 <button className="border-0">
                   <Mail />
                 </button>
               </div>
               <ul className="flex justify-items-start">
-                <li className="pr-3"><InstagramIcon /></li>
-                <li className="px-3"><FacebookIcon /></li>
-                <li className="px-3"><YoutubeIcon /></li>
-                <li className="px-3"><LinkedinIcon /></li>
+                <li className="pr-2"><InstagramIcon /></li>
+                <li className="px-2"><FacebookIcon /></li>
+                <li className="px-2"><YoutubeIcon /></li>
+                <li className="px-2"><LinkedinIcon /></li>
               </ul>
             </div>
           </div>
