@@ -264,7 +264,7 @@ function ShoppingHome() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw]">
             <div>
               <h2 className="text-xl py-8 uppercase tracking-wider">get to know us</h2>
-              <ul className="list-none">
+              <ul className="list-none text-sm py-2">
                 <li>FAQ's</li>
                 <li>Blogs</li>
                 <li>Terms & Conditions</li>
@@ -272,7 +272,7 @@ function ShoppingHome() {
             </div>
             <div>
               <h2 className="text-xl py-8 uppercase tracking-wider">orders</h2>
-              <ul className="list-none">
+              <ul className="list-none text-sm py-2">
                 <li>Track Order</li>
                 <li>Returns/Exchane Policy</li>
               </ul>
