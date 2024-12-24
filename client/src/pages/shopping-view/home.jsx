@@ -261,7 +261,7 @@ function ShoppingHome() {
 
       <section className="py-12 bg-gray-70">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:p-12 max-w-[90vw]">
             <div>
               <h2 className="text-xl py-8 uppercase tracking-widest">get to know us</h2>
               <ul className="list-none text-xs">
