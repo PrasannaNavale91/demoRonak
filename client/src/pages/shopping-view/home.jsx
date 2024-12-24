@@ -221,17 +221,41 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
-                  <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    handleAddtoCart={handleAddtoCart}
-                  />
-                ))
-              : null}
+          <div className="relative">
+            {/* Left Arrow */}
+            <button
+              onClick={() =>
+                document.getElementById("product-slider").scrollBy({ left: -300, behavior: "smooth" })
+              }
+              className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white p-2 shadow rounded-full z-10"
+            >
+              <ChevronLeftIcon className="w-6 h-6" />
+            </button>
+
+            <div
+              id="product-slider"
+              className="flex gap-6 scroll-smooth scrollbar-hide px-4"
+            >
+              {productList && productList.length > 0
+                ? productList.map((productItem) => (
+                    <ShoppingProductTile
+                      handleGetProductDetails={handleGetProductDetails}
+                      product={productItem}
+                      handleAddtoCart={handleAddtoCart}
+                    />
+                  ))
+                : null}
+            </div>
+            <button
+              onClick={() =>
+                document.getElementById("product-slider").scrollBy({ left: 300, behavior: "smooth" })
+              }
+              className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-2 shadow rounded-full z-10"
+            >
+              <ChevronRightIcon className="w-6 h-6" />
+            </button>
           </div>
+          
         </div>
       </section>
       <ProductDetailsDialog
@@ -294,7 +318,7 @@ function ShoppingHome() {
                 <input
                   type="text"
                   placeholder="Enter your mail"
-                  className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 w-80"
+                  className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 focus:outline-none focus:border-0 w-80"
                 />
                 <Link className="border-0" to="/shop/account">
                   <Mail />
