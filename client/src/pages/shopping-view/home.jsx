@@ -57,6 +57,15 @@ function ShoppingHome() {
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % productList.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + productList.length) % productList.length);
+  };
   const { featureImageList } = useSelector((state) => state.commonFeature);
 
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
@@ -221,41 +230,42 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
-          <div className="relative">
-            {/* Left Arrow */}
-            <button
-              onClick={() =>
-                document.getElementById("product-slider").scrollBy({ left: -300, behavior: "smooth" })
-              }
-              className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white p-2 shadow rounded-full z-10"
-            >
-              <ChevronLeftIcon className="w-6 h-6" />
-            </button>
-
-            <div
-              id="product-slider"
-              className="flex overflow-x-auto gap-6 scroll-smooth scrollbar-hide px-4"
-            >
-              {productList && productList.length > 0
-                ? productList.map((productItem) => (
-                    <ShoppingProductTile
-                      handleGetProductDetails={handleGetProductDetails}
-                      product={productItem}
-                      handleAddtoCart={handleAddtoCart}
-                    />
-                  ))
-                : null}
-            </div>
-            <button
-              onClick={() =>
-                document.getElementById("product-slider").scrollBy({ left: 300, behavior: "smooth" })
-              }
-              className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-2 shadow rounded-full z-10"
-            >
-              <ChevronRightIcon className="w-6 h-6" />
-            </button>
+          <div className="flex transition-transform duration-500 gap-6"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {items.map((item, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-full h-full flex justify-center items-center"
+              >
+                {productList && productList.length > 0
+                  ? productList.map((productItem) => (
+                      <ShoppingProductTile
+                        handleGetProductDetails={handleGetProductDetails}
+                        product={productItem}
+                        handleAddtoCart={handleAddtoCart}
+                      />
+                    ))
+                  : null}
+              </div>
+            ))}
           </div>
-          
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handlePrev}
+            className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
+          >
+            <ChevronLeftIcon className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleNext}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
+          >
+            <ChevronRightIcon className="w-4 h-4" />
+          </Button>
         </div>
       </section>
       <ProductDetailsDialog
