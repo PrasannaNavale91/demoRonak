@@ -243,7 +243,7 @@ function ShoppingHome() {
       <section className=" bg-orange-400">
         <div className="container p-12 text-center">
           <p className="text-xs uppercase font-bold text-gray-100 tracking-widest">this weekend only</p>
-          <h3 className="text-4xl md:text-6xl text-gray-100 py-8 uppercase font-bold tracking-widest">Sale</h3>
+          <h3 className="text-4xl md:text-6xl lg:text-9xl text-gray-100 py-8 uppercase font-bold tracking-widest">Sale</h3>
           <Button onClick={()=> navigate()} className="bg-white py-3 px-16 rounded-none text-slate-950">
             <span className="text-slate-950">Shop Now</span>
           </Button>
