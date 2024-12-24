@@ -57,6 +57,7 @@ function ShoppingHome() {
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % productList.length);
@@ -230,7 +231,7 @@ function ShoppingHome() {
             Feature Products
           </h2>
           <div className="flex transition-transform duration-500"
-            style={{ transform: `translateX(-${productList * 100}%)` }}
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {productList && productList.length > 0
               ? productList.map((productItem, index) => (
