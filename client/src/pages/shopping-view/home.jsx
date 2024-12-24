@@ -8,7 +8,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CloudLightning,
-  Copyright,
   FacebookIcon,
   Heater,
   Images,
@@ -280,6 +279,7 @@ function ShoppingHome() {
             <div>
               <h2 className="py-8 uppercase tracking-wider">sign up and save</h2>
               <small>Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
+              
               <ul className="flex justify-items-start">
                 <li className="pr-3"><InstagramIcon /></li>
                 <li className="px-3"><FacebookIcon /></li>
@@ -289,7 +289,7 @@ function ShoppingHome() {
             </div>
           </div>
           <div className="p-3 text-center">
-            <p><Copyright/> 2025 TrendCrave&reg;</p>
+            <p>&copy; 2025 TrendCrave&reg;</p>
             <small>Made in India</small>
           </div>
         </div>
