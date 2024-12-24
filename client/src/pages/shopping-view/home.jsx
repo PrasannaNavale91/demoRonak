@@ -30,7 +30,7 @@ import {
   fetchProductDetails,
 } from "@/store/shop/products-slice";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
@@ -239,6 +239,14 @@ function ShoppingHome() {
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
       />
+
+      <section>
+        <div className="container p-12 bg-orange-400">
+          <p className="uppercase tracking-widest">this weelend only</p>
+          <h3 className="text-3xl uppercase font-bold tracking-widest">Sale</h3>
+          <Link>Shop Now</Link>
+        </div>
+      </section>
 
       <section className="py-12">
         <div className="container mx-auto px-4">
