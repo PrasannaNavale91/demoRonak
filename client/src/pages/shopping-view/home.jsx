@@ -244,9 +244,9 @@ function ShoppingHome() {
         <div className="container p-12 text-center">
           <p className="text-xs uppercase font-bold text-gray-100 tracking-widest">this weekend only</p>
           <h3 className="text-4xl md:text-6xl lg:text-9xl text-gray-100 py-8 uppercase font-bold tracking-widest">Sale</h3>
-          <Button onClick={()=> navigate()} className="bg-white py-3 px-16 rounded-none text-slate-950">
+          <Link to="/shop/listing" className="bg-white py-3 px-16 rounded-none text-slate-950">
             <span className="text-slate-950">Shop Now</span>
-          </Button>
+          </Link>
         </div>
       </section>
 
@@ -290,11 +290,11 @@ function ShoppingHome() {
             <div>
               <h2 className="text-xl py-8 uppercase tracking-widest">sign up and save</h2>
               <small className="py-2">Sign up now and be the first to know about exclusive offers, latest fashion trends & style tips!</small>
-              <div className="flex py-3 w-90">
-                <input type="text" placeholder="Enter your mail" className="border-0" />
-                <button className="border-0">
+              <div className="flex py-6 w-90">
+                <input type="text" placeholder="Enter your mail" className="border-0 border-b-2" />
+                <Link className="border-0" to="/shop/account">
                   <Mail />
-                </button>
+                </Link>
               </div>
               <ul className="flex justify-items-start">
                 <li className="pr-2"><InstagramIcon /></li>
