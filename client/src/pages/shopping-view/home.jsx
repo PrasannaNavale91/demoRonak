@@ -230,7 +230,7 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
-          <div className="flex-shrink-0 w-full h-full flex justify-center items-center gap-6"
+          <div className="flex transition-transform duration-500"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {productList && productList.length > 0
@@ -240,7 +240,7 @@ function ShoppingHome() {
                     product={productItem}
                     handleAddtoCart={handleAddtoCart}
                     key={index}
-                    className="w-72"
+                    className="flex-shrink-0 w-full h-full flex justify-center items-center"
                   />
                 ))
               : null}
