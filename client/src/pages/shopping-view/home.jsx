@@ -292,7 +292,7 @@ function ShoppingHome() {
           </h2>
           <div className="relative overflow-hidden">
             <div className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex}%)` }}
+              style={{ transform: `translateX(-${currentIndex * 50}%)` }}
             >
               {productList && productList.length > 0
                 ? productList.map((productItem, index) => (
