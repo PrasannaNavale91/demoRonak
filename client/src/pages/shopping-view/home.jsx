@@ -234,7 +234,7 @@ function ShoppingHome() {
 
             <div
               id="product-slider"
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 scroll-smooth scrollbar-hide px-4"
+              className="flex overflow-x-auto gap-6 scroll-smooth scrollbar-hide px-4"
             >
               {productList && productList.length > 0
                 ? productList.map((productItem) => (
