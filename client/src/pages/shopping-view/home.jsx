@@ -230,7 +230,7 @@ function ShoppingHome() {
             Feature Products
           </h2>
           <div className="flex transition-transform duration-500"
-            style={{ transform: `translateX(-${productList * 100}%)` }}
+            style={{ transform: `translateX(-${productList * 10}%)` }}
           >
             {productList && productList.length > 0
               ? productList.map((productItem, index) => (
