@@ -311,22 +311,22 @@ function ShoppingHome() {
                 : null}
             </div>
             {/* Navigation Buttons */}
-            <Button
+            <button
               variant="outline"
               size="icon"
               onClick={handlePrev}
               className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 z-10"
             >
               <ChevronLeftIcon className="w-4 h-4" />
-            </Button>
-            <Button
+            </button>
+            <button
               variant="outline"
               size="icon"
               onClick={handleNext}
               className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 z-10"
             >
               <ChevronRightIcon className="w-4 h-4" />
-            </Button>
+            </button>
           </div>
         </div>
       </section>
