@@ -19,7 +19,7 @@ export const registerUser = createAsyncThunk(
       }
     );
 
-    return response.data;
+    return response.data.message;
   }
 );
 
@@ -52,6 +52,22 @@ export const logoutUser = createAsyncThunk(
     );
 
     return response.data;
+  }
+);
+
+export const userSubscribe  = createAsyncThunk(
+  "/auth/subscribe",
+
+  async () => {
+    const response = await axios.post(
+      "https://ecommerce-app-xg3v.onrender.com/api/auth/subscribe",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data.message;
   }
 );
 

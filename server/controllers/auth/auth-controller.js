@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const sendEmail = require("./mail-controller");
 
 //register
 const registerUser = async (req, res) => {
@@ -33,6 +34,24 @@ const registerUser = async (req, res) => {
       message: "Some error occured",
     });
   }
+  
+  // Send welcome email
+  const welcomeMessage = `
+    <h1>Welcome to Our Store, ${userName}!</h1>
+    <p>Thank you for registering with us. Stay tuned for exciting offers!</p>
+  `;
+  await sendEmail(email, 'Welcome to Our Store!', welcomeMessage);
+
+  res.status(201).json({ message: 'User registered and email sent.' });
+
+  // Send subscription confirmation email
+  const subscriptionMessage = `
+    <h1>Thank You for Subscribing!</h1>
+    <p>We'll keep you updated with the latest offers and news.</p>
+  `;
+  await sendEmail(email, 'Thanks for Subscribing!', subscriptionMessage);
+
+  res.status(200).json({ message: 'Subscription confirmed and email sent.' });
 };
 
 //login
