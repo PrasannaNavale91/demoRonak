@@ -22,7 +22,7 @@ function AuthLogin() {
 
     dispatch(loginUser(formData)).then((data) => {
       if (data?.payload?.success) {
-        // navigate("/shop/home");
+        navigate("/shop/home");
         toast({
           title: data?.payload?.message,
         });
