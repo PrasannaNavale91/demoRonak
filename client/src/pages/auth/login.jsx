@@ -22,7 +22,14 @@ function AuthLogin() {
 
     dispatch(loginUser(formData)).then((data) => {
       if (data?.payload?.success) {
-        navigate("/shop/home");
+        const role = data.payload?.user?.role;
+
+        if (role === "admin") {
+          navigate("/admin/dashboard");
+        } else{
+          navigate("/shop/home");
+        }
+
         toast({
           title: data?.payload?.message,
         });
