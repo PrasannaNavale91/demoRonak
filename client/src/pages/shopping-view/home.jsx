@@ -371,6 +371,9 @@ function ShoppingHome() {
                 <input
                   type="text"
                   placeholder="Enter your mail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 focus:outline-none focus:border-0 w-80"
                 />
                 <Link className="border-0" to="/shop/listing" type="button" onSubmit={handleSubmit}>
