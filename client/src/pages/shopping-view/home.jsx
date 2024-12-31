@@ -373,7 +373,7 @@ function ShoppingHome() {
                   placeholder="Enter your mail"
                   className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 focus:outline-none focus:border-0 w-80"
                 />
-                <Link className="border-0" to="/shop/home" type="button" onSubmit={handleSubmit}>
+                <Link className="border-0" to="/shop/listing" type="button" onSubmit={handleSubmit}>
                   <Mail />
                 </Link>
               </div>
