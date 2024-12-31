@@ -39,19 +39,15 @@ const registerUser = async (req, res) => {
   const welcomeMessage = `
     <h1>Welcome to Our Store, ${userName}!</h1>
     <p>Thank you for registering with us. Stay tuned for exciting offers!</p>
+    <br>
+    <p>Best,</p>
+    <h3>The Trend Crave Team</h3>
+    <br>
+    <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
   `;
   await sendEmail(email, 'Welcome to Our Store!', welcomeMessage);
 
   res.status(201).json({ message: 'User registered and email sent.' });
-
-  // Send subscription confirmation email
-  const subscriptionMessage = `
-    <h1>Thank You for Subscribing!</h1>
-    <p>We'll keep you updated with the latest offers and news.</p>
-  `;
-  await sendEmail(email, 'Thanks for Subscribing!', subscriptionMessage);
-
-  res.status(200).json({ message: 'Subscription confirmed and email sent.' });
 };
 
 //login
@@ -115,6 +111,47 @@ const logoutUser = (req, res) => {
   });
 };
 
+const subscribeUser = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const checkUser = await User.findOne({ email });
+    if (checkUser)
+      return res.json({
+        success: false,
+        message: "User Already exists with the same email! Please try again",
+      });
+
+    const newUser = new User({
+      email,
+    });
+
+    await newUser.save();
+    res.status(200).json({
+      success: true,
+      message: "Subscribe successfully..!",
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "Some error occured",
+    });
+  }
+  // Send subscription confirmation email
+  const subscriptionMessage = `
+    <h1>Thank You for Subscribing!</h1>
+    <p>We'll keep you updated with the latest offers and news.</p>
+    <br>
+    <p>Best,</p>
+    <h3>The Trend Crave Team</h3>
+    <br>
+    <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
+  `;
+  await sendEmail(email, 'Thanks for Subscribing!', subscriptionMessage);
+
+  res.status(200).json({ message: 'Subscription confirmed and email sent.' });
+}
+
 //auth middleware
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
@@ -136,4 +173,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware, subscribeUser };

@@ -58,10 +58,10 @@ export const logoutUser = createAsyncThunk(
 export const userSubscribe  = createAsyncThunk(
   "/auth/subscribe",
 
-  async () => {
+  async (formData) => {
     const response = await axios.post(
       "https://ecommerce-app-xg3v.onrender.com/api/auth/subscribe",
-      {},
+      formData,
       {
         withCredentials: true,
       }
