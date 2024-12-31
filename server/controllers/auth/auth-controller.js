@@ -23,6 +23,21 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
+    const welcomeMessage = `
+      <h1>Welcome to Our Store, ${userName}!</h1>
+      <p>Thank you for registering with us. Stay tuned for exciting offers!</p>
+      <br>
+      <p>Best,</p>
+      <h3>The Trend Crave Team</h3>
+      <br>
+      <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
+    `;
+    try {
+      await sendEmail(email, "Welcome to Our Store!", welcomeMessage);
+    } catch (emailError) {
+      console.error("Failed to send email:", emailError);
+    }
+
     res.status(200).json({
       success: true,
       message: "Registration successful",
@@ -31,23 +46,9 @@ const registerUser = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "An error occurred during registration.",
     });
   }
-  
-  // Send welcome email
-  const welcomeMessage = `
-    <h1>Welcome to Our Store, ${userName}!</h1>
-    <p>Thank you for registering with us. Stay tuned for exciting offers!</p>
-    <br>
-    <p>Best,</p>
-    <h3>The Trend Crave Team</h3>
-    <br>
-    <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
-  `;
-  await sendEmail(email, 'Welcome to Our Store!', welcomeMessage);
-
-  res.status(201).json({ message: 'User registered and email sent.' });
 };
 
 //login
@@ -118,14 +119,27 @@ const subscribeUser = async (req, res) => {
     if (checkUser)
       return res.json({
         success: false,
-        message: "User Already exists with the same email! Please try again",
+        message: "You are already subscribed with the same email! Please try different mail id",
       });
 
-    const newUser = new User({
-      email,
-    });
-
+    const newUser = new User({email,});
     await newUser.save();
+
+    const subscriptionMessage = `
+      <h1>Thank You for Subscribing!</h1>
+      <p>We'll keep you updated with the latest offers and news.</p>
+      <br>
+      <p>Best,</p>
+      <h3>The Trend Crave Team</h3>
+      <br>
+      <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
+    `;
+    try {
+      await sendEmail(email, "Thanks for Subscribing!", subscriptionMessage);
+    } catch (emailError) {
+      console.error("Failed to send subscription email:", emailError);
+    }
+
     res.status(200).json({
       success: true,
       message: "Subscribe successfully..!",
@@ -137,19 +151,6 @@ const subscribeUser = async (req, res) => {
       message: "Some error occured",
     });
   }
-  // Send subscription confirmation email
-  const subscriptionMessage = `
-    <h1>Thank You for Subscribing!</h1>
-    <p>We'll keep you updated with the latest offers and news.</p>
-    <br>
-    <p>Best,</p>
-    <h3>The Trend Crave Team</h3>
-    <br>
-    <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
-  `;
-  await sendEmail(email, 'Thanks for Subscribing!', subscriptionMessage);
-
-  res.status(200).json({ message: 'Subscription confirmed and email sent.' });
 }
 
 //auth middleware
