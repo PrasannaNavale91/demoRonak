@@ -75,6 +75,21 @@ function ShoppingHome() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const backendUrl = "https://ecommerce-app-xg3v.onrender.com";
+
+    try {
+      const response = await axios.post(`${backendUrl}/send-subscription-email`, { email });
+      alert(response.data.message);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send email.");
+    }
+  };
 
   function handleNavigateToListingPage(getCurrentItem, section) {
     sessionStorage.removeItem("filters");
@@ -358,7 +373,7 @@ function ShoppingHome() {
                   placeholder="Enter your mail"
                   className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 focus:outline-none focus:border-0 w-80"
                 />
-                <Link className="border-0" to="/shop/account">
+                <Link className="border-0" to="/shop/account" type="button" onSubmit={handleSubmit}>
                   <Mail />
                 </Link>
               </div>
