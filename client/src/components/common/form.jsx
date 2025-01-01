@@ -9,7 +9,7 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Eye, EyeOff } from "lucide-react";
+// import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 function CommonForm({
@@ -25,9 +25,9 @@ function CommonForm({
     const value = formData[getControlItem.name] || "";
     const [show, setShow] = useState(false);
 
-    const handleToggle = () =>{
-      setShow(!show)
-    };
+    // const handleToggle = () =>{
+    //   setShow(!show)
+    // };
 
     switch (getControlItem.componentType) {
       case "input":
@@ -105,8 +105,7 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
-          />,
-          <span onClick={handleToggle} className='ml-[-30px] text-lg cursor-pointer'>{show ? <EyeOff /> : <Eye /> }</span>
+          />
         );
         break;
     }

@@ -20,7 +20,7 @@ function AuthRegister() {
 
   async function sendWelcomeEmail(email, userName) {
     try {
-      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/send-mail", {
+      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/auth/send-mail", {
         email,
         name: userName,
       });
