@@ -24,6 +24,10 @@ function CommonForm({
     const value = formData[getControlItem.name] || "";
     const [show, setShow] = useState(false);
 
+    const handleToggle = () =>{
+      setShow(!show)
+    };
+
     switch (getControlItem.componentType) {
       case "input":
         element = (
