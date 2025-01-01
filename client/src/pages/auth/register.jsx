@@ -10,6 +10,7 @@ const initialState = {
   userName: "",
   email: "",
   password: "",
+  confirmPassword: "",
 };
 
 function AuthRegister() {
@@ -20,11 +21,11 @@ function AuthRegister() {
 
   async function sendWelcomeEmail(email, userName) {
     try {
-      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/send-welcome-email", {
+      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/auth/register", {
         email,
         name: userName,
       });
-      console.log(response.data.message); // Debug message
+      console.log(response.data.message);
     } catch (error) {
       console.error("Failed to send email:", error);
     }
