@@ -24,6 +24,7 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
+    await sendEmail(email, 'Welcome to Our Store!', welcomeMessage);
     res.status(200).json({
       success: true,
       message: "Registration successful",
@@ -101,18 +102,8 @@ const logoutUser = (req, res) => {
 const subscribeUser = async (req, res) => {
   const { email } = req.body;
   try {
-    const checkUser = await User.findOne({ email });
-    if (checkUser)
-      return res.json({
-        success: false,
-        message: "You are already subscribed with the same email! Please try different mail id",
-      });
-
-    const newUser = new User({email,});
-    await newUser.save();
-
-    await sendEmail({to:newUser.email,html:sendEmail.subscriptionMsgTemplate(order),subject:'Thanks for Subscribing!' })
-
+    await sendEmail({to:newUser.email,html:sendEmail.subscriptionMsgTemplate(order),subject:'Thanks for Subscribing!' });
+    
     res.status(200).json({
       success: true,
       message: "Subscribe successfully..!",
