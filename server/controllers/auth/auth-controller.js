@@ -28,9 +28,7 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
-
     await sendEmail({to:newUser.email,html:sendEmail.welcomeMsgTemplate(order),subject:'Welcome to Our Store' });
-
     res.status(200).json({
       success: true,
       message: "Registration successful",
