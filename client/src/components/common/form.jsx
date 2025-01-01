@@ -45,7 +45,7 @@ function CommonForm({
             }
           />
         );
-
+        <span onClick={handleToggle} className='ml-[-30px] text-lg cursor-pointer'>{show ? <EyeOff /> : <Eye /> }</span>
         break;
       case "select":
         element = (
@@ -89,7 +89,6 @@ function CommonForm({
             }
           />
         );
-
         break;
 
       default:

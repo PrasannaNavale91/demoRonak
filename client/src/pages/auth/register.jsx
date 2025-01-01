@@ -10,7 +10,6 @@ const initialState = {
   userName: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
 function AuthRegister() {
@@ -21,7 +20,7 @@ function AuthRegister() {
 
   async function sendWelcomeEmail(email, userName) {
     try {
-      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/auth/register", {
+      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/send-mail", {
         email,
         name: userName,
       });
