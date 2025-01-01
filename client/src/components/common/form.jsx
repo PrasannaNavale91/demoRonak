@@ -44,8 +44,7 @@ function CommonForm({
                 [getControlItem.name]: event.target.value,
               })
             }
-          />,
-          <span onClick={handleToggle} className='ml-[-30px] text-lg cursor-pointer'>{show ? <EyeOff /> : <Eye /> }</span>
+          />
         );
         break;
       case "select":
