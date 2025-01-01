@@ -23,20 +23,8 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
-    const welcomeMessage = `
-      <h1>Welcome to Our Store, ${userName}!</h1>
-      <p>Thank you for registering with us. Stay tuned for exciting offers!</p>
-      <br>
-      <p>Best,</p>
-      <h3>The Trend Crave Team</h3>
-      <br>
-      <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
-    `;
-    try {
-      await sendEmail(email, "Welcome to Our Store!", welcomeMessage);
-    } catch (emailError) {
-      console.error("Failed to send email:", emailError);
-    }
+
+    await sendEmail({to:User.email,html:sendEmail.welcomeMsgTemplate(order),subject:'Welcome to Our Store' });
 
     res.status(200).json({
       success: true,
@@ -125,20 +113,7 @@ const subscribeUser = async (req, res) => {
     const newUser = new User({email,});
     await newUser.save();
 
-    const subscriptionMessage = `
-      <h1>Thank You for Subscribing!</h1>
-      <p>We'll keep you updated with the latest offers and news.</p>
-      <br>
-      <p>Best,</p>
-      <h3>The Trend Crave Team</h3>
-      <br>
-      <small>Your are receiving this mail as you opted in to alerts for new fashion arrivals. If you are no longer interested you cab unsubscribe or yoy can update your account settings.</small>
-    `;
-    try {
-      await sendEmail(email, "Thanks for Subscribing!", subscriptionMessage);
-    } catch (emailError) {
-      console.error("Failed to send subscription email:", emailError);
-    }
+    await sendEmail({to:User.email,html:sendEmail.subscriptionMsgTemplate(order),subject:'Thanks for Subscribing!' })
 
     res.status(200).json({
       success: true,

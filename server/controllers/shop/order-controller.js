@@ -2,6 +2,7 @@ const paypal = require("../../helpers/paypal");
 const Order = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
+const sendEmail = require("../../helpers/email");
 
 const createOrder = async (req, res) => {
   try {
@@ -130,6 +131,8 @@ const capturePayment = async (req, res) => {
 
     const getCartId = order.cartId;
     await Cart.findByIdAndDelete(getCartId);
+
+    await sendEmail({to:user.email,html:invoiceTemplate(order),subject:'Order Received' })
 
     await order.save();
 
