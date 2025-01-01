@@ -10,7 +10,6 @@ const initialState = {
   userName: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
 function AuthRegister() {

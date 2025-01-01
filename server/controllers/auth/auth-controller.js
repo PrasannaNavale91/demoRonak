@@ -5,15 +5,10 @@ const sendEmail = require("../../helpers/email");
 
 //register
 const registerUser = async (req, res) => {
-  const { userName, email, password, confirmPassword } = req.body;
+  const { userName, email, password } = req.body;
 
   try {
     const checkUser = await User.findOne({ email });
-    if (password !== confirmPassword)
-      return res.json({
-        success: false,
-        message: "Password doesn't match! Please Check..",
-      });
     
     if (checkUser)
       return res.json({
@@ -22,16 +17,13 @@ const registerUser = async (req, res) => {
       });
 
     const hashPassword = await bcrypt.hash(password, 12);
-    const hashPassword2 = await bcrypt.hash(confirmPassword, 12);
     const newUser = new User({
       userName,
       email,
       password: hashPassword,
-      confirmPassword: hashPassword2,
     });
 
     await newUser.save();
-    await sendEmail({to:newUser.email,html:sendEmail.welcomeMsgTemplate(order),subject:'Welcome to Our Store' });
     res.status(200).json({
       success: true,
       message: "Registration successful",
