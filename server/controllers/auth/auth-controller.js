@@ -9,9 +9,12 @@ const registerUser = async (req, res) => {
 
   try {
     const checkUser = await User.findOne({ email });
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+    if (password !== confirmPassword)
+      return res.json({
+        success: false,
+        message: "Password doesn't match! Please Check..",
+      });
+    
     if (checkUser)
       return res.json({
         success: false,
