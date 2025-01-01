@@ -23,7 +23,7 @@ function CommonForm({
   function renderInputsByComponentType(getControlItem) {
     let element = null;
     const value = formData[getControlItem.name] || "";
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
 
     // const handleToggle = () =>{
     //   setShow(!show)
