@@ -19,15 +19,17 @@ const registerUser = async (req, res) => {
       });
 
     const hashPassword = await bcrypt.hash(password, 12);
+    const hashPassword2 = await bcrypt.hash(confirmPassword, 12);
     const newUser = new User({
       userName,
       email,
       password: hashPassword,
+      confirmPassword: hashPassword2,
     });
 
     await newUser.save();
 
-    await sendEmail({to:User.email,html:sendEmail.welcomeMsgTemplate(order),subject:'Welcome to Our Store' });
+    await sendEmail({to:newUser.email,html:sendEmail.welcomeMsgTemplate(order),subject:'Welcome to Our Store' });
 
     res.status(200).json({
       success: true,
@@ -116,7 +118,7 @@ const subscribeUser = async (req, res) => {
     const newUser = new User({email,});
     await newUser.save();
 
-    await sendEmail({to:User.email,html:sendEmail.subscriptionMsgTemplate(order),subject:'Thanks for Subscribing!' })
+    await sendEmail({to:newUser.email,html:sendEmail.subscriptionMsgTemplate(order),subject:'Thanks for Subscribing!' })
 
     res.status(200).json({
       success: true,
