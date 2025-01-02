@@ -22,9 +22,9 @@ function AuthRegister() {
     try {
       const response = await axios.post("https://ecommerce-d3qt.onrender.com/auth/register/send-welcome-email", {
         email,
-        name: userName,
+        userName,
       });
-      console.log(response.data.message); // Debug message
+      console.log(response.data.message);
     } catch (error) {
       console.error("Failed to send email:", error);
     }
