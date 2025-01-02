@@ -36,6 +36,7 @@ import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 import { subscribeUser } from "@/store/auth-slice";
+import { registerFormControls } from "@/config";
 
 const categoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
@@ -53,7 +54,13 @@ const brandsWithIcon = [
   { id: "zara", label: "Zara", icon: Images },
   { id: "h&m", label: "H&M", icon: Heater },
 ];
+
+const initialState = {
+  email: "",
+}
+
 function ShoppingHome() {
+  const [formData, setFormData] = useState(initialState);
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
@@ -389,8 +396,9 @@ function ShoppingHome() {
                   type="text"
                   placeholder="Enter your mail"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  formControls={registerFormControls}
+                  formData={formData}
+                  setFormData={setFormData}
                   className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 focus:outline-none focus:border-0 w-80"
                 />
                 <Link className="border-0" to="/shop/listing" type="button" onSubmit={onSubmit}>
