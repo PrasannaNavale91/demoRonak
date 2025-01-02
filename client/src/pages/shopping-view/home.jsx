@@ -36,7 +36,6 @@ import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 import { subscribeUser } from "@/store/auth-slice";
-import { registerFormControls } from "@/config";
 
 const categoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
@@ -54,13 +53,7 @@ const brandsWithIcon = [
   { id: "zara", label: "Zara", icon: Images },
   { id: "h&m", label: "H&M", icon: Heater },
 ];
-
-const initialState = {
-  email: "",
-}
-
 function ShoppingHome() {
-  const [formData, setFormData] = useState(initialState);
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
@@ -150,6 +143,26 @@ function ShoppingHome() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`http://localhost:8080/api/v1/user/register`, user, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        navigate("/login");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
+    setEmail({ email: "" });
+  }
+
   async function sendSubscribeMail(email) {
     try {
       const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/shop/home/send-subscribe-email", {
@@ -159,25 +172,6 @@ function ShoppingHome() {
     } catch (error) {
       console.error("Failed to send email:", error);
     }
-  }
-  
-  function onSubmit(event) {
-    event.preventDefault();
-    dispatch(subscribeUser(formData)).then((data) => {
-      if (data?.payload?.success) {
-        toast({
-          title: data?.payload?.message,
-        });
-        
-        sendSubscribeMail(formData.email, formData.userName);
-        navigate("/auth/login");
-      } else {
-        toast({
-          title: data?.payload?.message,
-          variant: "destructive",
-        });
-      }
-    });
   }
 
   return (
@@ -395,13 +389,12 @@ function ShoppingHome() {
                 <input
                   type="text"
                   placeholder="Enter your mail"
-                  value={email}
-                  formControls={registerFormControls}
-                  formData={formData}
-                  setFormData={setFormData}
+                  value={email.email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 focus:outline-none focus:border-0 w-80"
                 />
-                <Link className="border-0" to="/shop/listing" type="button" onSubmit={onSubmit}>
+                <Link className="border-0" to="/shop/listing" type="button" onSubmit={handleSubmit}>
                   <Mail />
                 </Link>
               </div>
