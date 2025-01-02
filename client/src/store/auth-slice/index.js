@@ -55,7 +55,7 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-export const userSubscribe  = createAsyncThunk(
+export const subscribeUser  = createAsyncThunk(
   "/auth/subscribe",
 
   async (formData) => {

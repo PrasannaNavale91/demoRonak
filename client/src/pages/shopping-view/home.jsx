@@ -35,6 +35,7 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
+import { subscribeUser } from "@/store/auth-slice";
 
 const categoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
@@ -76,20 +77,6 @@ function ShoppingHome() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const backendUrl = "https://ecommerce-app-xg3v.onrender.com";
-
-    try {
-      const response = await axios.post(`${backendUrl}/send-subscription-email`, { email });
-      alert(response.data.message);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to send email.");
-    }
-  };
 
   function handleNavigateToListingPage(getCurrentItem, section) {
     sessionStorage.removeItem("filters");
@@ -155,6 +142,37 @@ function ShoppingHome() {
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
+
+  async function sendSubscribeMail(email, userName) {
+    try {
+      const response = await axios.post("https://ecommerce-d3qt.onrender.com/auth/hom/send-subscribe-email", {
+        email,
+        name: userName,
+      });
+      console.log(response.data.message); // Debug message
+    } catch (error) {
+      console.error("Failed to send email:", error);
+    }
+  }
+  
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(subscribeUser(formData)).then((data) => {
+      if (data?.payload?.success) {
+        toast({
+          title: data?.payload?.message,
+        });
+        
+        sendSubscribeMail(formData.email, formData.userName);
+        navigate("/auth/login");
+      } else {
+        toast({
+          title: data?.payload?.message,
+          variant: "destructive",
+        });
+      }
+    });
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -376,7 +394,7 @@ function ShoppingHome() {
                   required
                   className="border-0 border-b-2 border-slate-950 placeholder:text-sm placeholder:text-slate-950 focus:outline-none focus:border-0 w-80"
                 />
-                <Link className="border-0" to="/shop/listing" type="button" onSubmit={handleSubmit}>
+                <Link className="border-0" to="/shop/listing" type="button" onSubmit={onSubmit}>
                   <Mail />
                 </Link>
               </div>

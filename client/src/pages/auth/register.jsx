@@ -18,6 +18,18 @@ function AuthRegister() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  async function sendWelcomeEmail(email, userName) {
+    try {
+      const response = await axios.post("https://ecommerce-d3qt.onrender.com/auth/register/send-welcome-email", {
+        email,
+        name: userName,
+      });
+      console.log(response.data.message); // Debug message
+    } catch (error) {
+      console.error("Failed to send email:", error);
+    }
+  }
+
   function onSubmit(event) {
     event.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
@@ -25,6 +37,8 @@ function AuthRegister() {
         toast({
           title: data?.payload?.message,
         });
+        
+        sendWelcomeEmail(formData.email, formData.userName);
         navigate("/auth/login");
       } else {
         toast({
