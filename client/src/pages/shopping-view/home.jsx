@@ -143,11 +143,10 @@ function ShoppingHome() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
-  async function sendSubscribeMail(email, userName) {
+  async function sendSubscribeMail(email) {
     try {
-      const response = await axios.post("https://ecommerce-d3qt.onrender.com/auth/hom/send-subscribe-email", {
+      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/shop/home/send-subscribe-email", {
         email,
-        name: userName,
       });
       console.log(response.data.message); // Debug message
     } catch (error) {
