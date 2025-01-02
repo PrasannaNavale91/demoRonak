@@ -26,13 +26,13 @@ const registerUser = async (req, res) => {
     await newUser.save();
 
     const welcomeMessage = `
-      <h1>Welcome to Our Store, ${userName}!</h1>
+      <h2>Welcome to Our Store, ${userName}!</h2>
       <p>Thank you for registering with us. Stay tuned for exciting offers!</p>
       <br>
       <p>Best regards,</p>
       <p>The Trend Crave Team</p>
     `;
-    await sendEmail(email, 'Welcome to Our Store!', welcomeMessage);
+    await sendEmail(email, 'Congratulation! Shop now on lowest pricing', welcomeMessage);
     res.status(200).json({
       success: true,
       message: "Registration successful",
@@ -111,13 +111,13 @@ const subscribeUser = async (req, res) => {
   const { email } = req.body;
   try {
     const subscriptionMessage = `
-      <h1>Thank You for Subscribing!</h1>
+      <h2>Thank You for Subscribing!</h2>
       <p>We'll keep you updated with the latest offers and news.</p>
       <br>
       <p>Best regards,</p>
       <p>The Trend Crave Team</p>
     `;
-    await sendEmail(email, 'Thanks for Subscribing!', subscriptionMessage);
+    await sendEmail(email, 'Greate!Our nea year collection is now available', subscriptionMessage);
 
     res.status(200).json({
       success: true,

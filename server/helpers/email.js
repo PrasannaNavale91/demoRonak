@@ -11,8 +11,10 @@ const sendEmail = async (to, subject, htmlContent) => {
         name: 'Trend Crave',
         email: 'prasanna.navle143@gmail.com'
       },
-      subject,
-      html: htmlContent,
+      templateId: process.env.TEMPLATE_ID,
+      dynamicTemplateData: {
+        name: 'Jack'
+      }
     };
     await sgMail.send(msg);
     console.log(`Email sent successfully ${to}`);
