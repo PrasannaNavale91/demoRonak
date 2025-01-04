@@ -85,7 +85,7 @@ const verifyRazorpayPayment = async (req, res) => {
     const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } = req.body;
 
     const expectedSignature = crypto
-      .createHmac("trendcrave", process.env.RAZORPAY_KEY_SECRET)
+      .createHmac("trendcrave", razorpayInstance)
       .update(`${razorpayOrderId}|${razorpayPaymentId}`)
       .digest("hex");
 
