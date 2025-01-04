@@ -21,11 +21,11 @@ export const createNewOrder = createAsyncThunk(
   }
 );
 
-export const capturePayment = createAsyncThunk(
+export const razorpayOptions = createAsyncThunk(
   "/order/capturePayment",
   async ({ paymentId, payerId, orderId }) => {
     const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/shop/order/capture",
+      "https://ecommerce-app-xg3v.onrender.com/api/shop/order/verify-payment",
       {
         paymentId,
         payerId,

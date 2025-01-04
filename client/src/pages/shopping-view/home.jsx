@@ -143,10 +143,21 @@ function ShoppingHome() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
+  async function sendSubscribeMail(email) {
+    try {
+      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/shop/home/send-subscribe-email", {
+        email,
+      });
+      console.log(response.data.message);
+    } catch (error) {
+      console.error("Failed to send email:", error);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:8080/api/v1/user/register`, user, {
+      const res = await axios.post(`https://ecommerce-d3qt.onrender.com/api/shop/home/send-subscribe-email`, user, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -161,17 +172,6 @@ function ShoppingHome() {
       console.log(error);
     }
     setEmail({ email: "" });
-  }
-
-  async function sendSubscribeMail(email) {
-    try {
-      const response = await axios.post("https://ecommerce-d3qt.onrender.com/api/shop/home/send-subscribe-email", {
-        email,
-      });
-      console.log(response.data.message); // Debug message
-    } catch (error) {
-      console.error("Failed to send email:", error);
-    }
   }
 
   return (

@@ -1,33 +1,29 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-  userId: String,
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   cartId: String,
   cartItems: [
     {
-      productId: String,
-      title: String,
-      image: String,
-      price: String,
-      quantity: Number,
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      quantity: { type: Number, required: true },
+      price: { type: Number, required: true },
     },
   ],
   addressInfo: {
-    addressId: String,
-    address: String,
-    city: String,
-    pincode: String,
-    phone: String,
-    notes: String,
+    type: Object,
+    required: true,
   },
-  orderStatus: String,
-  paymentMethod: String,
-  paymentStatus: String,
-  totalAmount: Number,
-  orderDate: Date,
-  orderUpdateDate: Date,
-  paymentId: String,
-  payerId: String,
+  amount: {
+    type: Number,
+    required: true
+  },
+  paymentMethod: { type: String, enum: ["razorpay", "cod"], required: true },
+  paymentStatus: { type: String, enum: ["pending", "paid"], default: "pending" },
+  orderStatus: { type: String, enum: ["pending", "confirmed"], default: "pending" },
+  totalAmount: { type: Number, required: true },
+  razorpayOrderId: { type: String },
+  razorpayPaymentId: { type: String },
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

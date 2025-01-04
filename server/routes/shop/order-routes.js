@@ -4,13 +4,13 @@ const {
   createOrder,
   getAllOrdersByUser,
   getOrderDetails,
-  capturePayment,
+  verifyRazorpayPayment,
 } = require("../../controllers/shop/order-controller");
 
 const router = express.Router();
 
 router.post("/create", createOrder);
-router.post("/capture", capturePayment);
+router.post("/verify-payment", verifyRazorpayPayment);
 router.get("/list/:userId", getAllOrdersByUser);
 router.get("/details/:id", getOrderDetails);
 
