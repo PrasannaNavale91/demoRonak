@@ -82,7 +82,7 @@ const createOrder = async (req, res) => {
 
 const verifyRazorpayPayment = async (req, res) => {
   try {
-    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } = req.body;
+    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId, email } = req.body;
 
     const expectedSignature = crypto
       .createHmac("trendcrave", razorpayInstance)
