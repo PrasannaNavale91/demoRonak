@@ -117,7 +117,7 @@ const subscribeUser = async (req, res) => {
       <p>Best regards,</p>
       <p>The Trend Crave Team</p>
     `;
-    await sendEmail(email, 'Greate!Our nea year collection is now available', subscriptionMessage);
+    await sendEmail(email, 'Greate!Our new year collection is now available', subscriptionMessage);
 
     res.status(200).json({
       success: true,

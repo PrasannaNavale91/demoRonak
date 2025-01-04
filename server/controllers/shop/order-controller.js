@@ -121,7 +121,7 @@ const verifyRazorpayPayment = async (req, res) => {
 
       // Send confirmation email
       await sendEmail({
-        to: req.user.email,
+        to: req.email,
         html: `<h3>Thank you for your payment!</h3><p>Your order has been confirmed.</p>`,
         subject: "Order Confirmation",
       });
