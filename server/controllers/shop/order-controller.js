@@ -1,7 +1,6 @@
 const Order = require("../../models/Order");
-// const Cart = require("../../models/Cart");
+const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
-const sendEmail = require("../../helpers/email");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 
@@ -23,20 +22,22 @@ const createOrder = async (req, res) => {
     } = req.body;
 
     if (paymentMethod === "razorpay") {
-      const razorpayOrder = await razorpayInstance.orders.create({
+      const options = {
         amount: totalAmount * 100,
         currency: "INR",
-        receipt: `order_rcptid_${Math.random().toString(36).substring(7)}`,
-      });
+        receipt: `receipt_${Date.now()}`,
+      };
+
+      const razorpayOrder = await razorpayInstance.orders.create(options);
 
       const newOrder = new Order({
         userId,
         cartItems,
         addressInfo,
+        orderStatus: "pending",
         paymentMethod,
         paymentStatus: "pending",
         totalAmount,
-        orderStatus: "pending",
         razorpayOrderId: razorpayOrder.id,
       });
 
@@ -46,17 +47,17 @@ const createOrder = async (req, res) => {
         success: true,
         orderId: newOrder._id,
         razorpayOrderId: razorpayOrder.id,
+        orderId: newOrder._id,
       });
     } else if (paymentMethod === "cod") {
-      // COD Order Creation
       const newOrder = new Order({
         userId,
         cartItems,
         addressInfo,
+        orderStatus: "confirmed",
         paymentMethod,
         paymentStatus: "pending",
         totalAmount,
-        orderStatus: "confirmed",
       });
 
       await newOrder.save();
@@ -76,74 +77,65 @@ const createOrder = async (req, res) => {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Some error occurred!",
+      message: "An error occurred while creating the order!",
     });
   }
 };
 
-const verifyRazorpayPayment = async (req, res) => {
+const capturePayment = async (req, res) => {
   try {
-    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId, email } = req.body;
+    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } = req.body;
 
     const expectedSignature = crypto
       .createHmac("trendcrave", razorpayInstance)
       .update(`${razorpayOrderId}|${razorpayPaymentId}`)
       .digest("hex");
 
-    if (expectedSignature === razorpaySignature) {
-      const order = await Order.findById(orderId);
+    if (expectedSignature !== razorpaySignature) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid payment signature",
+      });
+    }
 
-      if (!order) {
-        return res.status(404).json({
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    order.paymentStatus = "paid";
+    order.orderStatus = "confirmed";
+    order.razorpayPaymentId = razorpayPaymentId;
+
+    for (const item of order.cartItems) {
+      const product = await Product.findById(item.productId);
+
+      if (!product || product.totalStock < item.quantity) {
+        return res.status(400).json({
           success: false,
-          message: "Order not found.",
+          message: `Not enough stock for ${product?.title || "a product"}`,
         });
       }
 
-      order.paymentStatus = "paid";
-      order.orderStatus = "confirmed";
-      order.razorpayPaymentId = razorpayPaymentId;
-
-      for (let item of order.cartItems) {
-        const product = await Product.findById(item.productId);
-
-        if (product.totalStock < item.quantity) {
-          return res.status(400).json({
-            success: false,
-            message: `Not enough stock for ${product.title}.`,
-          });
-        }
-
-        product.totalStock -= item.quantity;
-        await product.save();
-      }
-
-      await order.save();
-
-      const paymentVerifiedMessage = `
-        <h2>Thank you for your payment!</h2>
-        <p>Your order has been confirmed.</p>
-        <br>
-        <p>Best regards,</p>
-        <p>The Trend Crave Team</p>
-      `;
-      await sendEmail(email, 'Payment done successfully., please check our new arrival we came with new offers...', paymentVerifiedMessage);
-
-      res.status(200).json({
-        success: true,
-        message: "Payment verified and order confirmed.",
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Invalid payment signature.",
-      });
+      product.totalStock -= item.quantity;
+      await product.save();
     }
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Payment captured and order confirmed",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Some error occurred!",
+      message: "An error occurred while capturing the payment!",
     });
   }
 };
@@ -202,7 +194,7 @@ const getOrderDetails = async (req, res) => {
 
 module.exports = {
   createOrder,
-  verifyRazorpayPayment,
+  capturePayment,
   getAllOrdersByUser,
   getOrderDetails,
 };
