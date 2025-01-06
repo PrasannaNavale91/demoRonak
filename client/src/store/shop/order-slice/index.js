@@ -25,7 +25,7 @@ export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
   async ({ paymentId, payerId, orderId }) => {
     const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/shop/order/verify-payment",
+      "https://ecommerce-app-xg3v.onrender.com/api/shop/order/capture",
       {
         paymentId,
         payerId,

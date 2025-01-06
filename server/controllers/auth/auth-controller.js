@@ -32,11 +32,7 @@ const registerUser = async (req, res) => {
       <p>Best regards,</p>
       <p>The Trend Crave Team</p>
     `;
-    await sendEmail({
-      to: req.user?.email,
-      html: 'Congratulation! Shop now on lowest pricing',
-      subject: welcomeMessage
-    });
+    await sendEmail(email, 'Congratulation! Shop now on lowest pricing', welcomeMessage);
     res.status(200).json({
       success: true,
       message: "Registration successful",
@@ -121,11 +117,8 @@ const subscribeUser = async (req, res) => {
       <p>Best regards,</p>
       <p>The Trend Crave Team</p>
     `;
-    await sendEmail({
-      to: req.user?.email,
-      html: 'Greate!Our new year collection is now available',
-      subject: subscriptionMessage
-    });
+    await sendEmail(email, 'Greate!Our new year collection is now available', subscriptionMessage);
+
     res.status(200).json({
       success: true,
       message: "Subscribe successfully..!",
