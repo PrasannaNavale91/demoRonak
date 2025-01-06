@@ -83,7 +83,7 @@ const createOrder = async (req, res) => {
 
 const verifyRazorpayPayment = async (req, res) => {
   try {
-    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } = req.body;
+    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId, email } = req.body;
 
     const expectedSignature = crypto
       .createHmac("trendcrave", razorpayInstance)
@@ -119,12 +119,15 @@ const verifyRazorpayPayment = async (req, res) => {
       }
 
       await order.save();
-      
-      await sendEmail({
-        to: req.user.email,
-        html: `<h3>Thank you for your payment!</h3><p>Your order has been confirmed.</p>`,
-        subject: "Order Confirmation",
-      });
+
+      const paymentVerifiedMessage = `
+        <h2>Thank you for your payment!</h2>
+        <p>Your order has been confirmed.</p>
+        <br>
+        <p>Best regards,</p>
+        <p>The Trend Crave Team</p>
+      `;
+      await sendEmail(email, 'Payment done successfully., please check our new arrival we came with new offers...', paymentVerifiedMessage);
 
       res.status(200).json({
         success: true,
