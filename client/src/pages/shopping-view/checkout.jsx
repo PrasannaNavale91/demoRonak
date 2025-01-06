@@ -51,49 +51,45 @@ function ShoppingCheckout() {
       return;
     }
 
-    if (paymentMethod === "cod") {
-      navigate("/order-confirmation", { state: { message: "Your COD order has been placed successfully." } });
-    }else{
-      const orderData = {
-        userId: user?.id,
-        cartId: cartItems?._id,
-        cartItems: cartItems.items.map((singleCartItem) => ({
-          productId: singleCartItem?.productId,
-          title: singleCartItem?.title,
-          image: singleCartItem?.image,
-          price:
-            singleCartItem?.salePrice > 0
-              ? singleCartItem?.salePrice
-              : singleCartItem?.price,
-          quantity: singleCartItem?.quantity,
-        })),
-        addressInfo: {
-          addressId: currentSelectedAddress?._id,
-          address: currentSelectedAddress?.address,
-          city: currentSelectedAddress?.city,
-          pincode: currentSelectedAddress?.pincode,
-          phone: currentSelectedAddress?.phone,
-          notes: currentSelectedAddress?.notes,
-        },
-        orderStatus: "pending",
-        paymentMethod: "razorpay",
-        paymentStatus: "pending",
-        totalAmount: totalCartAmount,
-        orderDate: new Date(),
-        orderUpdateDate: new Date(),
-        paymentId: "",
-        payerId: "",
-      };
-  
-      dispatch(createNewOrder(orderData)).then((data) => {
-        console.log(data, "Parasanna");
-        if (data?.payload?.success) {
-          setIsPaymemntStart(true);
-        } else {
-          setIsPaymemntStart(false);
-        }
-      });
-    }
+    const orderData = {
+      userId: user?.id,
+      cartId: cartItems?._id,
+      cartItems: cartItems.items.map((singleCartItem) => ({
+        productId: singleCartItem?.productId,
+        title: singleCartItem?.title,
+        image: singleCartItem?.image,
+        price:
+          singleCartItem?.salePrice > 0
+            ? singleCartItem?.salePrice
+            : singleCartItem?.price,
+        quantity: singleCartItem?.quantity,
+      })),
+      addressInfo: {
+        addressId: currentSelectedAddress?._id,
+        address: currentSelectedAddress?.address,
+        city: currentSelectedAddress?.city,
+        pincode: currentSelectedAddress?.pincode,
+        phone: currentSelectedAddress?.phone,
+        notes: currentSelectedAddress?.notes,
+      },
+      orderStatus: "pending",
+      paymentMethod: "razorpay",
+      paymentStatus: "pending",
+      totalAmount: totalCartAmount,
+      orderDate: new Date(),
+      orderUpdateDate: new Date(),
+      paymentId: "",
+      payerId: "",
+    };
+
+    dispatch(createNewOrder(orderData)).then((data) => {
+      console.log(data, "Parasanna");
+      if (data?.payload?.success) {
+        setIsPaymemntStart(true);
+      } else {
+        setIsPaymemntStart(false);
+      }
+    });      
   }
 
   if (approvalURL) {
