@@ -91,7 +91,7 @@ function App() {
           <Route path="search" element={<SearchProducts />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
-          <Route path="paypal-return" element={<PaymentReturnPage />} />
+          <Route path="payment-return" element={<PaymentReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />

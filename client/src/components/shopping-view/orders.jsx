@@ -38,41 +38,7 @@ function ShoppingOrders() {
   }, [orderDetails]);
 
   console.log(orderDetails, "orderDetails");
-
-  const placeOrder = async (req, res) => {
-    const { userId, cartItems, paymentMethod, shippingAddress } = req.body;
   
-    try {
-      const newOrder = new Order({
-        userId,
-        cartItems,
-        paymentMethod,
-        shippingAddress,
-        status: paymentMethod === "cod" ? "Pending Payment" : "Payment In Progress",
-      });
-  
-      await newOrder.save();
-  
-      if (paymentMethod !== "cod") {
-        // Trigger payment gateway processing
-        const paymentLink = await initiatePayment(newOrder);
-        return res.status(200).json({
-          success: true,
-          message: "Redirect to payment gateway",
-          paymentLink,
-        });
-      }
-  
-      res.status(200).json({
-        success: true,
-        message: "Order placed successfully with Cash on Delivery",
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Failed to place order" });
-    }
-  };
-
   return (
     <Card>
       <CardHeader>
