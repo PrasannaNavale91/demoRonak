@@ -1,5 +1,4 @@
 const express = require("express");
-const { authMiddleware } = require("../../controllers/auth/auth-controller");
 const {
   createOrder,
   getAllOrdersByUser,
@@ -10,7 +9,7 @@ const {
 const router = express.Router();
 
 router.post("/create", createOrder);
-router.post("/verify-payment", authMiddleware, capturePayment);
+router.post("/verify-payment", capturePayment);
 router.get("/list/:userId", getAllOrdersByUser);
 router.get("/details/:id", getOrderDetails);
 
