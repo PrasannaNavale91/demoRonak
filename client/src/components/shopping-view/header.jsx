@@ -83,7 +83,7 @@ function HeaderRightContent() {
     dispatch(logoutUser());
   }
 
-  console.log(cartItems, "sangam");
+  console.log(cartItems, "trendCrave");
 
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">

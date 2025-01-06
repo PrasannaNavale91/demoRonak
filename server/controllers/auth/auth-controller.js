@@ -32,8 +32,11 @@ const registerUser = async (req, res) => {
       <p>Best regards,</p>
       <p>The Trend Crave Team</p>
     `;
-    await sendEmail({ to: req.user?.email, html: 'Congratulation! Shop now on lowest pricing', subject: welcomeMessage });
-    console.log("req.user:", req.user);
+    await sendEmail({
+      to: req.user?.email,
+      html: 'Congratulation! Shop now on lowest pricing',
+      subject: welcomeMessage
+    });
     res.status(200).json({
       success: true,
       message: "Registration successful",
@@ -118,8 +121,11 @@ const subscribeUser = async (req, res) => {
       <p>Best regards,</p>
       <p>The Trend Crave Team</p>
     `;
-    await sendEmail({ to: req.user?.email, html: 'Greate!Our new year collection is now available', subject: subscriptionMessage});
-    console.log("req.user:", req.user);
+    await sendEmail({
+      to: req.user?.email,
+      html: 'Greate!Our new year collection is now available',
+      subject: subscriptionMessage
+    });
     res.status(200).json({
       success: true,
       message: "Subscribe successfully..!",

@@ -16,7 +16,6 @@ function ShoppingCheckout() {
   const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const dispatch = useDispatch();
   const { toast } = useToast();
-  const navigate = Navigate();
 
   console.log(currentSelectedAddress, "cartItems");
 
