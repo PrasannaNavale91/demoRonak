@@ -1,8 +1,9 @@
 const Order = require("../../models/Order");
-const Cart = require("../../models/Cart");
+// const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
 const sendEmail = require("../../helpers/email");
 const Razorpay = require("razorpay");
+const crypto = require("crypto");
 
 require("dotenv").config();
 
@@ -82,7 +83,7 @@ const createOrder = async (req, res) => {
 
 const verifyRazorpayPayment = async (req, res) => {
   try {
-    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId, email } = req.body;
+    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } = req.body;
 
     const expectedSignature = crypto
       .createHmac("trendcrave", razorpayInstance)
@@ -119,9 +120,16 @@ const verifyRazorpayPayment = async (req, res) => {
 
       await order.save();
 
+      if (!req.user || !req.user.email) {
+        return res.status(400).json({
+          success: false,
+          message: "User email not found.",
+        });
+      }
+
       // Send confirmation email
       await sendEmail({
-        to: req.email,
+        to: req.user.email,
         html: `<h3>Thank you for your payment!</h3><p>Your order has been confirmed.</p>`,
         subject: "Order Confirmation",
       });
