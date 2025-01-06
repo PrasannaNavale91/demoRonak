@@ -8,7 +8,7 @@ function ShoppingOrderDetailsView({ orderDetails }) {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <DialogContent className="sm:max-w-[600px] overflow-y-auto">
+    <DialogContent className="sm:max-w-[600px] overflow-y-auto max-h-[90vh]">
       <div className="grid gap-6 overflow-y-auto">
         <div className="grid gap-2">
           <div className="flex mt-6 items-center justify-between">
