@@ -75,8 +75,8 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         userName: checkUser.userName,
       },
-      "CLIENT_SECRET_KEY",
-      { expiresIn: "60m" }
+      process.env.JWTTOKEN,
+      { expiresIn: "30m" }
     );
 
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
