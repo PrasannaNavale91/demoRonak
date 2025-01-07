@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router.post("/register", authMiddleware, registerUser);
-router.post("/login", loginUser);
+router.post("/login", authMiddleware, loginUser);
 router.post("/logout", logoutUser);
 router.post("/subscribed", authMiddleware, subscribeUser)
 router.get("/check-auth", authMiddleware, (req, res) => {
