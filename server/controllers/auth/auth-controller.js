@@ -75,8 +75,8 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         userName: checkUser.userName,
       },
-      process.env.JWTTOKEN,
-      { expiresIn: "30m" }
+      "CLIENT_SECRET_KEY",
+      { expiresIn: "60m" }
     );
 
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
@@ -99,7 +99,6 @@ const loginUser = async (req, res) => {
 };
 
 //logout
-
 const logoutUser = (req, res) => {
   res.clearCookie("token").json({
     success: true,
@@ -107,6 +106,7 @@ const logoutUser = (req, res) => {
   });
 };
 
+//subscribers
 const subscribeUser = async (req, res) => {
   const { email } = req.body;
   try {
