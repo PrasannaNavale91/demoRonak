@@ -2,14 +2,14 @@ const Order = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
 const Razorpay = require("razorpay");
-const crypto = require("crypto");
+// const crypto = require("crypto");
 
-require("dotenv").config();
+// require("dotenv").config();
 
-const razorpayInstance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+// const razorpayInstance = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET,
+// });
 
 const createOrder = async (req, res) => {
   try {
