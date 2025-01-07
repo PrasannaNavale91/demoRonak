@@ -5,7 +5,6 @@ import UserCartItemsContent from "@/components/shopping-view/cart-items-content"
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { createNewOrder } from "@/store/shop/order-slice";
-import { Navigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 function ShoppingCheckout() {
@@ -72,7 +71,7 @@ function ShoppingCheckout() {
         notes: currentSelectedAddress?.notes,
       },
       orderStatus: "pending",
-      paymentMethod: "razorpay",
+      paymentMethod: "paypal",
       paymentStatus: "pending",
       totalAmount: totalCartAmount,
       orderDate: new Date(),

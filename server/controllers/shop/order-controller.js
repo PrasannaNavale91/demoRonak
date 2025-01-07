@@ -17,125 +17,140 @@ const createOrder = async (req, res) => {
       userId,
       cartItems,
       addressInfo,
+      orderStatus,
       paymentMethod,
+      paymentStatus,
       totalAmount,
+      orderDate,
+      orderUpdateDate,
+      paymentId,
+      payerId,
+      cartId,
     } = req.body;
 
-    if (paymentMethod === "razorpay") {
-      const options = {
-        amount: totalAmount * 100,
-        currency: "INR",
-        receipt: `receipt_${Date.now()}`,
-      };
+    const create_payment_json = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+      },
+      redirect_urls: {
+        return_url: "https://ecommerce-d3qt.onrender.com/api/shop/paypal-return",
+        cancel_url: "https://ecommerce-d3qt.onrender.com/api/shop/paypal-cancel",
+      },
+      transactions: [
+        {
+          item_list: {
+            items: cartItems.map((item) => ({
+              name: item.title,
+              sku: item.productId,
+              price: item.price.toFixed(2),
+              currency: "USD",
+              quantity: item.quantity,
+            })),
+          },
+          amount: {
+            currency: "USD",
+            total: totalAmount.toFixed(2),
+          },
+          description: "description",
+        },
+      ],
+    };
 
-      const razorpayOrder = await razorpayInstance.orders.create(options);
+    paypal.payment.create(create_payment_json, async (error, paymentInfo) => {
+      if (error) {
+        console.log(error);
 
-      const newOrder = new Order({
-        userId,
-        cartItems,
-        addressInfo,
-        orderStatus: "pending",
-        paymentMethod,
-        paymentStatus: "pending",
-        totalAmount,
-        razorpayOrderId: razorpayOrder.id,
-      });
+        return res.status(500).json({
+          success: false,
+          message: "Error while creating paypal payment",
+        });
+      } else {
+        const newlyCreatedOrder = new Order({
+          userId,
+          cartId,
+          cartItems,
+          addressInfo,
+          orderStatus,
+          paymentMethod,
+          paymentStatus,
+          totalAmount,
+          orderDate,
+          orderUpdateDate,
+          paymentId,
+          payerId,
+        });
 
-      await newOrder.save();
+        await newlyCreatedOrder.save();
 
-      return res.status(201).json({
-        success: true,
-        orderId: newOrder._id,
-        razorpayOrderId: razorpayOrder.id,
-        orderId: newOrder._id,
-      });
-    } else if (paymentMethod === "cod") {
-      const newOrder = new Order({
-        userId,
-        cartItems,
-        addressInfo,
-        orderStatus: "confirmed",
-        paymentMethod,
-        paymentStatus: "pending",
-        totalAmount,
-      });
+        const approvalURL = paymentInfo.links.find(
+          (link) => link.rel === "approval_url"
+        ).href;
 
-      await newOrder.save();
-
-      return res.status(201).json({
-        success: true,
-        message: "Order placed successfully with COD.",
-        orderId: newOrder._id,
-      });
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid payment method.",
-      });
-    }
-  } catch (error) {
-    console.error(error);
+        res.status(201).json({
+          success: true,
+          approvalURL,
+          orderId: newlyCreatedOrder._id,
+        });
+      }
+    });
+  } catch (e) {
+    console.log(e);
     res.status(500).json({
       success: false,
-      message: "An error occurred while creating the order!",
+      message: "Some error occured!",
     });
   }
 };
 
 const capturePayment = async (req, res) => {
   try {
-    const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } = req.body;
+    const { paymentId, payerId, orderId } = req.body;
 
-    const expectedSignature = crypto
-      .createHmac("trendcrave", razorpayInstance)
-      .update(`${razorpayOrderId}|${razorpayPaymentId}`)
-      .digest("hex");
-
-    if (expectedSignature !== razorpaySignature) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid payment signature",
-      });
-    }
-
-    const order = await Order.findById(orderId);
+    let order = await Order.findById(orderId);
 
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: "Order not found",
+        message: "Order can not be found",
       });
     }
 
     order.paymentStatus = "paid";
     order.orderStatus = "confirmed";
-    order.razorpayPaymentId = razorpayPaymentId;
+    order.paymentId = paymentId;
+    order.payerId = payerId;
 
-    for (const item of order.cartItems) {
-      const product = await Product.findById(item.productId);
+    for (let item of order.cartItems) {
+      let product = await Product.findById(item.productId);
 
-      if (!product || product.totalStock < item.quantity) {
-        return res.status(400).json({
+      if (!product) {
+        return res.status(404).json({
           success: false,
-          message: `Not enough stock for ${product?.title || "a product"}`,
+          message: `Not enough stock for this product ${product.title}`,
         });
       }
 
       product.totalStock -= item.quantity;
+
       await product.save();
     }
+
+    const getCartId = order.cartId;
+    await Cart.findByIdAndDelete(getCartId);
 
     await order.save();
 
     res.status(200).json({
       success: true,
-      message: "Payment captured and order confirmed",
+      message: "Order confirmed",
+      data: order,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    console.log(e);
     res.status(500).json({
       success: false,
-      message: "An error occurred while capturing the payment!",
+      message: "Some error occured!",
     });
   }
 };
