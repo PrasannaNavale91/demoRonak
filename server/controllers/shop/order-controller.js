@@ -1,7 +1,7 @@
 const Order = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
-const Razorpay = require("razorpay");
+const paypal = require("../../helpers/paypal");
 // const crypto = require("crypto");
 
 // require("dotenv").config();
