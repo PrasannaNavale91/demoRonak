@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 const sendEmail = require("../../helpers/email");
 
+require("dotenv").config();
+
 //register
 const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
@@ -75,7 +77,7 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         userName: checkUser.userName,
       },
-      "CLIENT_SECRET_KEY",
+      process.env.JWT_TOKEN,
       { expiresIn: "60m" }
     );
 
@@ -142,7 +144,7 @@ const authMiddleware = async (req, res, next) => {
     });
 
   try {
-    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    const decoded = jwt.verify(token, process.env.JWT_TOKEN);
     req.user = decoded;
     next();
   } catch (error) {
