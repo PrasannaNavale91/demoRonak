@@ -8,10 +8,10 @@ const {
 } = require("../../controllers/auth/auth-controller");
 const router = express.Router();
 
-router.post("/register", authMiddleware, registerUser);
-router.post("/login", authMiddleware, loginUser);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 router.post("/logout", logoutUser);
-router.post("/subscribed", authMiddleware, subscribeUser)
+router.post("/subscribed", subscribeUser)
 router.get("/check-auth", authMiddleware, (req, res) => {
   const user = req.user;
   res.status(200).json({
