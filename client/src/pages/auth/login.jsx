@@ -17,24 +17,24 @@ function AuthLogin() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      axios
+        .post("https://ecommerce-app-xg3v.onrender.com/api/auth/validate-token", { token })
+        .then((response) => {
+          setUser(response.data.user);
+        })
+        .catch(() => {
+          localStorage.removeItem("authToken");
+          navigate("/login");
+        });
+    }
+  }, []);
+
   function onSubmit(event) {
     event.preventDefault();
 
-    useEffect(() => {
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        axios
-          .post("https://ecommerce-app-xg3v.onrender.com/api/auth/validate-token", { token })
-          .then((response) => {
-            setUser(response.data.user);
-          })
-          .catch(() => {
-            localStorage.removeItem("authToken");
-            navigate("/login");
-          });
-      }
-    }, []);
-    
     dispatch(loginUser(formData)).then((data) => {
       if (data?.payload?.success) {
         const role = data.payload?.user?.role;
