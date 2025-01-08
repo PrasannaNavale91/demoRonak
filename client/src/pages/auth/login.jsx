@@ -2,7 +2,7 @@ import CommonForm from "@/components/common/form";
 import { useToast } from "@/hooks/use-toast";
 import { loginFormControls } from "@/config";
 import { loginUser } from "@/store/auth-slice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,21 +16,6 @@ function AuthLogin() {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      axios
-        .post("https://ecommerce-app-xg3v.onrender.com/api/auth/validate-token", { token })
-        .then((response) => {
-          setUser(response.data.user);
-        })
-        .catch(() => {
-          localStorage.removeItem("authToken");
-          navigate("/login");
-        });
-    }
-  }, []);
 
   function onSubmit(event) {
     event.preventDefault();

@@ -30,7 +30,18 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth());
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      axios
+        .post("https://ecommerce-app-xg3v.onrender.com/api/auth/validate-token", { token })
+        .then((response) => {
+          setUser(response.data.user);
+        })
+        .catch(() => {
+          localStorage.removeItem("authToken");
+          navigate("/login");
+        });
+    }
   }, [dispatch]);
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
