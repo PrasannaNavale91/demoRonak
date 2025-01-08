@@ -78,12 +78,13 @@ const loginUser = async (req, res) => {
         userName: checkUser.userName,
       },
       process.env.JWT_TOKEN,
-      { expiresIn: "60m" }
+      { expiresIn: "30m" }
     );
 
     res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'none' }).json({
       success: true,
       message: "Logged in successfully",
+      token,
       user: {
         email: checkUser.email,
         role: checkUser.role,
