@@ -25,7 +25,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: "https://ecommerce-d3qt.onrender.com",
+  origin: ["https://ecommerce-d3qt.onrender.com", "exp://127.0.0.1:19000", "http://192.168.147.115:8081" ,"exp://192.168.147.115:8081"],
   methods: ["GET", "POST", "DELETE", "PUT"],
   allowedHeaders: [ "Content-Type", "Authorization", "Cache-Control", "Expires", "Pragma",],
   credentials: true,
