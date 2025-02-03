@@ -16,7 +16,6 @@ const Home = () => {
 
   return (
     <Layout>
-      <Categories />
       <Banner />
       <Products />
     </Layout>

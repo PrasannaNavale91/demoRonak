@@ -9,24 +9,27 @@ import React from "react";
 import { categoriesData } from "../../data/CategoriesData";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
+import Layout from "../Layout/Layout";
 const Categories = () => {
   const navigation = useNavigation();
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-      <View style={styles.container}>
-        {categoriesData?.map((item) => (
-          <View key={item._id}>
-            <TouchableOpacity
-              style={styles.catContainer}
-              onPress={() => navigation.navigate(item.path)}
-            >
-              <AntDesign name={item.icon} style={styles.catIcon} />
-              <Text style={styles.catTitle}>{item.name}</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+    <Layout>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <View style={styles.container}>
+          {categoriesData?.map((item) => (
+            <View key={item._id}>
+              <TouchableOpacity
+                style={styles.catContainer}
+                onPress={() => navigation.navigate(item.path)}
+              >
+                <AntDesign name={item.icon} style={styles.catIcon} />
+                <Text style={styles.catTitle}>{item.name}</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </Layout>
   );
 };
 

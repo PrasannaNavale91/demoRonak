@@ -3,14 +3,10 @@ import React from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { useReduxStateHook } from "../../hooks/customeHook";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/features/auth/userActions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Footer = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const loading = useReduxStateHook(navigation, "login");
   return (
@@ -29,19 +25,19 @@ const Footer = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.menuContainer}
-        onPress={() => navigation.navigate("notifications")}
+        onPress={() => navigation.navigate("categories")}
       >
         <AntDesign
-          style={[styles.icon, route.name === "notifications" && styles.active]}
+          style={[styles.icon, route.name === "categories" && styles.active]}
           name="bells"
         />
         <Text
           style={[
             styles.iconText,
-            route.name === "notifications" && styles.active,
+            route.name === "categories" && styles.active,
           ]}
         >
-          notification
+          Categories
         </Text>
       </TouchableOpacity>
       <TouchableOpacity

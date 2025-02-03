@@ -11,7 +11,6 @@ import Payments from "./screens/Payments";
 import Login from "./screens/auth/Login";
 import Register from "./screens/auth/Register";
 import Account from "./screens/Account/Account";
-import Notifications from "./screens/Account/Notifications";
 import Profile from "./screens/Account/Profile";
 import MyOrders from "./screens/Account/MyOrders";
 import Dashboard from "./screens/Admin/Dashboard";
@@ -19,6 +18,7 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Header from "./components/Layout/Header";
+import Categories from "./components/category/Categories";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -63,7 +63,7 @@ export default function Main() {
           <Stack.Screen name="checkout" component={Checkout} />
           <Stack.Screen name="myorders" component={MyOrders} />
           <Stack.Screen name="profile" component={Profile} />
-          <Stack.Screen name="notifications" component={Notifications} />
+          <Stack.Screen name="categories" component={Categories} />
           <Stack.Screen name="adminPanel" component={Dashboard} />
           <Stack.Screen name="payment" component={Payments} />
           <Stack.Screen name="account" component={Account} />

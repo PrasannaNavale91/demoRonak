@@ -82,8 +82,8 @@ export const logout = () => async (dispatch) => {
     dispatch({
       type: "logoutRequest",
     });
-    // hitting node login api request
     const { data } = await axios.get(`${server}/api/auth/logout`);
+    await AsyncStorage.removeItem("@auth");
     dispatch({
       type: "logoutSucess",
       payload: data?.message,
@@ -91,7 +91,7 @@ export const logout = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "logoutFail",
-      payload: error.response.data.message,
+      payload: error.response.data.message || "Logout failed",
     });
   }
 };

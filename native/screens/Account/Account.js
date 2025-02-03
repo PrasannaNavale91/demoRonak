@@ -1,11 +1,19 @@
 import { View, Text } from 'react-native';
 import React from 'react';
+import Layout from '../../components/Layout/Layout';
+import MyOrders from './MyOrders';
+import Notifications from './Notifications';
 
 const CheckoutScreen = (props) => {
   return (
-    <View>
-      <Text>CheckoutScreen</Text>
-    </View>
+    <Layout>
+      <View style={{
+        display: "flex"
+      }}>
+        <MyOrders></MyOrders>
+        <Notifications></Notifications>
+      </View>
+    </Layout>
   );
 };
 

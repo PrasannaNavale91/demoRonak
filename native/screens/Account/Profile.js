@@ -11,6 +11,9 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { userData } from "../../data/userData";
 import InputBox from "../../components/Form/InputBox";
+import { logout } from "../../redux/features/auth/userActions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
 
 const Profile = ({ navigation }) => {
   //state
@@ -21,6 +24,8 @@ const Profile = ({ navigation }) => {
   const [address, setAddress] = useState(userData.address);
   const [city, setCity] = useState(userData.city);
   const [contact, setContact] = useState(userData.contact);
+
+  const dispatch = useDispatch();
 
   //   update profile
   const handleUpdate = () => {
@@ -80,6 +85,19 @@ const Profile = ({ navigation }) => {
           <TouchableOpacity style={styles.btnUpdate} onPress={handleUpdate}>
             <Text style={styles.btnUpdateText}>UPDATE PROFILE</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnLogout}
+            onPress={async () => {
+              try {
+                dispatch(logout());
+                await AsyncStorage.removeItem("@auth");
+              } catch (error) {
+                console.error("Logout Error:", error);
+              }
+            }}
+          >
+            <Text style={styles.btnLogoutText}>Logout</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </Layout>
@@ -107,6 +125,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   btnUpdateText: {
+    color: "#ffffff",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  btnLogout: {
+    backgroundColor: "#254457",
+    height: 40,
+    borderRadius: 20,
+    marginHorizontal: 30,
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  btnLogoutText: {
     color: "#ffffff",
     fontSize: 18,
     textAlign: "center",

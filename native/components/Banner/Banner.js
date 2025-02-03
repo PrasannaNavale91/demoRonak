@@ -8,20 +8,35 @@ import {
   Pressable,
 } from "react-native";
 import Carousel, { PaginationLight } from "react-native-x-carousel";
-import { BannerData } from "../../data/BannerData";
 
 const { width } = Dimensions.get("window");
+
 const Banner = () => {
+  const banners = [
+    {
+      _id: 1,
+      image: require("../../assets/banner_1.png"),
+      cornerLabelColor: "#FFD300",
+    },
+    {
+      _id: 2,
+      image: require("../../assets/banner_2.png"),
+      cornerLabelColor: "#0080ff",
+    },
+    {
+      _id: 3,
+      image: require("../../assets/banner_3.png"),
+      cornerLabelColor: "#2ECC40",
+    },
+  ];
+
   const renderItem = (data) => (
-    <View key={data.coverImageUri} style={styles.cardContainer}>
+    <View key={data._id} style={styles.cardContainer}>
       <Pressable onPress={() => alert(data._id)}>
         <View style={styles.cardWrapper}>
-          <Image style={styles.card} source={{ uri: data.coverImageUri }} />
+          <Image style={styles.card} source={data.image} resizeMode="cover" />
           <View
-            style={[
-              styles.cornerLabel,
-              { backgroundColor: data.cornerLabelColor },
-            ]}
+            style={[styles.cornerLabel, { backgroundColor: data.cornerLabelColor }]}
           >
             <Text style={styles.cornerLabelText}>{data.cornerLabelText}</Text>
           </View>
@@ -35,13 +50,14 @@ const Banner = () => {
       <Carousel
         pagination={PaginationLight}
         renderItem={renderItem}
-        data={BannerData}
+        data={banners}
         loop
         autoplay
       />
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
@@ -54,7 +70,6 @@ const styles = StyleSheet.create({
     width,
   },
   cardWrapper: {
-    // borderRadius: 8,
     overflow: "hidden",
   },
   card: {
@@ -77,4 +92,5 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
   },
 });
+
 export default Banner;
