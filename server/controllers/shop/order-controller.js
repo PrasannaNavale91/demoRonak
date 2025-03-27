@@ -1,15 +1,14 @@
 const Order = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
-const paypal = require("../../helpers/paypal");
-// const crypto = require("crypto");
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
+require("dotenv").config();
 
-// require("dotenv").config();
-
-// const razorpayInstance = new Razorpay({
-//   key_id: process.env.RAZORPAY_KEY_ID,
-//   key_secret: process.env.RAZORPAY_KEY_SECRET,
-// });
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 const createOrder = async (req, res) => {
   try {
@@ -28,84 +27,49 @@ const createOrder = async (req, res) => {
       cartId,
     } = req.body;
 
-    const create_payment_json = {
-      intent: "sale",
-      payer: {
-        payment_method: "paypal",
-      },
-      redirect_urls: {
-        return_url: "https://ecommerce-d3qt.onrender.com/api/shop/paypal-return",
-        cancel_url: "https://ecommerce-d3qt.onrender.com/api/shop/paypal-cancel",
-      },
-      transactions: [
-        {
-          item_list: {
-            items: cartItems.map((item) => ({
-              name: item.title,
-              sku: item.productId,
-              price: item.price.toFixed(2),
-              currency: "USD",
-              quantity: item.quantity,
-            })),
-          },
-          amount: {
-            currency: "USD",
-            total: totalAmount.toFixed(2),
-          },
-          description: "description",
-        },
-      ],
+    const options = {
+      amount: totalAmount * 100, // Razorpay accepts amount in paise
+      currency: "INR",
+      receipt: `order_rcptid_${Date.now()}`,
     };
 
-    paypal.payment.create(create_payment_json, async (error, paymentInfo) => {
-      if (error) {
-        console.log(error);
+    const order = await razorpay.orders.create(options);
 
-        return res.status(500).json({
-          success: false,
-          message: "Error while creating paypal payment",
-        });
-      } else {
-        const newlyCreatedOrder = new Order({
-          userId,
-          cartId,
-          cartItems,
-          addressInfo,
-          orderStatus,
-          paymentMethod,
-          paymentStatus,
-          totalAmount,
-          orderDate,
-          orderUpdateDate,
-          paymentId,
-          payerId,
-        });
+    const newlyCreatedOrder = new Order({
+      userId,
+      cartId,
+      cartItems,
+      addressInfo,
+      orderStatus,
+      paymentMethod,
+      paymentStatus: "pending",
+      totalAmount,
+      orderDate,
+      orderUpdateDate,
+      paymentId: order.id,
+    });
 
-        await newlyCreatedOrder.save();
+    await newlyCreatedOrder.save();
 
-        const approvalURL = paymentInfo.links.find(
-          (link) => link.rel === "approval_url"
-        ).href;
-
-        res.status(201).json({
-          success: true,
-          approvalURL,
-          orderId: newlyCreatedOrder._id,
-        });
-      }
+    res.status(201).json({
+      success: true,
+      orderId: newlyCreatedOrder._id,
+      razorpayOrderId: order.id,
+      amount: order.amount,
+      currency: order.currency,
     });
   } catch (e) {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured!",
+      message: "Some error occured while creating order!",
     });
   }
 };
 
 const capturePayment = async (req, res) => {
   try {
-    const { paymentId, payerId, orderId } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId } = req.body;
 
     let order = await Order.findById(orderId);
 
@@ -116,15 +80,25 @@ const capturePayment = async (req, res) => {
       });
     }
 
+    const shasum = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+    shasum.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+    const digest = shasum.digest("hex");
+
+    if (digest !== razorpay_signature) {
+      return res.status(400).json({
+        success: false,
+        message: "Payment verification failed!",
+      });
+    }
+
     order.paymentStatus = "paid";
     order.orderStatus = "confirmed";
-    order.paymentId = paymentId;
-    order.payerId = payerId;
+    order.paymentId = razorpay_payment_id;
 
     for (let item of order.cartItems) {
       let product = await Product.findById(item.productId);
 
-      if (!product) {
+      if (!product || product.totalStock < item.quantity) {
         return res.status(404).json({
           success: false,
           message: `Not enough stock for this product ${product.title}`,
@@ -132,7 +106,6 @@ const capturePayment = async (req, res) => {
       }
 
       product.totalStock -= item.quantity;
-
       await product.save();
     }
 
@@ -143,7 +116,7 @@ const capturePayment = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Order confirmed",
+      message: "Order confirmed and Payment Verified!",
       data: order,
     });
   } catch (e) {

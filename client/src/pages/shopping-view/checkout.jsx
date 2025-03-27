@@ -3,7 +3,7 @@ import img from "../../assets/account.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createNewOrder } from "@/store/shop/order-slice";
 import { useToast } from "@/hooks/use-toast";
 
@@ -31,13 +31,22 @@ function ShoppingCheckout() {
         )
       : 0;
 
-  function handleInitiateRazorpayPayment() {
+  useEffect(() => {
+    const loadRazorpayScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+    loadRazorpayScript();
+  }, []);
+
+  const handleInitiateRazorpayPayment = () => {
     if (cartItems.length === 0) {
       toast({
         title: "Your cart is empty. Please add items to proceed",
         variant: "destructive",
       });
-
       return;
     }
     if (currentSelectedAddress === null) {
@@ -45,7 +54,6 @@ function ShoppingCheckout() {
         title: "Please select one address to proceed.",
         variant: "destructive",
       });
-
       return;
     }
 
@@ -71,19 +79,16 @@ function ShoppingCheckout() {
         notes: currentSelectedAddress?.notes,
       },
       orderStatus: "pending",
-      paymentMethod: "paypal",
+      paymentMethod: "razorpay",
       paymentStatus: "pending",
       totalAmount: totalCartAmount,
       orderDate: new Date(),
       orderUpdateDate: new Date(),
-      paymentId: "",
-      payerId: "",
     };
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "Parasanna");
       if (data?.payload?.success) {
-        setIsPaymemntStart(true);
+        initiateRazorpayPayment(data?.payload?.orderId);
       } else {
         setIsPaymemntStart(false);
       }
@@ -92,7 +97,63 @@ function ShoppingCheckout() {
 
   if (approvalURL) {
     window.location.href = approvalURL;
-  }
+  }const initiateRazorpayPayment = (orderId) => {
+    setIsPaymemntStart(true);
+
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_KEY,
+      amount: totalCartAmount * 100,
+      currency: "INR",
+      name: "Ecommerce Store",
+      description: "Order Payment",
+      order_id: orderId,
+      handler: function (response) {
+        const paymentData = {
+          orderId,
+          paymentId: response.razorpay_payment_id,
+          signature: response.razorpay_signature,
+        };
+
+        dispatch(verifyPayment(paymentData)).then((verifyResponse) => {
+          if (verifyResponse?.payload?.success) {
+            toast({
+              title: "Payment successful! Your order is confirmed.",
+              variant: "success",
+            });
+            setIsPaymemntStart(false);
+          } else {
+            toast({
+              title: "Payment verification failed. Please try again.",
+              variant: "destructive",
+            });
+            setIsPaymemntStart(false);
+          }
+        });
+      },
+      prefill: {
+        name: user?.name,
+        email: user?.email,
+        contact: currentSelectedAddress?.phone || "",
+      },
+      notes: {
+        address: currentSelectedAddress?.address,
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+
+    razorpay.on("payment.failed", function (response) {
+      toast({
+        title: "Payment failed. Please try again.",
+        variant: "destructive",
+      });
+      setIsPaymemntStart(false);
+    });
+  };
 
   return (
     <div className="flex flex-col">
