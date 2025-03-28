@@ -109,30 +109,64 @@ const logoutUser = (req, res) => {
   });
 };
 
-//subscribers
-const subscribeUser = async (req, res) => {
+//forgot password
+const sendOtp = async (req, res) => {
   const { email } = req.body;
-  try {
-    const subscriptionMessage = `
-      <h2>Thank You for Subscribing!</h2>
-      <p>We'll keep you updated with the latest offers and news.</p>
-      <br>
-      <p>Best regards,</p>
-      <p>The Trend Crave Team</p>
-    `;
-    await sendEmail(email, 'Greate!Our new year collection is now available', subscriptionMessage);
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  otpStore[email] = { otp, expires: Date.now() + 300000 };
+
+  const msg = {
+    to: email,
+    from: "prasanna99navale@gmail.com",
+    subject: "Password Reset Request",
+    html: `
+      <p>Hello ${user.name},</p>
+      <p>You requested a password reset. Click <a href="${resetLink}">here</a> to reset your password.</p>
+      <p>If you didn't request this, please ignore this email.</p>
+    `,
+  };
+
+  try {
+    await sendEmail.send(msg);
     res.status(200).json({
       success: true,
-      message: "Subscribe successfully..!",
+      message: "Password reset email sent successfully"
     });
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "Error sending email"
     });
   }
+}
+
+//verify OTP
+const verifyOtp = async (req, res) => {
+  const { otp, email, newPassword } = req.body;
+
+  const storedOtp = otpStore[email];
+  if (!storedOtp || storedOtp.otp !== otp || storedOtp.expires < Date.now()) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid or expired OTP"
+    });
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await User.updateOne({ email }, { password: hashedPassword });
+
+  delete otpStore[email];
+  res.status(200).json({
+    success: true,
+    message: "Password reset successful"
+  });
 }
 
 //auth middleware
@@ -157,4 +191,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware, subscribeUser };
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware, sendOtp, verifyOtp };

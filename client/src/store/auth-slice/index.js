@@ -58,25 +58,6 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-export const subscribeUser  = createAsyncThunk(
-  "/auth/subscribe",
-
-  async (formData) => {
-    const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/subscribe",
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json"
-        },
-      }
-    );
-
-    return response.data.message;
-  }
-);
-
 export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
 
