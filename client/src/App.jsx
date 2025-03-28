@@ -79,8 +79,6 @@ function App() {
         >
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="verify-otp" element={<VerifyOtp />} />
         </Route>
         <Route
           path="/shop"
@@ -98,6 +96,8 @@ function App() {
           <Route path="payment-return" element={<PaymentReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
         </Route>
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="verify-otp" element={<VerifyOtp />} />
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
