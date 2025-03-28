@@ -23,25 +23,16 @@ const createOrder = async (req, res) => {
       totalAmount,
       orderDate,
       orderUpdateDate,
-      paymentId,
-      payerId,
       cartId,
     } = req.body;
 
     const options = {
       amount: totalAmount * 100,
       currency: "INR",
-      receipt: `order_${Date.now()}`,
+      receipt: `order_rcptid_${Date.now()}`,
     };
 
-    const order = await razorpay.orders.create(options);
-
-    if (!order) {
-      return res.status(500).json({
-        success: false,
-        message: "Error while creating Razorpay order",
-      });
-    }
+    const order = await razorpayInstance.orders.create(options);
 
     const newlyCreatedOrder = new Order({
       userId,
@@ -80,14 +71,44 @@ const verifyPayment = async (req, res) => {
     const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } =
     req.body;
 
-    const hmac = crypto
-    .createHmac("sha256", process.env.RAZORPAY_SECRET)
-    .update(`${razorpayOrderId}|${razorpayPaymentId}`)
-    .digest("hex");
+    let order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found!",
+      });
+    }
 
-    if (generated_signature !== razorpay_signature) {
+    const shasum = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+    shasum.update(`${razorpayOrderId}|${razorpayPaymentId}`);
+    const digest = shasum.digest("hex");
+
+    if (digest !== razorpaySignature) {
       return res.status(400).json({ success: false, message: "Invalid payment signature" });
     }
+
+    order.paymentStatus = "paid";
+    order.orderStatus = "confirmed";
+    order.paymentId = razorpayPaymentId;
+
+    for (let item of order.cartItems) {
+      let product = await Product.findById(item.productId);
+
+      if (!product || product.totalStock < item.quantity) {
+        return res.status(404).json({
+          success: false,
+          message: `Not enough stock for product ${item.title}`,
+        });
+      }
+
+      product.totalStock -= item.quantity;
+      await product.save();
+    }
+
+    const getCartId = order.cartId;
+    await Cart.findByIdAndDelete(getCartId);
+
+    await order.save();
     
     res.status(200).json({
       success: true,

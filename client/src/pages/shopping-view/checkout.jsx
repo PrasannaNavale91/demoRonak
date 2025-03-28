@@ -3,7 +3,7 @@ import img from "../../assets/account.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createNewOrder, capturePayment } from "@/store/shop/order-slice";
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,6 +30,16 @@ function ShoppingCheckout() {
         )
       : 0;
 
+  useEffect(() => {
+    const loadRazorpayScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+    loadRazorpayScript();
+  })
+
   async function handleInitiateRazorpayPayment() {
     if (cartItems.length === 0) {
       toast({
@@ -38,6 +48,7 @@ function ShoppingCheckout() {
       });
       return;
     }
+
     if (currentSelectedAddress === null) {
       toast({
         title: "Please select one address to proceed.",
@@ -75,13 +86,20 @@ function ShoppingCheckout() {
       orderUpdateDate: new Date(),
     };
   
-    const { payload } = await dispatch(createNewOrder(orderData));
+    dispatch(createNewOrder(orderData)).then((data) => {
+      if (data?.payload?.success) {
+        initiateRazorpayPayment(data?.payload?.orderId);
+      } else {
+        setIsPaymemntStart(false);
+      }
+    });
   
-    if (payload?.success) {
-      const { razorpayOrderId, amount, currency } = payload;
+    const initiateRazorpayPayment = (orderId) => {
+      setIsPaymemntStart(true);
+
       const options = {
         key: process.env.RAZORPAY_KEY_ID,
-        amount: amount,
+        amount: totalCartAmount * 100,
         currency: "INR",
         name: "TrendCarve",
         description: "Transaction",
@@ -94,23 +112,46 @@ function ShoppingCheckout() {
             orderId: payload.orderId,
           };
   
-          await dispatch(capturePayment(paymentVerificationData));
+          dispatch(verifyPayment(paymentData)).then((verifyResponse) => {
+            if (verifyResponse?.payload?.success) {
+              toast({
+                title: "Payment successful! Your order is confirmed.",
+                variant: "success",
+              });
+              setIsPaymemntStart(false);
+            } else {
+              toast({
+                title: "Payment verification failed. Please try again.",
+                variant: "destructive",
+              });
+              setIsPaymemntStart(false);
+            }
+          });
         },
         prefill: {
           name: user?.name,
           email: user?.email,
           contact: currentSelectedAddress?.phone,
         },
+        notes: {
+          address: currentSelectedAddress?.address,
+        },
+        theme: {
+          color: "#3399cc",
+        },
       };
   
       const razorpay = new window.Razorpay(options);
       razorpay.open();
-    } else {
-      toast({
-        title: "Payment initiation failed!",
-        variant: "destructive",
+
+      razorpay.on("payment.failed", function (response) {
+        toast({
+          title: "Payment failed. Please try again.",
+          variant: "destructive",
+        });
+        setIsPaymemntStart(false);
       });
-    }
+    } 
   }
 
   return (
