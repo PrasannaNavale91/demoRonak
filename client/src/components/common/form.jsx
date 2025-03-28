@@ -9,7 +9,7 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-// import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 function CommonForm({
@@ -18,16 +18,15 @@ function CommonForm({
   setFormData,
   onSubmit,
   buttonText,
-  isBtnDisabled,
 }) {
   function renderInputsByComponentType(getControlItem) {
     let element = null;
     const value = formData[getControlItem.name] || "";
-    // const [show, setShow] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
-    // const handleToggle = () =>{
-    //   setShow(!show)
-    // };
+    function handleInputChange(e) {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
 
     switch (getControlItem.componentType) {
       case "input":
@@ -121,6 +120,28 @@ function CommonForm({
             <Label className="mb-1">{controlItem.label}</Label>
             {renderInputsByComponentType(controlItem)}
           </div>
+          ||
+          <div key={control.name} className="relative">
+          <label className="block text-sm font-medium">{control.label}</label>
+          <div className="relative">
+            <input
+              type={control.name === "password" ? (showPassword ? "text" : "password") : control.type}
+              name={control.name}
+              value={formData[control.name]}
+              onChange={handleInputChange}
+              className="w-full border rounded-md px-4 py-2"
+            />
+            {control.name === "password" && (
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            )}
+          </div>
+        </div>
         ))}
       </div>
       <Button disabled={isBtnDisabled} type="submit" className="mt-2 w-full">
