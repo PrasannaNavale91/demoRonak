@@ -11,9 +11,7 @@ function ForgotPassword() {
     e.preventDefault();
 
     const endpoint =
-      method === "otp"
-        ? "/auth/forgot-password"
-        : "/auth/forgot-password-link";
+      method === "otp" ? "/forgot-password" : "reset-password"
 
     try {
       const response = await axios.post(
@@ -43,15 +41,13 @@ function ForgotPassword() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium">Method</label>
-          <select
+          <p
             className="w-full p-2 border rounded-lg"
             value={method}
             onChange={(e) => setMethod(e.target.value)}
           >
-            <option value="otp">OTP via Email</option>
-            <option value="link">Password Reset Link</option>
-          </select>
+            OTP via Email
+          </p>
         </div>
 
         <button
