@@ -94,15 +94,16 @@ function ShoppingCheckout() {
       }
     });
   
-    const initiateRazorpayPayment = (orderId) => {
-      setIsPaymemntStart(true);
+    const { payload } = await dispatch(createNewOrder(orderData));
 
+    if (payload?.success) {
+      const { razorpayOrderId, amount, currency } = payload;
       const options = {
         key: process.env.RAZORPAY_KEY_ID,
         amount: totalCartAmount * 100,
-        currency: "INR",
-        name: "TrendCarve",
-        description: "Transaction",
+        currency: currency,
+        name: "E-commerce",
+        description: "Test Transaction",
         order_id: razorpayOrderId,
         handler: async function (response) {
           const paymentVerificationData = {
@@ -111,47 +112,24 @@ function ShoppingCheckout() {
             razorpaySignature: response.razorpay_signature,
             orderId: payload.orderId,
           };
-  
-          dispatch(verifyPayment(paymentData)).then((verifyResponse) => {
-            if (verifyResponse?.payload?.success) {
-              toast({
-                title: "Payment successful! Your order is confirmed.",
-                variant: "success",
-              });
-              setIsPaymemntStart(false);
-            } else {
-              toast({
-                title: "Payment verification failed. Please try again.",
-                variant: "destructive",
-              });
-              setIsPaymemntStart(false);
-            }
-          });
+
+          await dispatch(verifyPayment(paymentVerificationData));
         },
         prefill: {
           name: user?.name,
           email: user?.email,
           contact: currentSelectedAddress?.phone,
         },
-        notes: {
-          address: currentSelectedAddress?.address,
-        },
-        theme: {
-          color: "#3399cc",
-        },
       };
-  
+
       const razorpay = new window.Razorpay(options);
       razorpay.open();
-
-      razorpay.on("payment.failed", function (response) {
-        toast({
-          title: "Payment failed. Please try again.",
-          variant: "destructive",
-        });
-        setIsPaymemntStart(false);
+    } else {
+      toast({
+        title: "Payment initiation failed!",
+        variant: "destructive",
       });
-    } 
+    }
   }
 
   return (
