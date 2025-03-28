@@ -51,7 +51,7 @@ function AuthLogin() {
         <p className="mt-2">
           Don't have an account
           <Link
-            className="font-medium ml-2 text-primary hover:underline"
+            className="font-medium ml-2 text-primary hover:underline text-sky-400"
             to="/auth/register"
           >
             Register
@@ -65,6 +65,15 @@ function AuthLogin() {
         setFormData={setFormData}
         onSubmit={onSubmit}
       />
+      <div className="text-center">
+        <p className="mt-2">
+          <Link className="font-medium ml-2 text-primary hover:underline text-sky-400"
+            to="/auth/forgot-password"
+          >
+            Forgot Password
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
