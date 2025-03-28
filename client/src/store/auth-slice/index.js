@@ -58,6 +58,44 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  "/auth/forgot-password",
+
+  async () => {
+    const response = await axios.post(
+      "https://ecommerce-app-xg3v.onrender.com/api/auth/forgot-password",
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }
+    );
+
+    return response.data;
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  "/auth/verify-otp",
+
+  async () => {
+    const response = await axios.post(
+      "https://ecommerce-app-xg3v.onrender.com/api/auth/verify-otp",
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }
+    );
+
+    return response.data;
+  }
+);
+
 export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
 
