@@ -10,7 +10,6 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
 
 function CommonForm({
   formControls,
@@ -20,6 +19,8 @@ function CommonForm({
   buttonText,
   isBtnDisabled,
 }) {
+  const [showPassword, setShowPassword] = useState(false);
+
   function renderInputsByComponentType(getControlItem) {
     let element = null;
     const value = formData[getControlItem.name] || "";
@@ -27,19 +28,30 @@ function CommonForm({
     switch (getControlItem.componentType) {
       case "input":
         element = (
-          <Input
-            name={getControlItem.name}
-            placeholder={getControlItem.placeholder}
-            id={getControlItem.name}
-            type={getControlItem.type}
-            value={value}
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                [getControlItem.name]: event.target.value,
-              })
-            }
-          />
+          <div className="relative w-full">
+            <Input
+              name={getControlItem.name}
+              placeholder={getControlItem.placeholder}
+              id={getControlItem.name}
+              type={getControlItem.type  === "password" ? showPassword ? "text" : "password" : getControlItem.type}
+              value={value}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  [getControlItem.name]: event.target.value,
+                })
+              }
+            />
+            {getControlItem.name === "password" && (
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            )}
+          </div>
         );
         break;
       case "select":
