@@ -56,7 +56,6 @@ const OrderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  // Razorpay-specific fields
   razorpayOrderId: {
     type: String,
   },
@@ -66,13 +65,6 @@ const OrderSchema = new mongoose.Schema({
   razorpaySignature: {
     type: String,
   },
-  // Keeping the old PayPal fields in case you need them
-  // paymentId: {
-  //   type: String,
-  // },
-  // payerId: {
-  //   type: String,
-  // },
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

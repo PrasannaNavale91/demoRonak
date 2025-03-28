@@ -82,9 +82,9 @@ function ShoppingCheckout() {
       const options = {
         key: process.env.RAZORPAY_KEY_ID,
         amount: amount,
-        currency: currency,
-        name: "E-commerce",
-        description: "Test Transaction",
+        currency: "INR",
+        name: "TrendCarve",
+        description: "Transaction",
         order_id: razorpayOrderId,
         handler: async function (response) {
           const paymentVerificationData = {

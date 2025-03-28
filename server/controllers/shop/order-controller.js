@@ -29,12 +29,12 @@ const createOrder = async (req, res) => {
     } = req.body;
 
     const options = {
-      amount: totalAmount * 100, // Razorpay accepts amount in paise
+      amount: totalAmount * 100,
       currency: "INR",
       receipt: `order_${Date.now()}`,
     };
 
-    const order = await razorpay.orders.create(options); // Create Razorpay Order
+    const order = await razorpay.orders.create(options);
 
     if (!order) {
       return res.status(500).json({
@@ -75,7 +75,7 @@ const createOrder = async (req, res) => {
   }
 };
 
-const capturePayment = async (req, res) => {
+const verifyPayment = async (req, res) => {
   try {
     const { razorpayOrderId, razorpayPaymentId, razorpaySignature, orderId } =
     req.body;
@@ -85,28 +85,9 @@ const capturePayment = async (req, res) => {
     .update(`${razorpayOrderId}|${razorpayPaymentId}`)
     .digest("hex");
 
-    // Compare signatures
-    if (hmac !== razorpaySignature) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid payment signature",
-      });
+    if (generated_signature !== razorpay_signature) {
+      return res.status(400).json({ success: false, message: "Invalid payment signature" });
     }
-    const order = await Order.findById(orderId);
-    if (!order) {
-      return res.status(404).json({
-        success: false,
-        message: "Order not found!",
-      });
-    }
-
-    order.paymentStatus = "paid";
-    order.orderStatus = "confirmed";
-    order.razorpayPaymentId = razorpayPaymentId;
-    order.razorpaySignature = razorpaySignature;
-    order.orderUpdateDate = new Date();
-
-    await order.save();
     
     res.status(200).json({
       success: true,
@@ -176,7 +157,7 @@ const getOrderDetails = async (req, res) => {
 
 module.exports = {
   createOrder,
-  capturePayment,
+  verifyPayment,
   getAllOrdersByUser,
   getOrderDetails,
 };
