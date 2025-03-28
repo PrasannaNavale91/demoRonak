@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { createNewOrder } from "@/store/shop/order-slice";
+import { createNewOrder, capturePayment } from "@/store/shop/order-slice";
 import { useToast } from "@/hooks/use-toast";
 
 function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
-  const { approvalURL } = useSelector((state) => state.shopOrder);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const dispatch = useDispatch();
@@ -31,13 +30,12 @@ function ShoppingCheckout() {
         )
       : 0;
 
-  function handleInitiateRazorpayPayment() {
+  async function handleInitiateRazorpayPayment() {
     if (cartItems.length === 0) {
       toast({
         title: "Your cart is empty. Please add items to proceed",
         variant: "destructive",
       });
-
       return;
     }
     if (currentSelectedAddress === null) {
@@ -45,10 +43,9 @@ function ShoppingCheckout() {
         title: "Please select one address to proceed.",
         variant: "destructive",
       });
-
       return;
     }
-
+  
     const orderData = {
       userId: user?.id,
       cartId: cartItems?._id,
@@ -71,27 +68,49 @@ function ShoppingCheckout() {
         notes: currentSelectedAddress?.notes,
       },
       orderStatus: "pending",
-      paymentMethod: "paypal",
+      paymentMethod: "razorpay",
       paymentStatus: "pending",
       totalAmount: totalCartAmount,
       orderDate: new Date(),
       orderUpdateDate: new Date(),
-      paymentId: "",
-      payerId: "",
     };
-
-    dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "Parasanna");
-      if (data?.payload?.success) {
-        setIsPaymemntStart(true);
-      } else {
-        setIsPaymemntStart(false);
-      }
-    });      
-  }
-
-  if (approvalURL) {
-    window.location.href = approvalURL;
+  
+    const { payload } = await dispatch(createNewOrder(orderData));
+  
+    if (payload?.success) {
+      const { razorpayOrderId, amount, currency } = payload;
+      const options = {
+        key: process.env.RAZORPAY_KEY_ID,
+        amount: amount,
+        currency: currency,
+        name: "E-commerce",
+        description: "Test Transaction",
+        order_id: razorpayOrderId,
+        handler: async function (response) {
+          const paymentVerificationData = {
+            razorpayOrderId,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+            orderId: payload.orderId,
+          };
+  
+          await dispatch(capturePayment(paymentVerificationData));
+        },
+        prefill: {
+          name: user?.name,
+          email: user?.email,
+          contact: currentSelectedAddress?.phone,
+        },
+      };
+  
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } else {
+      toast({
+        title: "Payment initiation failed!",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
