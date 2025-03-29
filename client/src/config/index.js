@@ -38,6 +38,49 @@ export const registerFormControls = [
       type: "password",
     },
   ];
+
+  export const forgotPasswordFormControls = [
+    {
+      name: "email",
+      label: "Email",
+      placeholder: "Enter your email",
+      componentType: "input",
+      type: "email",
+    },
+    {
+      label: "Method",
+      name: "method",
+      componentType: "select",
+      options: [
+        { id: "otp", label: "Otp" },
+        { id: "resetlink", label: "Reset Link" },
+      ],
+    },
+  ];
+
+  export const verifyOtpFormControls = [
+    {
+      name: "email",
+      label: "Email",
+      placeholder: "Enter your email",
+      componentType: "input",
+      type: "email",
+    },
+    {
+      label: "Otp",
+      name: "otp",
+      componentType: "input",
+      type: "number",
+      placeholder: "Enter opt here",
+    },
+    {
+      name: "password",
+      label: "Password",
+      placeholder: "Enter your new password",
+      componentType: "input",
+      type: "password",
+    },
+  ];
   
   export const addProductFormElements = [
     {
