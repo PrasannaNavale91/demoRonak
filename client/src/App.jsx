@@ -46,8 +46,6 @@ function App() {
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="search" element={<SearchProducts />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="verify-otp" element={<VerifyOtp />} />
         </Route>
         <Route
           path="/admin"
@@ -81,6 +79,8 @@ function App() {
         >
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="verify-otp" element={<VerifyOtp />} />
         </Route>
         <Route
           path="/shop"
