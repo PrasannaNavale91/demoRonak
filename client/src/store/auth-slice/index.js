@@ -96,6 +96,25 @@ export const verifyOtp = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  "/auth/reset-password",
+
+  async () => {
+    const response = await axios.post(
+      "https://ecommerce-app-xg3v.onrender.com/api/auth/reset-password",
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }
+    );
+
+    return response.data;
+  }
+);
+
 export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
 
@@ -152,6 +171,39 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(verifyOtp.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(verifyOtp.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.message;
       })
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;

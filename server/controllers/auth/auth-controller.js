@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 const sendEmail = require("../../helpers/email");
+const OPT = require("../../models/otpModel");
 
 require("dotenv").config();
 
@@ -109,7 +110,7 @@ const logoutUser = (req, res) => {
   });
 };
 
-//forgot password
+//forgot password, verify OTP, reset password
 const sendOtp = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -120,53 +121,84 @@ const sendOtp = async (req, res) => {
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   otpStore[email] = { otp, expires: Date.now() + 300000 };
 
-  const msg = {
-    to: email,
-    from: "prasanna99navale@gmail.com",
-    subject: "Password Reset Request",
-    html: `
-      <p>Hello ${user.name},</p>
-      <p>You requested a password reset. Click <a href="${resetLink}">here</a> to reset your password.</p>
-      <p>If you didn't request this, please ignore this email.</p>
-    `,
-  };
+  const sendOTP = async (email, otp) => {
+    const msg = {
+      to: email,
+      from: "prasanna99navale@gmail.com",
+      subject: "Password Reset Request",
+      html: `
+        <p>Hello ${user.name},</p>
+        <p>Your OTP is ${otp}. It expires in 10 minutes.</p>
+        <p>If you didn't request this, please ignore this email.</p>
+      `,
+    };
+    
+    await sendEmail.send(msg);
+  }
 
   try {
-    await sendEmail.send(msg);
+    const generateOtp = otp();
+    await OPT.create({ email, generateOtp });
+
+    await sendOTP(email, otp);
     res.status(200).json({
       success: true,
-      message: "Password reset email sent successfully"
+      message: "OTP sent to email"
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Error sending email"
+      message: "Error sending OTP"
     });
   }
 }
 
-//verify OTP
 const verifyOtp = async (req, res) => {
-  const { otp, email, newPassword } = req.body;
+  const { otp, email } = req.body;
 
-  const storedOtp = otpStore[email];
-  if (!storedOtp || storedOtp.otp !== otp || storedOtp.expires < Date.now()) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid or expired OTP"
+  try {
+    const otpRecord = await OPT.findOne({ email, otp });
+
+    if (!otpRecord) return res.status(400).json({ message: "Invalid OTP" });
+
+    await OPT.deleteOne({ email });
+
+    const token = jwt.sign({ email }, process.env.JWT_TOKEN, { expiresIn: "15m" });
+    res.json({
+      success: true,
+      token
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error verifying OTP",
+      error
     });
   }
+}
 
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
+const resetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
 
-  await User.updateOne({ email }, { password: hashedPassword });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_TOKEN);
+    const user = await User.findOne({ email: decoded.email });
 
-  delete otpStore[email];
-  res.status(200).json({
-    success: true,
-    message: "Password reset successful"
-  });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Password reset successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error resetting password",
+      error
+    });
+  }
 }
 
 //auth middleware
@@ -191,4 +223,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware, sendOtp, verifyOtp };
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware, sendOtp, verifyOtp, resetPassword };

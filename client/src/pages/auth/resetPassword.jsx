@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { verifyOtpFormControls } from "@/config";
-import { verifyOtp } from "@/store/auth-slice";
+import { resetPasswordFormControls } from "@/config";
+import { resetPassword } from "@/store/auth-slice";
 import { useDispatch } from "react-redux";
 import CommonForm from "@/components/common/form";
 
 const initialState = {
-  opt: "",
+  password: "",
 };
 
 function VerifyOtp() {
@@ -17,7 +17,7 @@ function VerifyOtp() {
   async function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(verifyOtp(formData)).then((data) => {
+    dispatch(resetPassword(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data?.payload?.message,
@@ -39,8 +39,8 @@ function VerifyOtp() {
         </h1>
       </div>
       <CommonForm
-        formControls={verifyOtpFormControls}
-        buttonText={"Verify OTP"}
+        formControls={resetPasswordFormControls}
+        buttonText={"Reset Password"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

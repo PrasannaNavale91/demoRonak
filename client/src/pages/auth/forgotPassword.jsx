@@ -6,15 +6,12 @@ import { useDispatch } from "react-redux";
 import CommonForm from "@/components/common/form";
 
 const initialState = {
-  otp: "",
   email: "",
-  password: "",
 };
 
 function ForgotPassword() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const [method, setMethod] = useState("otp");
   const { toast } = useToast();
 
   async function onSubmit(event) {
@@ -44,7 +41,7 @@ function ForgotPassword() {
       <CommonForm
         formControls={forgotPasswordFormControls}
         method={method}
-        buttonText={"Send OTP"}
+        buttonText={"Request OTP"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

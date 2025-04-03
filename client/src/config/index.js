@@ -46,39 +46,26 @@ export const registerFormControls = [
       placeholder: "Enter your email",
       componentType: "input",
       type: "email",
-    },
-    {
-      label: "Method",
-      name: "method",
-      componentType: "select",
-      options: [
-        { id: "otp", label: "Otp" },
-        { id: "resetlink", label: "Reset Link" },
-      ],
-    },
+    }
   ];
 
   export const verifyOtpFormControls = [
     {
-      name: "email",
-      label: "Email",
-      placeholder: "Enter your email",
-      componentType: "input",
-      type: "email",
-    },
-    {
-      label: "Otp",
       name: "otp",
+      label: "Otp",
       componentType: "input",
       type: "number",
       placeholder: "Enter opt here",
     },
+  ];
+
+  export const resetPasswordFormControls = [
     {
-      name: "password",
-      label: "Password",
-      placeholder: "Enter your new password",
+      name: "reset password",
+      label: "New Password",
       componentType: "input",
-      type: "password",
+      type: "text",
+      placeholder: "Enter your new password...",
     },
   ];
   
