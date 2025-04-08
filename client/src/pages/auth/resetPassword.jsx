@@ -9,7 +9,7 @@ const initialState = {
   password: "",
 };
 
-function VerifyOtp() {
+function ResetPassword() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -49,4 +49,4 @@ function VerifyOtp() {
   );
 }
 
-export default VerifyOtp;
+export default ResetPassword;

@@ -40,7 +40,6 @@ function ForgotPassword() {
       </div>
       <CommonForm
         formControls={forgotPasswordFormControls}
-        method={method}
         buttonText={"Request OTP"}
         formData={formData}
         setFormData={setFormData}
