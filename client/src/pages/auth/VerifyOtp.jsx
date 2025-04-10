@@ -22,6 +22,8 @@ function AuthVerifyOtp() {
         toast({
           title: data?.payload?.message,
         });
+
+        navigate("/auth/reset-password");
       } else {
         toast({
           title: data?.payload?.message,
@@ -35,7 +37,7 @@ function AuthVerifyOtp() {
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Verify Otp
+          Verify Your Otp
         </h1>
       </div>
       <CommonForm
