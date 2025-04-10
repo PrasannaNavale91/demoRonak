@@ -72,7 +72,12 @@ function AuthLogin() {
           </Link>
         </p>
         <p className="mt-2">
-          <button onClick={handleForgotPassword}>Forgot Password?</button>
+          <button
+            className="font-medium ml-2 text-primary hover:underline text-sky-400" 
+            onClick={handleForgotPassword}
+          >
+            Forgot Password ?
+          </button>
         </p>
       </div>
     </div>
