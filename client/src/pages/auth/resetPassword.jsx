@@ -9,7 +9,7 @@ const initialState = {
   password: "",
 };
 
-function ResetPassword() {
+function AuthResetPassword() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -49,4 +49,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default AuthResetPassword;

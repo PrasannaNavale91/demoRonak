@@ -9,7 +9,7 @@ const sendEmail = async (to, subject, htmlContent) => {
       to,
       from: {
         name: 'Trend Crave',
-        email: 'prasanna.navle143@gmail.com'
+        email: 'prasanna99navale@gmail.com'
       },
       templateId: process.env.TEMPLATE_ID,
       dynamicTemplateData: {

@@ -9,7 +9,7 @@ const initialState = {
   email: "",
 };
 
-function ForgotPassword() {
+function AuthForgotPassword() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -49,4 +49,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default AuthForgotPassword;

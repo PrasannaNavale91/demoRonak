@@ -9,7 +9,7 @@ const initialState = {
   opt: "",
 };
 
-function VerifyOtp() {
+function AuthVerifyOtp() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -49,4 +49,4 @@ function VerifyOtp() {
   );
 }
 
-export default VerifyOtp;
+export default AuthVerifyOtp;
