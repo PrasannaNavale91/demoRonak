@@ -17,6 +17,10 @@ function AuthLogin() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const handleForgotPassword = () => {
+    navigate("/auth/forgot-password");
+  };
+
   function onSubmit(event) {
     event.preventDefault();
 
@@ -68,11 +72,7 @@ function AuthLogin() {
           </Link>
         </p>
         <p className="mt-2">
-          <Link className="font-medium ml-2 text-primary hover:underline text-sky-400"
-            to="/auth/forgot-password"
-          >
-            Forgot Password
-          </Link>
+          <button onClick={handleForgotPassword}>Forgot Password?</button>
         </p>
       </div>
     </div>
