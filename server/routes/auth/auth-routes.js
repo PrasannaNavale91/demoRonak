@@ -14,7 +14,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 router.post("/forgot-password", sendOtp);
-router.post("/verify-otp", verifyOtp);
+router.post("/verify-otp/:token", verifyOtp);
 router.post("/reset-password", resetPassword);
 router.get("/check-auth", authMiddleware, (req, res) => {
   const user = req.user;

@@ -112,34 +112,34 @@ const logoutUser = (req, res) => {
 //forgot password, verify OTP, reset password
 const sendOtp = async (req, res) => {
   const { email } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  otpStore[email] = { otp, expires: Date.now() + 300000 };
-
-  const sendOTP = async (email, otp) => {
-    const msg = {
-      to: email,
-      from: "prasanna99navale@gmail.com",
-      subject: "Password Reset Request",
-      html: `
-        <p>Hello ${user.name},</p>
-        <p>Your OTP is ${otp}. It expires in 10 minutes.</p>
-        <p>If you didn't request this, please ignore this email.</p>
-      `,
-    };
-    
-    await sendEmail.send(msg);
-  }
-
+  
   try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpStore[email] = { otp, expires: Date.now() + 300000 };
+
+    const sendOTP = async (email, otp) => {
+      const msg = {
+        to: email,
+        from: "prasanna99navale@gmail.com",
+        subject: "Password Reset Request",
+        html: `
+          <p>Hello ${user.name},</p>
+          <p>Your OTP is ${otp}. It expires in 10 minutes.</p>
+          <p>If you didn't request this, please ignore this email.</p>
+        `,
+      };
+      
+      await sendEmail.send(msg);
+    }
     const generateOtp = otp();
     await OPT.create({ email, generateOtp });
+    await sendOTP(email, generateOtp);
 
-    await sendOTP(email, otp);
     res.status(200).json({
       success: true,
       message: "OTP sent to email"
