@@ -78,11 +78,11 @@ export const forgotPassword = createAsyncThunk(
 );
 
 export const verifyOtp = createAsyncThunk(
-  "/auth/verify-otp",
+  "/auth/verify-otp/:email",
 
   async () => {
     const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/verify-otp",
+      "https://ecommerce-app-xg3v.onrender.com/api/auth/verify-otp/:email",
       {},
       {
         withCredentials: true,
@@ -101,7 +101,7 @@ export const resetPassword = createAsyncThunk(
 
   async () => {
     const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/reset-password",
+      "https://ecommerce-app-xg3v.onrender.com/api/auth/reset-password/:token",
       {},
       {
         withCredentials: true,

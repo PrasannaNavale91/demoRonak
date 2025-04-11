@@ -120,26 +120,20 @@ const sendOtp = async (req, res) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    otpStore[email] = { otp, expires: Date.now() + 300000 };
+    await OPT.create({ email, otp });
 
-    const sendOTP = async (email, otp) => {
-      const msg = {
-        to: email,
-        from: "prasanna99navale@gmail.com",
-        subject: "Password Reset Request",
-        html: `
-          <p>Hello ${user.name},</p>
-          <p>Your OTP is ${otp}. It expires in 10 minutes.</p>
-          <p>If you didn't request this, please ignore this email.</p>
-        `,
-      };
-      
-      await sendEmail.send(msg);
-    }
-    const generateOtp = otp();
-    await OPT.create({ email, generateOtp });
-    await sendOTP(email, generateOtp);
-
+    const msg = {
+      to: email,
+      from: "prasanna99navale@gmail.com",
+      subject: "Password Reset Request",
+      html: `
+        <p>Hello ${user.name},</p>
+        <p>Your OTP is ${otp}. It expires in 10 minutes.</p>
+        <p>If you didn't request this, please ignore this email.</p>
+      `,
+    };
+    
+    await sendEmail.send(msg);
     res.status(200).json({
       success: true,
       message: "OTP sent to email"
