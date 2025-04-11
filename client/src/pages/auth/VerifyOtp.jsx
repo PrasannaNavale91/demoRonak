@@ -4,6 +4,7 @@ import { verifyOtpFormControls } from "@/config";
 import { verifyOtp } from "@/store/auth-slice";
 import { useDispatch } from "react-redux";
 import CommonForm from "@/components/common/form";
+import { useParams } from "react-router-dom";
 
 const initialState = {
   opt: "",
@@ -13,20 +14,21 @@ function AuthVerifyOtp() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
+  const { token } = useParams();
 
   async function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(verifyOtp(formData)).then((data) => {
+    dispatch(verifyOtp( token, otp )).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data.payload.message,
         });
 
-        navigate("/auth/reset-password");
+        navigate(`/auth/reset-password/${token}`);
       } else {
         toast({
-          title: data?.payload?.message || "Wrong OTP entered or OTP expired",
+          title: data?.payload?.message || "Invalid OTP or OTP expired",
           variant: "destructive",
         });
       }

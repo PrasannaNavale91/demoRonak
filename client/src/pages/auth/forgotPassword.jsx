@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { forgotPasswordFormControls } from "@/config";
 import { forgotPassword } from "@/store/auth-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useParams } from "react-redux";
 import CommonForm from "@/components/common/form";
 
 const initialState = {
@@ -23,7 +23,8 @@ function AuthForgotPassword() {
           title: data.payload.message,
         });
 
-        navigate("/auth/verify-otp/:token");
+        const token = data.payload.token;
+        navigate(`/auth/verify-otp/${token}`);
       } else {
         toast({
           title: data?.payload?.message || "OTP request failed",
