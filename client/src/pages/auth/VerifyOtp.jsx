@@ -39,6 +39,7 @@ function AuthVerifyOtp() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Verify Your Otp
         </h1>
+        <p className="mt-2">Enter your opt within 1 minute</p>
       </div>
       <CommonForm
         formControls={verifyOtpFormControls}

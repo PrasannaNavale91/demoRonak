@@ -39,6 +39,7 @@ function AuthForgotPassword() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Forgot Your Password
         </h1>
+        <p className="mt-2">Please enter your email address for password reset</p>
       </div>
       <CommonForm
         formControls={forgotPasswordFormControls}

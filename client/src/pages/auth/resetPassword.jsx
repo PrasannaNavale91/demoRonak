@@ -39,6 +39,7 @@ function AuthResetPassword() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Reset your Password
         </h1>
+        <p className="mt-2">Please enter your new password below</p>
       </div>
       <CommonForm
         formControls={resetPasswordFormControls}
