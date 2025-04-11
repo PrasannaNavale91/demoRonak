@@ -20,13 +20,13 @@ function AuthVerifyOtp() {
     dispatch(verifyOtp(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: data?.payload?.message,
+          title: data.payload.message,
         });
 
         navigate("/auth/reset-password");
       } else {
         toast({
-          title: data?.payload?.message,
+          title: data?.payload?.message || "Wrong OTP entered or OTP expired",
           variant: "destructive",
         });
       }

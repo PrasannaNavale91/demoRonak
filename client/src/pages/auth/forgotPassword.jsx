@@ -20,13 +20,13 @@ function AuthForgotPassword() {
     dispatch(forgotPassword(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: data?.payload?.message,
+          title: data.payload.message,
         });
 
         navigate("/auth/verify-otp/:token");
       } else {
         toast({
-          title: data?.payload?.message,
+          title: data?.payload?.message || "OTP request failed",
           variant: "destructive",
         });
       }
