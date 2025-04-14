@@ -7,7 +7,7 @@ import CommonForm from "@/components/common/form";
 import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
-  opt: "",
+  otp: "",
 };
 
 function AuthVerifyOtp() {
@@ -26,7 +26,7 @@ function AuthVerifyOtp() {
           title: data.payload.message,
         });
 
-        navigate(`/auth/reset-password/${data.payload.token}`);
+        navigate(`/auth/reset-password/${token}`);
       } else {
         toast({
           title: data?.payload?.message || "Invalid OTP or OTP expired",

@@ -134,6 +134,7 @@ const sendOtp = async (req, res) => {
     };
     
     await sendEmail.send(msg);
+    
     res.status(200).json({
       success: true,
       message: "OTP sent to email"
