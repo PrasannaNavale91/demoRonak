@@ -63,7 +63,9 @@ export const forgotPassword = createAsyncThunk(
 
   async ({ email }, thunkAPI) => {
     try {
-      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/forgot-password", { email });
+      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/forgot-password", {
+        email
+      });
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -74,9 +76,9 @@ export const forgotPassword = createAsyncThunk(
 export const verifyOtp = createAsyncThunk(
   "/auth/verify-otp",
 
-  async ({ email , otp}, t) => {
+  async ({ email , otp}, thunkAPI) => {
     try {
-      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/verify-opt", {
+      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/verify-otp", {
         email,
         otp,
       });
