@@ -4,7 +4,7 @@ import { forgotPasswordFormControls } from "@/config";
 import { forgotPassword } from "@/store/auth-slice";
 import { useDispatch } from "react-redux";
 import CommonForm from "@/components/common/form";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   email: "",
@@ -14,19 +14,18 @@ function AuthForgotPassword() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
-  const { email } = useParams();
+  const navigate = useNavigate();
 
   async function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(forgotPassword( email )).then((data) => {
+    dispatch(forgotPassword({ email: formData.email})).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data.payload.message,
         });
 
-        const email = data.payload.token;
-        navigate(`/auth/verify-otp/${email}`);
+        navigate(`/auth/verify-otp/${formData.email}`);
       } else {
         toast({
           title: data?.payload?.message || "OTP request failed",

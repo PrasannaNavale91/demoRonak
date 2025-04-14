@@ -61,57 +61,45 @@ export const logoutUser = createAsyncThunk(
 export const forgotPassword = createAsyncThunk(
   "/auth/forgot-password",
 
-  async () => {
-    const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/forgot-password",
-      {},
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json"
-        },
-      }
-    );
-
-    return response.data;
+  async ({ email }, thunkAPI) => {
+    try {
+      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/forgot-password", { email });
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
   }
 );
 
 export const verifyOtp = createAsyncThunk(
-  "/auth/verify-otp/:email",
+  "/auth/verify-otp",
 
-  async () => {
-    const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/verify-otp/:email",
-      {},
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json"
-        },
-      }
-    );
-
-    return response.data;
+  async ({ email , otp}, t) => {
+    try {
+      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/verify-opt", {
+        email,
+        otp,
+      });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   }
 );
 
 export const resetPassword = createAsyncThunk(
   "/auth/reset-password/:token",
 
-  async () => {
-    const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/reset-password/:token",
-      {},
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json"
-        },
-      }
-    );
-
-    return response.data;
+  async ({ token, newPassword }, thunkAPI) => {
+    try {
+      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/reset-password", {
+        token,
+        newPassword,
+      });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   }
 );
 

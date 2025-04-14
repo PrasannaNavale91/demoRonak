@@ -160,7 +160,9 @@ const verifyOtp = async (req, res) => {
     const token = jwt.sign({ email }, process.env.JWT_TOKEN, { expiresIn: "15m" });
     res.json({
       success: true,
-      token
+      message: "OTP verified",
+      token,
+      email
     });
   } catch (error) {
     res.status(500).json({

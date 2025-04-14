@@ -4,7 +4,7 @@ import { resetPasswordFormControls } from "@/config";
 import { resetPassword } from "@/store/auth-slice";
 import { useDispatch } from "react-redux";
 import CommonForm from "@/components/common/form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
   password: "",
@@ -15,12 +15,13 @@ function AuthResetPassword() {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { token } = useParams();
+  const navigate = useNavigate();
   
 
   async function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(resetPassword( token, newPassword )).then((data) => {
+    dispatch(resetPassword({ token, newPassword: formData.password })).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data.payload.message,
