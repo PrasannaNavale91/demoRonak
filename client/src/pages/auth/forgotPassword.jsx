@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { forgotPasswordFormControls } from "@/config";
 import { forgotPassword } from "@/store/auth-slice";
-import { useDispatch, useParams } from "react-redux";
+import { useDispatch } from "react-redux";
 import CommonForm from "@/components/common/form";
+import { useParams } from "react-router-dom";
 
 const initialState = {
   email: "",
