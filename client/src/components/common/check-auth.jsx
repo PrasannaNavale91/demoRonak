@@ -21,8 +21,8 @@ function CheckAuth({ isAuthenticated, user, children }) {
       location.pathname.includes("/login") ||
       location.pathname.includes("/register") ||
       location.pathname.includes("/forgot-password") ||
-      location.pathname.includes("/verify-otp") ||
-      location.pathname.includes("/reset-password")
+      location.pathname.includes("/verify-otp/:email") ||
+      location.pathname.includes("/reset-password/:token")
     )
   ) {
     return <Navigate to="/auth/login" />;
