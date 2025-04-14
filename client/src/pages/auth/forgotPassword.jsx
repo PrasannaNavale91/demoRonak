@@ -18,7 +18,7 @@ function AuthForgotPassword() {
   async function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(forgotPassword(formData)).then((data) => {
+    dispatch(forgotPassword( email )).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data.payload.message,
