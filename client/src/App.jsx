@@ -81,8 +81,8 @@ function App() {
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
           <Route path="forgot-password" element={<AuthForgotPassword />} />
-          <Route path="verify-otp/:token" element={<AuthVerifyOtp/>} />
-          <Route path="reset-password" element={<AuthResetPassword />} />
+          <Route path="verify-otp/:email" element={<AuthVerifyOtp/>} />
+          <Route path="reset-password/:token" element={<AuthResetPassword />} />
         </Route>
         <Route
           path="/shop"

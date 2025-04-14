@@ -13,6 +13,7 @@ function AuthForgotPassword() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
+  const { email } = useParams();
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -23,8 +24,8 @@ function AuthForgotPassword() {
           title: data.payload.message,
         });
 
-        const token = data.payload.token;
-        navigate(`/auth/verify-otp/${token}`);
+        const email = data.payload.token;
+        navigate(`/auth/verify-otp/${email}`);
       } else {
         toast({
           title: data?.payload?.message || "OTP request failed",
