@@ -5,6 +5,7 @@ const Otp = require("../../models/Otp");
 const sendEmail = require("../../helpers/email");
 
 require("dotenv").config();
+sendEmail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //register
 const registerUser = async (req, res) => {
@@ -123,7 +124,7 @@ const sendOtp = async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     await Otp.create({ email, otp });
 
-    const msg = {
+    await sendEmail({
       to: email,
       from: "prasanna99navale@gmail.com",
       subject: "Password Reset Request",
@@ -132,16 +133,14 @@ const sendOtp = async (req, res) => {
         <p>Your OTP is ${otp}. It expires in 10 minutes.</p>
         <p>If you didn't request this, please ignore this email.</p>
       `,
-    };
-    
-    await sendEmail.send(msg);
+    });
     
     res.status(200).json({
       success: true,
       message: "OTP sent to email"
     });
   } catch (error) {
-    console.error(error);
+    console.error("Server error in sendOtp:", error);
     res.status(500).json({
       success: false,
       message: "Error sending OTP"
