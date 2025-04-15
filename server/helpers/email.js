@@ -3,7 +3,7 @@ require('dotenv').config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendEmail = async ({ to, name, otp}) => {
+const sendEmail = async ({ to, name = 'User', otp}) => {
   try {
     const msg = {
       to,
@@ -13,8 +13,8 @@ const sendEmail = async ({ to, name, otp}) => {
       },
       templateId: process.env.TEMPLATE_ID,
       dynamicTemplateData: {
-        name,
-        otp,
+        name: name,
+        otp: otp,
       }
     };
     
