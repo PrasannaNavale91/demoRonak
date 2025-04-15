@@ -74,7 +74,7 @@ export const forgotPassword = createAsyncThunk(
 );
 
 export const verifyOtp = createAsyncThunk(
-  "/auth/verify-otp",
+  "/auth/verify-otp/:email",
 
   async ({ email , otp}, thunkAPI) => {
     try {
