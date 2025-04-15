@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-const OPT = require("../../models/Otp");
+const Otp = require("../../models/Otp");
 const sendEmail = require("../../helpers/email");
 
 require("dotenv").config();
@@ -153,11 +153,11 @@ const verifyOtp = async (req, res) => {
   const { otp, email } = req.body;
 
   try {
-    const otpRecord = await OPT.findOne({ email, otp });
+    const otpRecord = await Otp.findOne({ email, otp });
 
-    if (!otpRecord) return res.status(400).json({ message: "Invalid OTP" });
+    if (!otpRecord || record.expiresAt < new Date()) return res.status(400).json({ message: "Invalid OTP" });
 
-    await OPT.deleteOne({ email });
+    await Otp.deleteOne({ email });
 
     const token = jwt.sign({ email }, process.env.JWT_TOKEN, { expiresIn: "15m" });
     res.json({
