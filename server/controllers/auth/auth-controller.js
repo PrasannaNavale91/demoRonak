@@ -5,7 +5,6 @@ const Otp = require("../../models/Otp");
 const sendEmail = require("../../helpers/email");
 
 require("dotenv").config();
-sendEmail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //register
 const registerUser = async (req, res) => {
