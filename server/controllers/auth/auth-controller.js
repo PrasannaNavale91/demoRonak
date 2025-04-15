@@ -121,7 +121,11 @@ const sendOtp = async (req, res) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    await Otp.create({ email, otp });
+    await Otp.create({
+      email,
+      otp,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000)
+    });
 
     await sendEmail({
       to: email,
@@ -153,11 +157,13 @@ const verifyOtp = async (req, res) => {
   try {
     const otpRecord = await Otp.findOne({ email, otp });
 
-    if (!otpRecord || record.expiresAt < new Date()) return res.status(400).json({ message: "Invalid OTP" });
+    if (!otpRecord || otpRecord.expiresAt < new Date()) {
+      return res.status(400).json({ message: "Invalid OTP" })
+    };
 
     await Otp.deleteOne({ email });
 
-    const token = jwt.sign({ email }, process.env.JWT_TOKEN, { expiresIn: "10m" });
+    const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "10m" });
     res.json({
       success: true,
       message: "OTP verified",
@@ -176,7 +182,7 @@ const resetPassword = async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_TOKEN);
+    const decoded = jwt.verify(token, process.env.JWT_RESET_TOKEN);
     const user = await User.findOne({ email: decoded.email });
 
     if (!user) return res.status(404).json({ message: "User not found" });
