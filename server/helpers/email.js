@@ -3,7 +3,7 @@ require('dotenv').config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendEmail = async (to) => {
+const sendEmail = async ({ to, name, otp}) => {
   try {
     const msg = {
       to,
@@ -13,14 +13,15 @@ const sendEmail = async (to) => {
       },
       templateId: process.env.TEMPLATE_ID,
       dynamicTemplateData: {
-        name: 'TrendCrave'
+        name,
+        otp,
       }
     };
     
     await sgMail.send(msg);
     console.log(`Email sent successfully ${to}`);
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error sending email:', error.response?.body || error.message);
   }
 };
 
