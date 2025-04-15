@@ -157,7 +157,7 @@ const verifyOtp = async (req, res) => {
 
     await Otp.deleteOne({ email });
 
-    const token = jwt.sign({ email }, process.env.JWT_TOKEN, { expiresIn: "15m" });
+    const token = jwt.sign({ email }, process.env.JWT_TOKEN, { expiresIn: "10m" });
     res.json({
       success: true,
       message: "OTP verified",
