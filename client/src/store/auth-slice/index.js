@@ -63,7 +63,7 @@ export const forgotPassword = createAsyncThunk(
 
   async ({ email }, thunkAPI) => {
     try {
-      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/forgot-password", {
+      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/forgot-password", {
         email
       });
       return res.data;
