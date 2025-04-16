@@ -61,7 +61,7 @@ function AuthLogin() {
         <p className="mt-2">
           Don't have an account
           <Link
-            className="font-medium ml-2 text-primary hover:underline text-sky-400"
+            className="font-medium ml-2 hover:underline text-sky-400"
             to="/auth/register"
           >
             Register
@@ -69,7 +69,7 @@ function AuthLogin() {
         </p>
         <p className="mt-2">
           <Link
-              className="font-medium ml-2 text-primary hover:underline text-sky-400"
+              className="font-medium ml-2 hover:underline text-sky-400"
               to="/auth/forgot-password"
             >
             Forgot Password?
