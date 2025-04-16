@@ -121,6 +121,7 @@ const sendOtp = async (req, res) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    await Otp.deleteMany({ email });
     await Otp.create({
       email,
       otp,
@@ -156,7 +157,7 @@ const verifyOtp = async (req, res) => {
     };
 
     if(record.expiresAt < new Date()){
-      await Otp.deleteMany({ email });
+      await Otp.deleteOne({ email });
       return res.status(400).json({
         success: false,
         message: "OTP expired"
