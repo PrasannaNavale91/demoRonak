@@ -124,19 +124,10 @@ const sendOtp = async (req, res) => {
     await Otp.create({
       email,
       otp,
-      expiresAt: new Date(Date.now() + 10 * 60 * 1000)
+      expiresAt: new Date(Date.now() + 2 * 60 * 1000)
     });
 
-    await sendEmail({
-      to: email,
-      from: "prasanna99navale@gmail.com",
-      subject: "Password Reset Request",
-      html: `
-        <p>Hello ${user.name},</p>
-        <p>Your OTP is ${otp}. It expires in 10 minutes.</p>
-        <p>If you didn't request this, please ignore this email.</p>
-      `,
-    });
+    await sendEmail(email, otp, user.name);
     
     res.status(200).json({
       success: true,
