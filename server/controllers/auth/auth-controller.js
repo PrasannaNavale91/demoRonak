@@ -149,7 +149,7 @@ const verifyOtp = async (req, res) => {
   try {
     const record = await Otp.findOne({ email, otp: otp.toString() });
 
-    if (record !== email || record !== otp) {
+    if (!record) {
       return res.status(400).json({
         success: false,
         message: "Invalid OTP"
@@ -164,7 +164,7 @@ const verifyOtp = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "10m" });
+    const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "2m" });
     res.json({
       success: true,
       message: "OTP verified",
@@ -172,6 +172,7 @@ const verifyOtp = async (req, res) => {
       email
     });
   } catch (error) {
+    console.error("OTP Verification Error:", error);
     res.status(500).json({
       message: "Error verifying OTP",
       error
