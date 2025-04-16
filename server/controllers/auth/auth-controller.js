@@ -113,57 +113,67 @@ const logoutUser = (req, res) => {
 //forgot password, verify OTP, reset password
 const sendOtp = async (req, res) => {
   const { email } = req.body;
-  
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    await Otp.create({
-      email,
-      otp,
-      expiresAt: new Date(Date.now() + 2 * 60 * 1000)
-    });
-
-    await sendEmail(email, otp, user.name);
-    
-    res.status(200).json({
+  const result = await sendEmail(email);
+  if (result.success) {
+    res.status(200).json({ 
       success: true,
-      message: "OTP sent to email"
+      message: 'OTP sent successfully' 
     });
-  } catch (error) {
-    console.error("Server error in sendOtp:", error);
+  } else {
     res.status(500).json({
       success: false,
-      message: "Error sending OTP"
+      message: 'Failed to send OTP',
+      error: result.error 
     });
   }
 }
 
 const verifyOtp = async (req, res) => {
-  const { otp, email } = req.body;
+  const { email, otp } = req.body;
 
   try {
     const otpRecord = await Otp.findOne({ email, otp });
 
-    if (!otpRecord || otpRecord.expiresAt < new Date()) {
-      return res.status(400).json({ message: "Invalid OTP" })
+    if (!otpRecord) {
+      return res.status(400).json({ 
+        success: false,
+        message: "OTP not found. Please request again."
+      })
     };
 
-    await Otp.deleteOne({ email });
+    const isExpired = existingOtp.expiresAt < new Date();
+    if (isExpired) {
+      await Otp.deleteOne({ email });
+      return res.status(400).json({
+        success: false,
+        message: 'OTP has expired. Please request again.'
+      });
+    }
 
-    const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "10m" });
+    if (existingOtp.otp !== otp) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid OTP. Please try again.'
+      });
+    }
+
+    await Otp.deleteOne({ email });
+    
     res.json({
       success: true,
-      message: "OTP verified",
+      message: "OTP verified successfully",
       token,
       email
     });
   } catch (error) {
     res.status(500).json({
-      message: "Error verifying OTP",
+      success: false,
+      message: "Server error during OTP verification",
       error
     });
   }
