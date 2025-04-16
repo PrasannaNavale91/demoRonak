@@ -146,13 +146,22 @@ const verifyOtp = async (req, res) => {
   const { otp, email } = req.body;
 
   try {
-    const otpRecord = await Otp.findOne({ email, otp });
+    const record = await Otp.findOne({ email });
 
-    if (!otpRecord || otpRecord.expiresAt < new Date()) {
-      return res.status(400).json({ message: "Invalid OTP" })
+    if (!record || record.opt !== otp) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP"
+      })
     };
 
-    await Otp.deleteOne({ email });
+    if(record.expiresAt < new Date()){
+      await Otp.deleteOne({ email });
+      return res.status(400).json({
+        success: false,
+        message: "OTP expired"
+      });
+    }
 
     const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "10m" });
     res.json({

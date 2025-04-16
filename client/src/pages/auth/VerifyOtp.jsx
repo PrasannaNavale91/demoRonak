@@ -51,7 +51,7 @@ function AuthVerifyOtp() {
         onSubmit={onSubmit}
       />
       <div className="text-center">
-        <p className="mt-2">Enter your opt within <small className="font-medium ml-2 text-sky-400">2</small> minute</p>
+        <p className="mt-2">Enter your opt within <small className="font-medium text-sky-400">2</small> minute</p>
       </div>
     </div>
   );
