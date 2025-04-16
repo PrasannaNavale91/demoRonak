@@ -13,8 +13,8 @@ const sendEmail = async ({ to, name = 'User', otp}) => {
       },
       templateId: process.env.TEMPLATE_ID,
       dynamicTemplateData: {
-        name: name,
-        otp: otp,
+        name,
+        otp,
       }
     };
     
