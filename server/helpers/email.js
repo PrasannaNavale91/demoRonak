@@ -13,14 +13,10 @@ const sendEmail = async ( to, otp, user ) => {
       },
       templateId: process.env.TEMPLATE_ID,
       dynamicTemplateData: {
-        name: user,
+        name: user.name,
         otp: otp,
       }
     };
-
-    // console.log("Sending email to:", to);
-    // console.log("OTP:", otp);
-    // console.log("Template ID:", process.env.TEMPLATE_ID);
     
     await sgMail.send(msg);
     console.log(`Email sent successfully ${to}`);

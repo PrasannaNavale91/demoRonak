@@ -146,7 +146,7 @@ const verifyOtp = async (req, res) => {
   const { otp, email } = req.body;
 
   try {
-    const record = await Otp.findOne({ email });
+    const record = await Otp.findOne({ email, otp: otp.toString() });
 
     if (!record || record.opt !== otp) {
       return res.status(400).json({
@@ -156,7 +156,7 @@ const verifyOtp = async (req, res) => {
     };
 
     if(record.expiresAt < new Date()){
-      await Otp.deleteOne({ email });
+      await Otp.deleteMany({ email });
       return res.status(400).json({
         success: false,
         message: "OTP expired"
