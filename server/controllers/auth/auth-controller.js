@@ -149,7 +149,7 @@ const verifyOtp = async (req, res) => {
   try {
     const record = await Otp.findOne({ email, otp: otp.toString() });
 
-    if (!record || record.opt !== otp) {
+    if (!record) {
       return res.status(400).json({
         success: false,
         message: "Invalid OTP"
