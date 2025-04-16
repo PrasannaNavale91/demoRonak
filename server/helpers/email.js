@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
-const Otp = require('./models/Otp');
+const Otp = require('../models/Otp');
 
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
