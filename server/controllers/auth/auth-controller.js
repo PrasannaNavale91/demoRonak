@@ -145,7 +145,7 @@ const sendOtp = async (req, res) => {
 }
 
 const verifyOtp = async (req, res) => {
-  const { otp, email } = req.body;
+  const { email, otp } = req.body;
 
   try {
     const otpRecord = await Otp.findOne({ email, otp: String(otp) });

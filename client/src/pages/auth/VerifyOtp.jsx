@@ -26,7 +26,7 @@ function AuthVerifyOtp() {
           title: data.payload.message,
         });
 
-        navigate(`/auth/reset-password/${token}`);
+        navigate(`/auth/reset-password/${data.payload.token}`);
       } else {
         toast({
           title: data?.payload?.message || "Invalid OTP or OTP expired",
