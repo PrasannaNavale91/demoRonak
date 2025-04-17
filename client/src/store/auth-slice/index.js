@@ -76,7 +76,7 @@ export const forgotPassword = createAsyncThunk(
 export const verifyOtp = createAsyncThunk(
   "/auth/verify-otp",
 
-  async ({ email , otp}, thunkAPI) => {
+  async ({ email , otp }, thunkAPI) => {
     try {
       const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/verify-otp", {
         email,
