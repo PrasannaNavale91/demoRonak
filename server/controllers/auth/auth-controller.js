@@ -121,11 +121,10 @@ const sendOtp = async (req, res) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const hashedOtp = await bcrypt.hash(otp, 10);
     await Otp.deleteMany({ email });
     const newOtp = new Otp({
       email,
-      otp: hashedOtp,
+      otp,
       expiresAt: new Date(Date.now() + 2 * 60 * 1000)
     });
     
@@ -159,7 +158,7 @@ const verifyOtp = async (req, res) => {
     };
     
     await Otp.deleteOne({ email });
-    const isValid = await bcrypt.compare(userInputOtp, record.otp);
+    const isValid = await userOtp.compare(userInputOtp, otpRecord.otp);
     const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "2m" });
     res.json({
       success: true,
