@@ -7,7 +7,7 @@ import CommonForm from "@/components/common/form";
 import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
-  password: "",
+  newPassword: "",
 };
 
 function AuthResetPassword() {
@@ -21,7 +21,7 @@ function AuthResetPassword() {
   async function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(resetPassword({ token, newPassword: formData.password })).then((data) => {
+    dispatch(resetPassword({ token, newPassword: formData.newPassword })).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data.payload.message,
