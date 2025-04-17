@@ -61,11 +61,11 @@ export const registerFormControls = [
 
   export const resetPasswordFormControls = [
     {
-      name: "reset password",
+      name: "resetPassword",
       label: "New Password",
       componentType: "input",
       type: "text",
-      placeholder: "Enter your new password...",
+      placeholder: "Enter your new password here...",
     },
   ];
   
