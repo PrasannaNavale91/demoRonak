@@ -125,7 +125,7 @@ const sendOtp = async (req, res) => {
     const newOtp = new Otp({
       email,
       otp,
-      expiresAt: new Date(Date.now() + 2 * 60 * 1000)
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000)
     });
     
     await newOtp.save();
@@ -159,7 +159,7 @@ const verifyOtp = async (req, res) => {
     
     await Otp.deleteOne({ email });
 
-    const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "2m" });
+    const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "10m" });
     res.json({
       success: true,
       message: "OTP verified",
@@ -192,6 +192,7 @@ const resetPassword = async (req, res) => {
       message: "Password reset successfully"
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       message: "Error resetting password",
       error
