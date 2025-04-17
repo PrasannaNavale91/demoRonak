@@ -122,20 +122,21 @@ const sendOtp = async (req, res) => {
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     await Otp.deleteMany({ email });
-    await Otp.create({
+    const newOtp = new Otp({
       email,
       otp,
       expiresAt: new Date(Date.now() + 2 * 60 * 1000)
     });
-
+    
+    await newOtp.save();
     await sendEmail(email, otp, user.name);
     
     res.status(200).json({
       success: true,
-      message: "OTP sent to email"
+      message: "OTP sent to email successfully"
     });
   } catch (error) {
-    console.error("Server error in sendOtp:", error);
+    console.error(error);
     res.status(500).json({
       success: false,
       message: "Error sending OTP"
@@ -147,29 +148,22 @@ const verifyOtp = async (req, res) => {
   const { otp, email } = req.body;
 
   try {
-    const record = await Otp.findOne({ email, otp: otp.toString() });
+    const otpRecord = await Otp.findOne({ email, otp });
 
-    if (!record) {
+    if (!otpRecord || otpRecord.expiresAt < new Date()) {
       return res.status(400).json({
         success: false,
-        message: "Invalid OTP"
+        message: "Invalid OTP or expired OTP"
       })
     };
-
-    if(record.expiresAt < new Date()){
-      await Otp.deleteOne({ email });
-      return res.status(400).json({
-        success: false,
-        message: "OTP expired"
-      });
-    }
+    
+    await Otp.deleteOne({ email });
 
     const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "2m" });
     res.json({
       success: true,
       message: "OTP verified",
       token,
-      email
     });
   } catch (error) {
     console.error("OTP Verification Error:", error);
