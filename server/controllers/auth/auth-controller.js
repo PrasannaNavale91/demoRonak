@@ -158,13 +158,13 @@ const verifyOtp = async (req, res) => {
     };
     
     await Otp.deleteOne({ email });
-    const isValid = await userOtp.compare(userInputOtp, otpRecord.otp);
+
     const token = jwt.sign({ email }, process.env.JWT_RESET_TOKEN, { expiresIn: "2m" });
     res.json({
       success: true,
       message: "OTP verified",
       token,
-      isValid
+      email
     });
   } catch (error) {
     console.error(error);
