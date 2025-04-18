@@ -16,12 +16,12 @@ function AuthResetPassword() {
   const { toast } = useToast();
   const { token } = useParams();
   const navigate = useNavigate();
+  const decodedToken = decodeURIComponent(token);
   
-
   async function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(resetPassword({ token, newPassword: formData.newPassword })).then((data) => {
+    dispatch(resetPassword({ token: decodedToken, newPassword: formData.newPassword })).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data.payload.message,

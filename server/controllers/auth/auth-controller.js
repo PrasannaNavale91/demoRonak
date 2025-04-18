@@ -179,14 +179,15 @@ const resetPassword = async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
-    console.log("Received token:", token);
     const decoded = jwt.verify(token, process.env.JWT_RESET_TOKEN);
-    console.log("Decoded token:", decoded);
+    console.log("Received token:", token);
     const user = await User.findOne({ email: decoded.email });
+    console.log("Decoded token:", decoded);
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
     user.password = await bcrypt.hash(newPassword, 10);
+    console.log("New password:", newPassword);
     await user.save();
 
     res.json({
