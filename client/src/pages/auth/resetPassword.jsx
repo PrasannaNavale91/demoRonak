@@ -34,6 +34,13 @@ function AuthResetPassword() {
           variant: "destructive",
         });
       }
+    })
+    .catch((err) => {
+      console.error("🔥 Reset password request failed:", err);
+      toast({
+        title: "Request failed",
+        variant: "destructive",
+      });
     });
   }
 
