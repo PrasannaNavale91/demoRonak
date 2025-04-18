@@ -179,19 +179,21 @@ const resetPassword = async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
-    console.log("Received token:", token);
-    console.log("🔥 JWT_SECRET:", process.env.JWT_RESET_TOKEN);
-
-    const decoded = jwt.verify(token, process.env.JWT_RESET_TOKEN);
-    console.log("Decoded token:", decoded);
+    if (!token || !newPassword) {
+      return res.status(400).json({ message: "Token or password missing" });
+    }
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_RESET_TOKEN);
+    } catch (error) {
+      console.error("JWT verification error:", error);
+      return res.status(401).json({ message: "Invalid or expired token" });
+    }
 
     const user = await User.findOne({ email: decoded.email });
-    console.log("🔥 Found user:", user);
-
     if (!user) return res.status(404).json({ message: "User not found" });
 
     user.password = await bcrypt.hash(newPassword, 10);
-    console.log("New password:", newPassword);
     await user.save();
 
     res.json({
@@ -199,7 +201,7 @@ const resetPassword = async (req, res) => {
       message: "Password reset successfully"
     });
   } catch (error) {
-    console.error("Explain error:", error);
+    console.error("Error while resetting password:", error);
     res.status(500).json({
       message: "Error resetting password",
       error
