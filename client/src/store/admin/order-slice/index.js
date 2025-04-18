@@ -10,7 +10,7 @@ export const getAllOrdersForAdmin = createAsyncThunk(
   "/order/getAllOrdersForAdmin",
   async () => {
     const response = await axios.get(
-      `https://www.trendcrave.it.com/api/admin/orders/get`
+      `https://ecommerce-app-xg3v.onrender.com/api/admin/orders/get`
     );
 
     return response.data;
@@ -21,7 +21,7 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
   "/order/getOrderDetailsForAdmin",
   async (id) => {
     const response = await axios.get(
-      `https://www.trendcrave.it.com/api/admin/orders/details/${id}`
+      `https://ecommerce-app-xg3v.onrender.com/api/admin/orders/details/${id}`
     );
 
     return response.data;
@@ -32,7 +32,7 @@ export const updateOrderStatus = createAsyncThunk(
   "/order/updateOrderStatus",
   async ({ id, orderStatus }) => {
     const response = await axios.put(
-      `https://www.trendcrave.it.com/api/admin/orders/update/${id}`,
+      `https://ecommerce-app-xg3v.onrender.com/api/admin/orders/update/${id}`,
       {
         orderStatus,
       }

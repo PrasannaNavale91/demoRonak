@@ -25,7 +25,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: ["https://ecommerce-d3qt.onrender.com", "https://www.trendcrave.it.com"],
+  origin: "https://www.trendcrave.it.com",
   methods: ["GET", "POST", "DELETE", "PUT"],
   allowedHeaders: [ "Content-Type", "Authorization", "Cache-Control", "Expires", "Pragma",],
   credentials: true,
