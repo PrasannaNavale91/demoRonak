@@ -18,7 +18,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
     });
 
     const result = await axios.get(
-      `https://ecommerce-app-xg3v.onrender.com/api/shop/products/get?${query}`
+      `https://www.trendcrave.it.com/api/shop/products/get?${query}`
     );
 
     console.log(result);
@@ -31,7 +31,7 @@ export const fetchProductDetails = createAsyncThunk(
   "/products/fetchProductDetails",
   async (id) => {
     const result = await axios.get(
-      `https://ecommerce-app-xg3v.onrender.com/api/shop/products/get/${id}`
+      `https://www.trendcrave.it.com/api/shop/products/get/${id}`
     );
 
     return result?.data;

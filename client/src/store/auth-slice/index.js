@@ -6,7 +6,7 @@ export const registerUser = createAsyncThunk(
 
   async (formData) => {
     const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/register",
+      "https://www.trendcrave.it.com/api/auth/register",
       formData,
       {
         withCredentials: true,
@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
 
   async (formData) => {
     const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/login",
+      "https://www.trendcrave.it.com/api/auth/login",
       formData,
       {
         withCredentials: true,
@@ -44,7 +44,7 @@ export const logoutUser = createAsyncThunk(
 
   async () => {
     const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/logout",
+      "https://www.trendcrave.it.com/api/auth/logout",
       {},
       {
         withCredentials: true,
@@ -63,7 +63,7 @@ export const forgotPassword = createAsyncThunk(
 
   async ({ email }, thunkAPI) => {
     try {
-      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/forgot-password", {
+      const res = await axios.post("https://www.trendcrave.it.com/api/auth/forgot-password", {
         email
       });
       return res.data;
@@ -78,7 +78,7 @@ export const verifyOtp = createAsyncThunk(
 
   async ({ email , otp }, thunkAPI) => {
     try {
-      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/verify-otp", {
+      const res = await axios.post("https://www.trendcrave.it.com/api/auth/verify-otp", {
         email,
         otp,
       });
@@ -94,7 +94,7 @@ export const resetPassword = createAsyncThunk(
 
   async ({ token, newPassword }, thunkAPI) => {
     try {
-      const res = await axios.post("https://ecommerce-app-xg3v.onrender.com/api/auth/reset-password", {
+      const res = await axios.post("https://www.trendcrave.it.com/api/auth/reset-password", {
         token,
         newPassword,
       });
@@ -110,7 +110,7 @@ export const checkAuth = createAsyncThunk(
 
   async () => {
     const response = await axios.get(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/check-auth",
+      "https://www.trendcrave.it.com/api/auth/check-auth",
       {
         withCredentials: true,
         headers: {
