@@ -9,7 +9,7 @@ const sendOTP = async ( to, otp, name ) => {
       to,
       from: {
         name: 'TrendCrave',
-        email: 'prasanna99navale@gmail.com'
+        email: 'support@trendcrave.it.com'
       },
       templateId: process.env.TEMPLATE_ID,
       dynamicTemplateData: {
@@ -31,7 +31,7 @@ const sendEmail = async ( to, username ) => {
       to,
       from: {
         name: 'TrendCrave',
-        email: 'prasanna@trendcrave.it.com'
+        email: 'support@trendcrave.it.com'
       },
       templateId: process.env.TEMPLATE_ID2,
       dynamicTemplateData: {
