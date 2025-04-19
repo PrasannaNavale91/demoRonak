@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 const Otp = require("../../models/Otp");
-const sendEmail = require("../../helpers/email");
+const { sendEmail , sendOTP } = require("../../helpers/email");
 
 require("dotenv").config();
 
@@ -31,15 +31,8 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
+    await sendEmail(email, userName);
 
-    const welcomeMessage = `
-      <h2>Welcome to Our Store, ${userName}!</h2>
-      <p>Thank you for registering with us. Stay tuned for exciting offers!</p>
-      <br>
-      <p>Best regards,</p>
-      <p>The Trend Crave Team</p>
-    `;
-    await sendEmail(email, 'Congratulation! Shop now on lowest pricing', welcomeMessage);
     res.status(200).json({
       success: true,
       message: "Registration successful",
@@ -133,7 +126,7 @@ const sendOtp = async (req, res) => {
     });
     
     await newOtp.save();
-    await sendEmail(email, otp, user.name);
+    await sendOTP(email, otp, user.name);
     
     res.status(200).json({
       success: true,
