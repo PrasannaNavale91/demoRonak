@@ -20,13 +20,13 @@ export const registerFormControls = [
       componentType: "input",
       type: "password",
     },
-    {
-      name: "confirmPassword",
-      label: "Confirm Password",
-      placeholder: "Re-enter your password",
-      componentType: "input",
-      type: "password",
-    },
+    // {
+    //   name: "confirmPassword",
+    //   label: "Confirm Password",
+    //   placeholder: "Re-enter your password",
+    //   componentType: "input",
+    //   type: "password",
+    // },
   ];
   
   export const loginFormControls = [
@@ -74,13 +74,13 @@ export const registerFormControls = [
       type: "text",
       placeholder: "Enter your new password here...",
     },
-    {
-      name: "confirmPassword",
-      label: "Confirm Password",
-      placeholder: "Re-enter your password",
-      componentType: "input",
-      type: "password",
-    },
+    // {
+    //   name: "confirmPassword",
+    //   label: "Confirm Password",
+    //   placeholder: "Re-enter your password",
+    //   componentType: "input",
+    //   type: "password",
+    // },
   ];
   
   export const addProductFormElements = [

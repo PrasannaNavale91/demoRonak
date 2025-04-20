@@ -8,7 +8,7 @@ require("dotenv").config();
 
 //register
 const registerUser = async (req, res) => {
-  const { userName, email, password, confirmPassword } = req.body;
+  const { userName, email, password } = req.body;
 
   try {
     const checkUser = await User.findOne({ email });
@@ -19,9 +19,9 @@ const registerUser = async (req, res) => {
       message: "User Already exists with the same email! Please try again",
     });
 
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+    // if (password !== confirmPassword) {
+    //   return res.status(400).json({ message: "Invalid credentials" });
+    // }
 
     const hashPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
@@ -173,7 +173,7 @@ const verifyOtp = async (req, res) => {
 }
 
 const resetPassword = async (req, res) => {
-  const { token, newPassword, confirmPassword } = req.body;
+  const { token, newPassword } = req.body;
 
   try {
     console.log("Received token:", token);
@@ -186,9 +186,9 @@ const resetPassword = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (newPassword !== confirmPassword) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+    // if (newPassword !== confirmPassword) {
+    //   return res.status(400).json({ message: "Invalid credentials" });
+    // }
 
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();

@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
   newPassword: "",
-  confirmPassword: "",
+  // confirmPassword: "",
 };
 
 function AuthResetPassword() {
