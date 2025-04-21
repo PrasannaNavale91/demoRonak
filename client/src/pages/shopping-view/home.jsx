@@ -207,7 +207,7 @@ function ShoppingHome() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {collectionWithIcon.map((collectionItem) => (
               <Card
-                onClick={() => handleNavigateToListingPage(collectionItem, "brand")}
+                onClick={() => handleNavigateToListingPage(collectionItem, "collection")}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
