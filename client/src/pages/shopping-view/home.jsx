@@ -221,7 +221,7 @@ function ShoppingHome() {
       </section>
 
       <section className="py-12">
-        <div className="container mx-auto px-2">
+        <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
@@ -233,7 +233,7 @@ function ShoppingHome() {
                 ? productList.map((productItem, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2"
+                    className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/6 px-2"
                   >
                     <ShoppingProductTile
                       handleGetProductDetails={handleGetProductDetails}
