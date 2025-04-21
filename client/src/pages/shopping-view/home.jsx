@@ -221,7 +221,7 @@ function ShoppingHome() {
       </section>
 
       <section className="py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2">
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
@@ -280,7 +280,7 @@ function ShoppingHome() {
         </div>
       </section>
 
-      <section className="py-12">
+      {/* <section className="py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             New Arrivals
@@ -305,7 +305,7 @@ function ShoppingHome() {
                   ))
                 : null}
             </div>
-            {/* Navigation Buttons */}
+
             <button
               variant="outline"
               size="icon"
@@ -324,7 +324,7 @@ function ShoppingHome() {
             </button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="py-12 border-t-2">
         <div className="container mx-auto px-4">
