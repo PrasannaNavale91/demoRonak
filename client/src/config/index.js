@@ -103,23 +103,28 @@ export const registerFormControls = [
       componentType: "select",
       options: [
         { id: "men", label: "Men" },
-        { id: "women", label: "Women" },
         { id: "kids", label: "Kids" },
-        { id: "accessories", label: "Accessories" },
-        { id: "footwear", label: "Footwear" },
+        { id: "women", label: "Women" },
       ],
     },
     {
-      label: "Brand",
-      name: "brand",
+      label: "Collection",
+      name: "collection",
       componentType: "select",
       options: [
-        { id: "nike", label: "Nike" },
-        { id: "adidas", label: "Adidas" },
-        { id: "puma", label: "Puma" },
-        { id: "levi", label: "Levi's" },
-        { id: "zara", label: "Zara" },
-        { id: "h&m", label: "H&M" },
+        { id: "shirts", label: "Shirts" },
+        { id: "t-shirts", label: "T-Shirts" },
+        { id: "trousers", label: "Trousers" },
+        { id: "jeans", label: "Jeans" },
+        { id: "cargos", label: "Cargos" },
+        { id: "joggers", label: "Joggers" },
+        { id: "oversized", label: "Oversized" },
+        { id: "hoodies", label: "Hoodies & Sweatshirts" },
+        { id: "jackets", label: "Jackets" },
+        { id: "shorts", label: "Shorts" },
+        { id: "formal", label: "Formal Wear" },
+        { id: "footwear", label: "Footwear"},
+        { id: "accessories", label: "Accessories"},
       ],
     },
     {
@@ -172,16 +177,6 @@ export const registerFormControls = [
       path: "/shop/listing",
     },
     {
-      id: "footwear",
-      label: "Footwear",
-      path: "/shop/listing",
-    },
-    {
-      id: "accessories",
-      label: "Accessories",
-      path: "/shop/listing",
-    },
-    {
       id: "search",
       label: "Search",
       path: "/shop/search",
@@ -190,19 +185,24 @@ export const registerFormControls = [
   
   export const categoryOptionsMap = {
     men: "Men",
-    women: "Women",
     kids: "Kids",
-    accessories: "Accessories",
-    footwear: "Footwear",
+    women: "Women",
   };
   
-  export const brandOptionsMap = {
-    nike: "Nike",
-    adidas: "Adidas",
-    puma: "Puma",
-    levi: "Levi",
-    zara: "Zara",
-    "h&m": "H&M",
+  export const collectionOptionsMap = {
+    shirts: "Shirts",
+    "t-shirts": "T-Shirts",
+    trousers: "Trousers",
+    jeans: "Jeans",
+    cargos: "Cargos",
+    joggers: "Joggers",
+    oversized: "Oversized",
+    hoodies: "Hoodies & Sweatshirts",
+    jackets: "Jackets",
+    shorts: "Shorts",
+    formal: "Formal Wear",
+    footwear: "Footwear",
+    accessories: "Accessories",
   };
   
   export const filterOptions = {
@@ -210,16 +210,21 @@ export const registerFormControls = [
       { id: "men", label: "Men" },
       { id: "women", label: "Women" },
       { id: "kids", label: "Kids" },
-      { id: "accessories", label: "Accessories" },
-      { id: "footwear", label: "Footwear" },
     ],
-    brand: [
-      { id: "nike", label: "Nike" },
-      { id: "adidas", label: "Adidas" },
-      { id: "puma", label: "Puma" },
-      { id: "levi", label: "Levi's" },
-      { id: "zara", label: "Zara" },
-      { id: "h&m", label: "H&M" },
+    collection: [
+      { id: "shirts", label: "Shirts" },
+      { id: "t-shirts", label: "T-Shirts" },
+      { id: "trousers", label: "Trousers" },
+      { id: "jeans", label: "Jeans" },
+      { id: "cargos", label: "Cargos" },
+      { id: "joggers", label: "Joggers" },
+      { id: "oversized", label: "Oversized" },
+      { id: "hoodies", label: "Hoodies & Sweatshirts" },
+      { id: "jackets", label: "Jackets" },
+      { id: "shorts", label: "Shorts" },
+      { id: "formal", label: "Formal Wear" },
+      { id: "footwear", label: "Footwear"},
+      { id: "accessories", label: "Accessories"},
     ],
   };
   
