@@ -146,7 +146,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               ₹{productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 ? (
-              <p className="text-lg lg:text-xl font-bold text-muted-foreground">
+              <p className="text-sm font-bold text-muted-foreground">
                 ₹{productDetails?.salePrice}
               </p>
             ) : null}
