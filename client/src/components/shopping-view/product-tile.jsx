@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { collectionOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
+import { ShoppingCart } from "lucide-react";
 
 function ShoppingProductTile({
   product,
@@ -65,9 +66,9 @@ function ShoppingProductTile({
         ) : (
           <Button
             onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
-            className="w-full"
+            className="w-full text-black bg-transparent hover:bg-black hover:text-white border"
           >
-            Add to cart
+            <ShoppingCart className="w-4 h-4" /> Add to cart
           </Button>
         )}
       </CardFooter>

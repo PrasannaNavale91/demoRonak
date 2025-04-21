@@ -2,23 +2,6 @@ import { Button } from "@/components/ui/button";
 import bannerOne from "../../assets/banner_1.png";
 import bannerTwo from "../../assets/banner_2.png";
 import bannerThree from "../../assets/banner_3.png";
-import {
-  Airplay,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  FacebookIcon,
-  Heater,
-  Images,
-  InstagramIcon,
-  LinkedinIcon,
-  Mail,
-  Shirt,
-  ShoppingBasket,
-  UmbrellaIcon,
-  WashingMachine,
-  WatchIcon,
-  YoutubeIcon,
-} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,20 +17,20 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 
 const collectionWithIcon = [
-  { id: "shirts", label: "Shirts", icon: Shirt },
-  { id: "t-shirts", label: "T-Shirts", icon: WashingMachine },
-  { id: "trousers", label: "Trousers", icon: WatchIcon },
-  { id: "jeans", label: "Jeans", icon: UmbrellaIcon },
-  { id: "cargos", label: "Cargos", icon: ShoppingBasket },
-  { id: "joggers", label: "Joggers", icon: Airplay },
-  { id: "oversized", label: "Oversized", icon: Images },
-  { id: "hoodies", label: "Hoodies", icon: Heater },
-  { id: "sweatshirts", label: "Sweatshirts", icon: Heater },
-  { id: "jackets", label: "Jackets", icon: Heater },
-  { id: "shorts", label: "Shorts", icon: Heater },
-  { id: "formal", label: "Formal Wear", icon: Heater },
-  { id: "footwear", label: "Footwear", icon: Heater },
-  { id: "accessories", label: "Accessories", icon: Heater },
+  { id: "shirts", label: "Shirts", image: Shirt },
+  { id: "t-shirts", label: "T-Shirts", image: T-Shirts },
+  { id: "trousers", label: "Trousers", image: Trousers },
+  { id: "jeans", label: "Jeans", image: Jeans },
+  { id: "cargos", label: "Cargos", image: Cargos },
+  { id: "joggers", label: "Joggers", image: Joggers },
+  { id: "oversized", label: "Oversized", image: Oversized },
+  { id: "hoodies", label: "Hoodies", image: Hoodies },
+  { id: "sweatshirts", label: "Sweatshirts", image: Sweatshirts },
+  { id: "jackets", label: "Jackets", image: Jackets },
+  { id: "shorts", label: "Shorts", image: Shorts },
+  { id: "formal", label: "Formal Wear", image: Formals },
+  { id: "footwear", label: "Footwear", image: Footwear },
+  { id: "accessories", label: "Accessories", image: Accessories },
 ];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -221,7 +204,7 @@ function ShoppingHome() {
       </section>
 
       <section className="py-12">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-2">
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
@@ -233,7 +216,7 @@ function ShoppingHome() {
                 ? productList.map((productItem, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/6 px-2"
+                    className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2"
                   >
                     <ShoppingProductTile
                       handleGetProductDetails={handleGetProductDetails}
