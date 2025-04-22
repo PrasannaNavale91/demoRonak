@@ -161,7 +161,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             ) : null}
           </div>
           <div className="flex gap-2">
-            {product.sizes.map((size, i) => (
+            {productDetails.sizes.map((size, i) => (
               <button
                 key={i}
                 className={`px-3 py-1 border rounded ${
@@ -174,9 +174,9 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             ))}
           </div>
           {/* Colors */}
-          {product.colors.length > 1 && (
+          {productDetails.colors.length > 1 && (
             <div className="flex gap-2">
-              {product.colors.map((color, i) => (
+              {productDetails.colors.map((color, i) => (
                 <div
                   key={i}
                   className={`w-6 h-6 rounded-full border-2 cursor-pointer ${
