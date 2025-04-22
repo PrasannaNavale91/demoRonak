@@ -14,10 +14,10 @@ import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+  const [selectedImage, setSelectedImage] = useState(productDetails.images[0]);
+  const [selectedSize, setSelectedSize] = useState(productDetails.sizes[0]);
   const [selectedColor, setSelectedColor] = useState(
-    product.colors.length > 1 ? product.colors[0] : null
+    productDetails.colors.length > 1 ? productDetails.colors[0] : null
   );
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
