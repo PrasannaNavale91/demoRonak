@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema(
   {
-    image: String,
+    image: [String],
     title: String,
     description: String,
     category: String,
     collection: String,
-    size: String,
-    color: String,
+    size: [String],
+    color: [String],
     price: Number,
     salePrice: Number,
     totalStock: Number,
