@@ -14,11 +14,6 @@ import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
-  const [selectedImage, setSelectedImage] = useState(productDetails.images[0]);
-  const [selectedSize, setSelectedSize] = useState(productDetails.sizes[0]);
-  const [selectedColor, setSelectedColor] = useState(
-    productDetails.colors.length > 1 ? productDetails.colors[0] : null
-  );
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
@@ -127,17 +122,13 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     <Dialog open={open} onOpenChange={handleDialogClose} className="container mx-auto">
       <DialogContent className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw] max-h-[90vh] overflow-y-auto">
         <div className="relative overflow-hidden rounded-lg">
-          {product.images.map((img, i) => (
-            <img
-              key={i}
-              width={600}
-              height={600}
-              src={productDetails?.image}
-              alt={productDetails?.title}
-              onClick={() => setSelectedImage(img)}
-              className="aspect-square w-full object-cover"
-            />
-          ))}
+          <img
+            width={600}
+            height={600}
+            src={productDetails?.image}
+            alt={productDetails?.title}
+            className="aspect-square w-full object-cover"
+          />
         </div>
         <div className="p-1">
           <div>
@@ -160,34 +151,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
-          <div className="flex gap-2">
-            {productDetails.sizes.map((size, i) => (
-              <button
-                key={i}
-                className={`px-3 py-1 border rounded ${
-                  selectedSize === size ? "border-black" : "border-gray-300"
-                }`}
-                onClick={() => setSelectedSize(size)}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
-          {/* Colors */}
-          {productDetails.colors.length > 1 && (
-            <div className="flex gap-2">
-              {productDetails.colors.map((color, i) => (
-                <div
-                  key={i}
-                  className={`w-6 h-6 rounded-full border-2 cursor-pointer ${
-                    selectedColor === color ? "border-black" : "border-gray-300"
-                  }`}
-                  style={{ backgroundColor: color }}
-                  onClick={() => setSelectedColor(color)}
-                ></div>
-              ))}
-            </div>
-          )}
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
               <StarRatingComponent rating={averageReview} />
