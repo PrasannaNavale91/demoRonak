@@ -15,23 +15,40 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
-import { ChevronLeftIcon, ChevronRightIcon, FacebookIcon, InstagramIcon, LinkedinIcon, Mail, YoutubeIcon } from "lucide-react";
+import { 
+  BabyIcon, 
+  ChevronLeftIcon, 
+  ChevronRightIcon, 
+  CloudLightning, 
+  FacebookIcon, 
+  InstagramIcon, 
+  LinkedinIcon, 
+  Mail, 
+  Shirt, 
+  ShirtIcon, 
+  YoutubeIcon } from "lucide-react";
+
+const categoriesWithIcon = [
+  { id: "men", label: "Men", icon: ShirtIcon },
+  { id: "women", label: "Women", icon: CloudLightning },
+  { id: "kids", label: "Kids", icon: BabyIcon },
+];
 
 const collectionWithIcon = [
-  { id: "shirts", label: "Shirts",},
-  { id: "t-shirts", label: "T-Shirts", },
-  { id: "trousers", label: "Trousers", },
-  { id: "jeans", label: "Jeans",},
-  { id: "cargos", label: "Cargos",},
-  { id: "joggers", label: "Joggers", },
-  { id: "oversized", label: "Oversized", },
-  { id: "hoodies", label: "Hoodies", },
-  { id: "sweatshirts", label: "Sweatshirts", },
-  { id: "jackets", label: "Jackets", },
-  { id: "shorts", label: "Shorts", },
-  { id: "formal", label: "Formal Wear", },
-  { id: "footwear", label: "Footwear",},
-  { id: "accessories", label: "Accessories", },
+  { id: "shirts", label: "Shirts", icon: Shirt },
+  { id: "t-shirts", label: "T-Shirts", icon: Shirt },
+  { id: "trousers", label: "Trousers", icon: Shirt },
+  { id: "jeans", label: "Jeans", icon: Shirt },
+  { id: "cargos", label: "Cargos", icon: Shirt },
+  { id: "joggers", label: "Joggers", icon: Shirt },
+  { id: "oversized", label: "Oversized", icon: Shirt },
+  { id: "hoodies", label: "Hoodies", icon: Shirt },
+  { id: "sweatshirts", label: "Sweatshirts", icon: Shirt },
+  { id: "jackets", label: "Jackets", icon: Shirt },
+  { id: "shorts", label: "Shorts", icon: Shirt },
+  { id: "formal", label: "Formal Wear", icon: Shirt },
+  { id: "footwear", label: "Footwear", icon: Shirt },
+  { id: "accessories", label: "Accessories", icon: Shirt },
 ];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -187,6 +204,29 @@ function ShoppingHome() {
 
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Shop by category
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {categoriesWithIcon.map((categoryItem) => (
+              <Card
+                onClick={() =>
+                  handleNavigateToListingPage(categoryItem, "category")
+                }
+                className="cursor-pointer hover:shadow-lg transition-shadow"
+              >
+                <CardContent className="flex flex-col items-center justify-center p-6">
+                  <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
+                  <span className="font-bold">{categoryItem.label}</span>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Check Out Our Collection</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {collectionWithIcon.map((collectionItem) => (
@@ -263,52 +303,6 @@ function ShoppingHome() {
           </Link>
         </div>
       </section>
-
-      {/* <section className="py-12">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            New Arrivals
-          </h2>
-          <div className="relative overflow-hidden">
-            <div className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 20}%)` }}
-            >
-              {productList && productList.length > 0
-                ? productList.map((productItem, index) => (
-                  <div
-                    key={index}
-                    className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2"
-                  >
-                    <ShoppingProductTile
-                      handleGetProductDetails={handleGetProductDetails}
-                      product={productItem}
-                      handleAddtoCart={handleAddtoCart}
-                      className="h-full w-64 flex justify-center items-center"
-                    />
-                  </div>
-                  ))
-                : null}
-            </div>
-
-            <button
-              variant="outline"
-              size="icon"
-              onClick={handlePrev}
-              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 z-10"
-            >
-              <ChevronLeftIcon className="w-4 h-4" />
-            </button>
-            <button
-              variant="outline"
-              size="icon"
-              onClick={handleNext}
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 z-10"
-            >
-              <ChevronRightIcon className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </section> */}
 
       <section className="py-12 border-t-2">
         <div className="container mx-auto px-4">
