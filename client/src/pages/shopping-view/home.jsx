@@ -17,20 +17,20 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 
 const collectionWithIcon = [
-  { id: "shirts", label: "Shirts", image: Shirt },
-  { id: "t-shirts", label: "T-Shirts", image: T-Shirts },
-  { id: "trousers", label: "Trousers", image: Trousers },
-  { id: "jeans", label: "Jeans", image: Jeans },
-  { id: "cargos", label: "Cargos", image: Cargos },
-  { id: "joggers", label: "Joggers", image: Joggers },
-  { id: "oversized", label: "Oversized", image: Oversized },
-  { id: "hoodies", label: "Hoodies", image: Hoodies },
-  { id: "sweatshirts", label: "Sweatshirts", image: Sweatshirts },
-  { id: "jackets", label: "Jackets", image: Jackets },
-  { id: "shorts", label: "Shorts", image: Shorts },
-  { id: "formal", label: "Formal Wear", image: Formals },
-  { id: "footwear", label: "Footwear", image: Footwear },
-  { id: "accessories", label: "Accessories", image: Accessories },
+  { id: "shirts", label: "Shirts",},
+  { id: "t-shirts", label: "T-Shirts", },
+  { id: "trousers", label: "Trousers", },
+  { id: "jeans", label: "Jeans",},
+  { id: "cargos", label: "Cargos",},
+  { id: "joggers", label: "Joggers", },
+  { id: "oversized", label: "Oversized", },
+  { id: "hoodies", label: "Hoodies", },
+  { id: "sweatshirts", label: "Sweatshirts", },
+  { id: "jackets", label: "Jackets", },
+  { id: "shorts", label: "Shorts", },
+  { id: "formal", label: "Formal Wear", },
+  { id: "footwear", label: "Footwear",},
+  { id: "accessories", label: "Accessories", },
 ];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
