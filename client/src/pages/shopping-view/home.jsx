@@ -15,6 +15,7 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 const collectionWithIcon = [
   { id: "shirts", label: "Shirts",},
