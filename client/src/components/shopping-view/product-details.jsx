@@ -166,7 +166,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </Button>
             ) : (
               <Button
-                className="w-full"
+                className="w-full text-black bg-transparent hover:bg-black hover:text-white border"
                 onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
@@ -174,7 +174,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                   )
                 }
               >
-                Add to Cart
+                <ShoppingCart className="w-4 h-4" /> Add to Cart
               </Button>
             )}
           </div>
