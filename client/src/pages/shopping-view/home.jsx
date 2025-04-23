@@ -15,41 +15,55 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
-import { 
-  BabyIcon, 
+import {  
   ChevronLeftIcon, 
   ChevronRightIcon, 
-  CloudLightning, 
   FacebookIcon, 
   InstagramIcon, 
   LinkedinIcon, 
-  Mail, 
-  Shirt, 
-  ShirtIcon, 
-  Truck, 
+  Mail,  
   YoutubeIcon } from "lucide-react";
+import Men from "../../assets/men.png"
+import Women from "../../assets/women.png";
+import Kids from "../../assets/kids.png";
+import Shirt from "../../assets/Shirt.png";
+import TShirt from "../../assets/t-shirt.png";
+import Trousers from "../../assets/Trouser.png";
+import Jeans from "../../assets/jeans.png";
+import Cargos from "../../assets/cargos.webp";
+import Joggers from "../../assets/joggers.webp";
+import Oversized from "../../assets/oversized.webp";
+import Hoodies from "../../assets/hoodie.webp";
+import SweatShirts from "../../assets/black-sweatshirt.webp";
+import Jackets from "../../assets/Jacket.png";
+import Shorts from "../../assets/mens-shorts.webp";
+import Shoes from "../../assets/shoes.webp"
+import Formals from "../../assets/formal-wear.png"
+import Bgwomen from "../../assets/women.jpg"
+import Bgbag from "../../assets/bag.png"
+import Bgfootwear from "../../assets/footwear.jpg"
 
-const categoriesWithIcon = [
-  { id: "men", label: "Men", icon: ShirtIcon },
-  { id: "women", label: "Women", icon: CloudLightning },
-  { id: "kids", label: "Kids", icon: BabyIcon },
+const categoriesWithImages = [
+  { id: "men", label: "Men", image: Men },
+  { id: "women", label: "Women", image: Women },
+  { id: "kids", label: "Kids", image: Kids },
 ];
 
-const collectionWithIcon = [
-  { id: "shirts", label: "Shirts", icon: Shirt },
-  { id: "t-shirts", label: "T-Shirts", icon: Shirt },
-  { id: "trousers", label: "Trousers", icon: Shirt },
-  { id: "jeans", label: "Jeans", icon: Shirt },
-  { id: "cargos", label: "Cargos", icon: Shirt },
-  { id: "joggers", label: "Joggers", icon: Shirt },
-  { id: "oversized", label: "Oversized", icon: Shirt },
-  { id: "hoodies", label: "Hoodies", icon: Shirt },
-  { id: "sweatshirts", label: "Sweatshirts", icon: Shirt },
-  { id: "jackets", label: "Jackets", icon: Shirt },
-  { id: "shorts", label: "Shorts", icon: Shirt },
-  { id: "formal", label: "Formal Wear", icon: Shirt },
-  { id: "footwear", label: "Footwear", icon: Shirt },
-  { id: "accessories", label: "Accessories", icon: Shirt },
+const collectionWithImages = [
+  { id: "shirts", label: "Shirts", image: Shirt },
+  { id: "t-shirts", label: "T-Shirts", image: TShirt },
+  { id: "trousers", label: "Trousers", image: Trousers },
+  { id: "jeans", label: "Jeans", image: Jeans },
+  { id: "cargos", label: "Cargos", image: Cargos },
+  { id: "joggers", label: "Joggers", image: Joggers },
+  { id: "oversized", label: "Oversized", image: Oversized },
+  { id: "hoodies", label: "Hoodies", image: Hoodies },
+  { id: "sweatshirts", label: "Sweatshirts", image: SweatShirts },
+  { id: "jackets", label: "Jackets", image: Jackets },
+  { id: "shorts", label: "Shorts", image: Shorts },
+  { id: "formal", label: "Formal Wear", image: Formals },
+  { id: "footwear", label: "Footwear", image: Shoes },
+  { id: "accessories", label: "Accessories", image: Jeans },
 ];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -209,7 +223,7 @@ function ShoppingHome() {
             Shop by category
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {categoriesWithIcon.map((categoryItem) => (
+            {categoriesWithImages.map((categoryItem) => (
               <Card
                 onClick={() =>
                   handleNavigateToListingPage(categoryItem, "category")
@@ -217,7 +231,7 @@ function ShoppingHome() {
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
+                  <img src={categoryItem.image} alt="category_Image" width={100} />
                   <span className="font-bold">{categoryItem.label}</span>
                 </CardContent>
               </Card>
@@ -230,13 +244,13 @@ function ShoppingHome() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Check Out Our Collection</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {collectionWithIcon.map((collectionItem) => (
+            {collectionWithImages.map((collectionItem) => (
               <Card
                 onClick={() => handleNavigateToListingPage(collectionItem, "collection")}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <collectionItem.icon className="w-12 h-12 mb-4 text-primary" />
+                  <img src={collectionItem.image} alt="" width={100} height={100}/>
                   <span className="font-bold">{collectionItem.label}</span>
                 </CardContent>
               </Card>
@@ -295,47 +309,56 @@ function ShoppingHome() {
         productDetails={productDetails}
       />
 
-      <section className=" bg-orange-400">
-        <div className="container py-12 px-10 text-center">
-          <p className="text-xs uppercase font-bold text-gray-100 tracking-widest">Free Delivery Now On Your First Order and over ₹800</p>
-          <h3 className="text-4xl md:text-6xl text-gray-100 py-8 uppercase font-bold tracking-widest"><Truck />Free Shipping</h3>
-          <Link to="/shop/listing" className="bg-white py-3 px-16 rounded-none text-slate-950">
-            <span className="text-slate-950">Shop Now</span>
-          </Link>
+      <section className="">
+        <div className="relative overflow-hidden">
+          {/* Background video */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          >
+            <source src="https://videos.pexels.com/video-files/855823/855823-hd_1920_1080_15fps.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="relative z-10 container py-12 px-10 text-center">
+            <p className="text-xs uppercase font-bold text-gray-100 tracking-widest">Free Delivery Now On Your First Order and over ₹800</p>
+            <h3 className="text-4xl md:text-6xl text-gray-100 py-8 uppercase font-bold tracking-widest">Free Shipping</h3>
+            <Link to="/shop/listing" className="bg-white py-3 px-16 rounded-none text-slate-950">
+              <span className="text-slate-950 uppercase tracking-wider">Shop Now</span>
+            </Link>
+          </div>
         </div>
       </section>
 
       <section className="py-12">
         <div className="conainter mx-auto">
-          <div className="gird grid-cols1 md:grid-cols-2 lg:grid-cols-4 sm:p-12">
-            <div>
-              <img src="" alt="" />
-              <h3>Buy Women products with low price</h3>
-              <Link>
+          <div className="grid grid-cols1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-12">
+            <div className="bg-cover py-4 px-2" style={{ backgroundImage: `url(${Bgwomen})`}}>
+              <h3 className="text-lg font-semibold w-[120px]">Buy women products with low price</h3>
+              <Link className="underline uppercase">
                 <span>Shop Now</span>
               </Link>
             </div>
-            <div>
-              <img src="" alt="" />
-              <h3>Buy Men's Bag products with low price</h3>
-              <p>₹499</p>
-              <Link>
+            <div className="bg-cover py-4 px-2" style={{ backgroundImage: `url(${Bgbag})`}}>
+              <h3 className="text-lg font-semibold w-[130px]">Buy Men's Bag products with low price</h3>
+              <p className="text-red-400 font-semibold">₹499</p>
+              <Link className="underline uppercase">
                 <span>Shop Now</span>
               </Link>
             </div>
-            <div>
-              <img src="" alt="" />
-              <h3>Buy Men's Bag products with low price</h3>
-              <p>₹799</p>
-              <Link>
+            <div className="bg-cover py-4 px-2">
+              <h3 className="text-lg font-semibold w-[130px]">Buy Men's Bag products with low price</h3>
+              <p className="text-red-400 font-semibold">₹799</p>
+              <Link className="underline uppercase">
                 <span>Shop Now</span>
               </Link>
             </div>
-            <div>
-              <img src="" alt="" />
-              <h3>Buy Men's Footwear products with low price</h3>
-              <p>₹999</p>
-              <Link>
+            <div className="bg-cover py-4 px-2" style={{ backgroundImage: `url(${Bgfootwear})`}}>
+              <h3 className="text-lg font-semibold w-[130px]">Buy Men's Footwear products with low price</h3>
+              <p className="text-red-400 font-semibold">₹999</p>
+              <Link className="underline uppercase">
                 <span>Shop Now</span>
               </Link>
             </div>

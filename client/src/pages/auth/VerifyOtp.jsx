@@ -101,7 +101,7 @@ function AuthVerifyOtp() {
             Resend OTP
           </button>
         ) : (
-          <p>Resend available in <strong>{formatTime()}</strong></p>
+          <p>Resend available in <strong className="text-sky-400">{formatTime()}</strong></p>
         )}
       </div>
     </div>
