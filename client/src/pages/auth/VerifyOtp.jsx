@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { verifyOtpFormControls } from "@/config";
 import { verifyOtp } from "@/store/auth-slice";
@@ -16,6 +16,27 @@ function AuthVerifyOtp() {
   const { toast } = useToast();
   const { email } = useParams();
   const navigate = useNavigate();
+  const [timer, setTimer] = useState(120);
+  const [canResend, setCanResend] = useState(false);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setCanResend(true);
+      return;
+    }
+
+    const countdown = setInterval(() => {
+      setTimer(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [timer]);
+
+  const formatTime = () => {
+    const mins = Math.floor(timer / 60);
+    const secs = timer % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -36,6 +57,30 @@ function AuthVerifyOtp() {
     });
   }
 
+  const resendOTP = async () => {
+    setTimer(120);
+    setCanResend(false);
+    try {
+      const data = await dispatch(sendOtp({ email }));
+  
+      if (data?.payload?.success) {
+        toast({
+          title: "OTP sent again successfully!",
+        });
+      } else {
+        toast({
+          title: data?.payload?.message || "Failed to resend OTP",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Something went wrong!",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
@@ -51,7 +96,13 @@ function AuthVerifyOtp() {
         onSubmit={onSubmit}
       />
       <div className="text-center">
-        <p className="mt-2">Enter your opt within <small className="font-medium text-sky-400">10</small> minute</p>
+        {canResend ? (
+          <button onClick={resendOTP} className="text-sky-400 underline">
+            Resend OTP
+          </button>
+        ) : (
+          <p>Resend available in <strong>{formatTime()}</strong></p>
+        )}
       </div>
     </div>
   );

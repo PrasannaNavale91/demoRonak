@@ -133,20 +133,20 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         <div className="p-1">
           <div>
             <h1 className="text-lg md:text-xl font-extrabold">{productDetails?.title}</h1>
-            <p className="text-muted-foreground text-lg lg:text-xl mb-5 mt-4">
+            <p className="text-muted-foreground text-lg mb-5 mt-4">
               {productDetails?.description}
             </p>
           </div>
           <div className="flex items-center justify-between">
             <p
-              className={`text-lg lg:text-xl font-bold text-primary ${
+              className={`font-bold text-primary ${
                 productDetails?.salePrice > 0 ? "line-through" : ""
               }`}
             >
               ₹{productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 ? (
-              <p className="text-sm font-bold text-muted-foreground">
+              <p className="font-bold text-muted-foreground">
                 ₹{productDetails?.salePrice}
               </p>
             ) : null}

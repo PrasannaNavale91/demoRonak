@@ -186,10 +186,6 @@ const resetPassword = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // if (newPassword !== confirmPassword) {
-    //   return res.status(400).json({ message: "Invalid credentials" });
-    // }
-
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 

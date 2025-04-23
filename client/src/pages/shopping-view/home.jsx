@@ -21,11 +21,13 @@ import {
   ChevronRightIcon, 
   CloudLightning, 
   FacebookIcon, 
+  IndianRupee, 
   InstagramIcon, 
   LinkedinIcon, 
   Mail, 
   Shirt, 
   ShirtIcon, 
+  Truck, 
   YoutubeIcon } from "lucide-react";
 
 const categoriesWithIcon = [
@@ -296,11 +298,49 @@ function ShoppingHome() {
 
       <section className=" bg-orange-400">
         <div className="container py-12 px-10 text-center">
-          <p className="text-xs uppercase font-bold text-gray-100 tracking-widest">this weekend only</p>
-          <h3 className="text-4xl md:text-6xl lg:text-9xl text-gray-100 py-8 uppercase font-bold tracking-widest">Sale</h3>
+          <p className="text-xs uppercase font-bold text-gray-100 tracking-widest">Free Delivery Now On Your First Order and over <IndianRupee />800</p>
+          <h3 className="text-4xl md:text-6xl text-gray-100 py-8 uppercase font-bold tracking-widest"><Truck />Free Shipping</h3>
           <Link to="/shop/listing" className="bg-white py-3 px-16 rounded-none text-slate-950">
             <span className="text-slate-950">Shop Now</span>
           </Link>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <div className="conainter mx-auto">
+          <div className="gird grid-cols1 md:grid-cols-2 lg:grid-cols-4 sm:p-12">
+            <div>
+              <img src="" alt="" />
+              <h3>Buy Women products with low price</h3>
+              <Link>
+                <span>Shop Now</span>
+              </Link>
+            </div>
+            <div>
+              <img src="" alt="" />
+              <h3>Buy Men's Bag products with low price</h3>
+              <p>₹499</p>
+              <Link>
+                <span>Shop Now</span>
+              </Link>
+            </div>
+            <div>
+              <img src="" alt="" />
+              <h3>Buy Men's Bag products with low price</h3>
+              <p>₹799</p>
+              <Link>
+                <span>Shop Now</span>
+              </Link>
+            </div>
+            <div>
+              <img src="" alt="" />
+              <h3>Buy Men's Footwear products with low price</h3>
+              <p>₹999</p>
+              <Link>
+                <span>Shop Now</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
