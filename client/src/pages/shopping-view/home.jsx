@@ -332,7 +332,7 @@ function ShoppingHome() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="conainter mx-auto">
           <div className="grid grid-cols1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-12">
             <div className="bg-cover py-4 px-2" style={{ backgroundImage: `url(${Bgwomen})`}}>
