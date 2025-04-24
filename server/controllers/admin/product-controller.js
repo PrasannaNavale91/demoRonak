@@ -29,6 +29,8 @@ const addProduct = async (req, res) => {
       description,
       category,
       collection,
+      size,
+      color,
       price,
       salePrice,
       totalStock,
@@ -38,11 +40,13 @@ const addProduct = async (req, res) => {
     console.log(averageReview, "averageReview");
 
     const newlyCreatedProduct = new Product({
-      image,
+      image: image || [],
       title,
       description,
       category,
       collection,
+      size: size ? size.split(",") : [],
+      color: color ? color.split(",") : [],
       price,
       salePrice,
       totalStock,
@@ -91,6 +95,8 @@ const editProduct = async (req, res) => {
       description,
       category,
       collection,
+      size,
+      color,
       price,
       salePrice,
       totalStock,
@@ -103,6 +109,13 @@ const editProduct = async (req, res) => {
         success: false,
         message: "Product not found",
       });
+    
+    if (size !== undefined) {
+      findProduct.size = size === "" ? [] : size.split(",");
+    }
+    if (color !== undefined) {
+      findProduct.color = color === "" ? [] : color.split(",");
+    }
 
     findProduct.title = title || findProduct.title;
     findProduct.description = description || findProduct.description;

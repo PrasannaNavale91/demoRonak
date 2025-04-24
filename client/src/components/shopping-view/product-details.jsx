@@ -119,8 +119,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
       : 0;
 
   return (
-    <Dialog open={open} onOpenChange={handleDialogClose} className="container mx-auto">
-      <DialogContent className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw] max-h-[90vh] overflow-y-auto">
+    <section className="container mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 overflow-y-auto">
         <div className="relative overflow-hidden rounded-lg">
           <img
             width={600}
@@ -166,7 +166,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </Button>
             ) : (
               <Button
-                className="w-full text-black bg-transparent hover:bg-black hover:text-white border"
+                className="w-full text-black bg-transparent hover:bg-black hover:text-white border border-black"
                 onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
@@ -230,8 +230,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </section>
   );
 }
 
