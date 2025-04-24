@@ -1,7 +1,6 @@
 import { ShoppingCart, StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
-import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,12 +74,9 @@ function ProductDetailsDialog({ productDetails }) {
           title: "Product is added to cart",
         });
       }
+      setProductDetails()
     });
   }
-  
-  dispatch(setProductDetails());
-  setRating(0);
-  setReviewMsg("");
 
   function handleAddReview() {
     dispatch(
