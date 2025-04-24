@@ -13,7 +13,7 @@ import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
-function ProductDetailsDialog({ open, setOpen, productDetails }) {
+function ProductDetailsDialog({ productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
@@ -77,13 +77,10 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
       }
     });
   }
-
-  function handleDialogClose() {
-    setOpen(false);
-    dispatch(setProductDetails());
-    setRating(0);
-    setReviewMsg("");
-  }
+  
+  dispatch(setProductDetails());
+  setRating(0);
+  setReviewMsg("");
 
   function handleAddReview() {
     dispatch(
