@@ -1,6 +1,7 @@
 import { ShoppingCart, StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
+import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +13,7 @@ import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
-function ProductDetailsDialog({ productDetails }) {
+function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
@@ -74,8 +75,14 @@ function ProductDetailsDialog({ productDetails }) {
           title: "Product is added to cart",
         });
       }
-      setProductDetails()
     });
+  }
+
+  function handleDialogClose() {
+    setOpen(false);
+    dispatch(setProductDetails());
+    setRating(0);
+    setReviewMsg("");
   }
 
   function handleAddReview() {
