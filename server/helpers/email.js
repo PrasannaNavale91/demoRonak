@@ -27,8 +27,12 @@ const sendEmail = async (to, subject, html) => {
     await resend.emails.send({
       from: 'TrendCrave <support@trendcrave.it.com>',
       to: [to],
-      subject,
-      html
+      subject: 'Welcome to Our Store',
+      html: `
+          <div>
+            <h2>Welcome to Our Platform</h2>
+            <p>We're excited to have you on board!</p>
+          </div>`
     });
     console.log("Email sent");
     return true;
