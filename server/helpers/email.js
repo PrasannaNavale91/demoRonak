@@ -1,49 +1,44 @@
-const sgMail = require('@sendgrid/mail');
-require('dotenv').config();
+const { Resend } = require('resend');
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const sendOTP = async ( to, otp, name ) => {
+const sendOTP = async (email, otp) => {
   try {
-    const msg = {
-      to,
-      from: {
-        name: 'TrendCrave',
-        email: 'support@trendcrave.it.com'
-      },
-      templateId: process.env.TEMPLATE_ID,
-      dynamicTemplateData: {
-        name,
-        otp: otp,
-      }
-    };
-    
-    await sgMail.send(msg);
-    console.log(`Email sent successfully ${to}`);
+    await resend.emails.send({
+      from: 'TrendCrave <support@trendcrave.it.com>',
+      to: [email],
+      subject: 'Your OTP Code',
+      html: `
+        <h2>Here is your OTP</h2>
+        <p><strong>${otp}</strong></p>
+        <p>This OTP is valid for 2 minutes.</p>
+      `
+    });
+    console.log("OTP email sent");
+    return true;
   } catch (error) {
-    console.error('Error sending email:', error.response?.body || error.message);
+    console.error("Error sending OTP email:", error);
+    return false;
   }
 };
 
-const sendEmail = async ( to, username ) => {
+const sendEmail = async (to, subject, html) => {
   try {
-    const msg = {
-      to,
-      from: {
-        name: 'TrendCrave',
-        email: 'support@trendcrave.it.com'
-      },
-      templateId: process.env.TEMPLATE_ID2,
-      dynamicTemplateData: {
-        username,
-      }
-    };
-    
-    await sgMail.send(msg);
-    console.log(`Email sent successfully ${to}`);
+    await resend.emails.send({
+      from: 'TrendCrave <support@trendcrave.it.com>',
+      to: [to],
+      subject,
+      html
+    });
+    console.log("Email sent");
+    return true;
   } catch (error) {
-    console.error('Error sending email:', error.response?.body || error.message);
+    console.error("Error sending email:", error);
+    return false;
   }
 };
 
-module.exports = { sendEmail, sendOTP };
+module.exports = {
+  sendOTP,
+  sendEmail,
+};

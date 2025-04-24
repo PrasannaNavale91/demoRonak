@@ -19,10 +19,6 @@ const registerUser = async (req, res) => {
       message: "User Already exists with the same email! Please try again",
     });
 
-    // if (password !== confirmPassword) {
-    //   return res.status(400).json({ message: "Invalid credentials" });
-    // }
-
     const hashPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
       userName,
@@ -31,7 +27,7 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
-    await sendEmail(email, userName);
+    await sendEmail(email);
 
     res.status(200).json({
       success: true,
@@ -111,34 +107,30 @@ const logoutUser = (req, res) => {
 const sendOtp = async (req, res) => {
   const { email } = req.body;
   
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+  if (!email) return res.status(400).json({
+    success: false,
+    message: 'Email required'
+  });
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    await Otp.deleteMany({ email });
-    const newOtp = new Otp({
-      email,
-      otp,
-      expiresAt: new Date(Date.now() + 10 * 60 * 1000)
-    });
-    
-    await newOtp.save();
-    await sendOTP(email, otp, user.name);
-    
-    res.status(200).json({
-      success: true,
-      message: "OTP sent to email successfully"
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const expiresAt = Date.now() + 2 * 60 * 1000;
+
+  await Otp.deleteMany({ email });
+  await Otp.create({ email, otp, expiresAt });
+
+  const emailSent = await sendOTP(email, otp);
+
+  if (!emailSent) {
+    return res.status(500).json({
       success: false,
-      message: "Error sending OTP"
+      message: 'Failed to send OTP'
     });
   }
+
+  res.status(200).json({
+    success: true,
+    message: 'OTP sent successfully'
+  });
 }
 
 const verifyOtp = async (req, res) => {
