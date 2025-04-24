@@ -8,18 +8,14 @@ const ProductSchema = new mongoose.Schema(
     },
     title: String,
     description: String,
-    category: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "category",
-      },
-    ],
-    collection: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "collection",
-      },
-    ],
+    category: {
+      type: String,
+      required: true,
+    },
+    collection: {
+      type: String,
+      required: true,
+    },
     size: {
       type : String,
       default : ""
