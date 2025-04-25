@@ -3,19 +3,12 @@ import { Button } from "../ui/button";
 import { collectionOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
 import { ShoppingCart } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 function ShoppingProductTile({
   product,
   handleGetProductDetails,
   handleAddtoCart,
 }) {
-  const navigate = useNavigate();
-
-  function handleGetProductDetails(productId) {
-    navigate(`/products/get/${productId}`);
-  }
-
   return (
     <Card className="w-full mx-6">
       <div onClick={() => handleGetProductDetails(product?._id)}>

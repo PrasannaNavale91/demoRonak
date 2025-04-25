@@ -1,4 +1,4 @@
-import { ShoppingCart, StarIcon } from "lucide-react";
+import { ShoppingCartIcon, StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
@@ -6,21 +6,18 @@ import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import { useToast } from "../../hooks/use-toast";
-import { fetchProductDetails, setProductDetails } from "@/store/shop/products-slice";
+import { useToast } from "../ui/use-toast";
+import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
-import { useParams } from "react-router-dom";
 
-function ProductDetailsDialog() {
-  const { productId } = useParams();
+function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { productDetails } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { reviews } = useSelector((state) => state.shopReview);
 
@@ -31,26 +28,6 @@ function ProductDetailsDialog() {
 
     setRating(getRating);
   }
-
-  useEffect(() => {
-    dispatch(setProductDetails());
-    dispatch(fetchProductDetails(productId));
-    dispatch(getReviews(productId));
-  }, [productId]);
-
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then((registration) => {
-          console.log("Service Worker registered with scope:", registration.scope);
-        })
-        .catch((error) => {
-          console.error("Service Worker registration failed:", error);
-        });
-    });
-  }
-  
 
   function handleAddToCart(getCurrentProductId, getTotalStock) {
     let getCartItems = cartItems.items || [];
@@ -87,6 +64,13 @@ function ProductDetailsDialog() {
     });
   }
 
+  function handleDialogClose() {
+    setOpen(false);
+    dispatch(setProductDetails());
+    setRating(0);
+    setReviewMsg("");
+  }
+
   function handleAddReview() {
     dispatch(
       addReview({
@@ -108,6 +92,10 @@ function ProductDetailsDialog() {
     });
   }
 
+  useEffect(() => {
+    if (productDetails !== null) dispatch(getReviews(productDetails?._id));
+  }, [productDetails]);
+
   console.log(reviews, "reviews");
 
   const averageReview =
@@ -117,35 +105,35 @@ function ProductDetailsDialog() {
       : 0;
 
   return (
-    <section className="container mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 overflow-y-auto">
+    <Dialog open={open} onOpenChange={handleDialogClose}>
+      <DialogContent className="grid grid-cols-2 gap-8 sm:p-12 max-w-screen sm:max-w-[90vw]">
         <div className="relative overflow-hidden rounded-lg">
           <img
-            width={600}
-            height={600}
             src={productDetails?.image}
             alt={productDetails?.title}
+            width={600}
+            height={600}
             className="aspect-square w-full object-cover"
           />
         </div>
-        <div className="p-1">
+        <div className="">
           <div>
-            <h1 className="text-lg md:text-xl font-extrabold">{productDetails?.title}</h1>
-            <p className="text-muted-foreground text-lg mb-5 mt-4">
+            <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
+            <p className="text-muted-foreground text-2xl mb-5 mt-4">
               {productDetails?.description}
             </p>
           </div>
           <div className="flex items-center justify-between">
             <p
-              className={`font-bold text-primary ${
+              className={`text-3xl font-bold text-primary ${
                 productDetails?.salePrice > 0 ? "line-through" : ""
               }`}
             >
-              ₹{productDetails?.price}
+              ${productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 ? (
-              <p className="font-bold text-muted-foreground">
-                ₹{productDetails?.salePrice}
+              <p className="text-2xl font-bold text-muted-foreground">
+                ${productDetails?.salePrice}
               </p>
             ) : null}
           </div>
@@ -164,7 +152,7 @@ function ProductDetailsDialog() {
               </Button>
             ) : (
               <Button
-                className="w-full text-black bg-transparent hover:bg-black hover:text-white border border-black"
+                className="w-full"
                 onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
@@ -172,7 +160,7 @@ function ProductDetailsDialog() {
                   )
                 }
               >
-                <ShoppingCart className="w-4 h-4" /> Add to Cart
+                <ShoppingCartIcon />  Add to Cart
               </Button>
             )}
           </div>
@@ -228,8 +216,8 @@ function ProductDetailsDialog() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </DialogContent>
+    </Dialog>
   );
 }
 
