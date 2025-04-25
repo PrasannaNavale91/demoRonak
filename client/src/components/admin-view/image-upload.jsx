@@ -21,11 +21,7 @@ function ProductImageUpload({
   console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
-    console.log(event.target.files, "event.target.files");
-    const selectedFile = Array.from(event.target.files || []);
-    console.log(selectedFile);
-
-    if (selectedFile) setImageFile(selectedFile);
+    const files = Array.from(event.target.files || []);
     setImageFile(prev => [...prev, ...files]);
   }
 
@@ -35,8 +31,7 @@ function ProductImageUpload({
 
   function handleDrop(event) {
     event.preventDefault();
-    const droppedFile = Array.from(event.dataTransfer.files || []);
-    if (droppedFile) setImageFile(droppedFile);
+    const files = Array.from(event.dataTransfer.files || []);
     droppedFile(prev => [...prev, ...files]);
   }
   
@@ -48,14 +43,16 @@ function ProductImageUpload({
     for (const file of imageFile) {
       const data = new FormData();
       data.append("my_file", file);
-      const response = await axios.post(
-        "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
-        data
-      );
-      console.log(response, "response");
-      
-      if (response?.data?.success) {
-        uploadedUrls.push(response.data.result.url);
+      try {
+        const response = await axios.post(
+          "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
+          data
+        );
+        if (response?.data?.success) {
+          uploadedUrls.push(response.data.result.url);
+        }
+      } catch (error) {
+        console.error("Image upload error:", error);
       }
     }
     
@@ -94,7 +91,7 @@ function ProductImageUpload({
           disabled={isEditMode}
           multiple
         />
-        {!imageFile.length > 0 ? (
+        {!imageFile.length ? (
           <Label
             htmlFor="image-upload"
             className={`${
@@ -104,7 +101,7 @@ function ProductImageUpload({
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload image</span>
           </Label>
-        ) : !imageLoadingState ? (
+        ) : imageLoadingState ? (
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
           <div className="flex items-center justify-between">
