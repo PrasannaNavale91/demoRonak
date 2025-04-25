@@ -25,7 +25,6 @@ import SearchProducts from "./pages/shopping-view/search";
 import AuthForgotPassword from "./pages/auth/forgotPassword";
 import AuthVerifyOtp from "./pages/auth/VerifyOtp";
 import AuthResetPassword from "./pages/auth/resetPassword";
-import ProductDetailsDialog from "./components/shopping-view/product-details";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -47,7 +46,6 @@ function App() {
         <Route path="/shop" element={<ShoppingLayout />}>
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
-          <Route path="products" element={<ProductDetailsDialog />} />
           <Route path="search" element={<SearchProducts />} />
         </Route>
         <Route
@@ -96,7 +94,6 @@ function App() {
         >
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
-          <Route path="products" element={<ProductDetailsDialog />} />
           <Route path="search" element={<SearchProducts />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />

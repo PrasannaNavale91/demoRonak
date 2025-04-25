@@ -13,11 +13,13 @@ import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
-function ProductDetailsDialog({ open, setOpen, productDetails }) {
+function ProductDetailsDialog() {
+  const { productId } = useParams();
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { productDetails } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { reviews } = useSelector((state) => state.shopReview);
 
@@ -28,6 +30,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
     setRating(getRating);
   }
+
+  useEffect(() => {
+    dispatch(setProductDetails());
+    dispatch(fetchProductById(productId));
+    dispatch(getReviews(productId));
+  }, [productId]);
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
@@ -78,13 +86,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     });
   }
 
-  function handleDialogClose() {
-    setOpen(false);
-    dispatch(setProductDetails());
-    setRating(0);
-    setReviewMsg("");
-  }
-
   function handleAddReview() {
     dispatch(
       addReview({
@@ -105,10 +106,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
       }
     });
   }
-
-  useEffect(() => {
-    if (productDetails !== null) dispatch(getReviews(productDetails?._id));
-  }, [productDetails]);
 
   console.log(reviews, "reviews");
 
