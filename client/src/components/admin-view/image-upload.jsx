@@ -32,7 +32,7 @@ function ProductImageUpload({
   function handleDrop(event) {
     event.preventDefault();
     const files = Array.from(event.dataTransfer.files || []);
-    droppedFile(prev => [...prev, ...files]);
+    setImageFile(prev => [...prev, ...files]);
   }
   
   function handleRemoveImage(index) {
