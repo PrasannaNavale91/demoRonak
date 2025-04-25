@@ -35,6 +35,12 @@ function ProductImageUpload({
     droppedFile(prev => [...prev, ...files]);
   }
   
+  function handleRemoveImage(index) {
+    const newFiles = [...imageFile];
+    newFiles.splice(index, 1);
+    setImageFile(newFiles);
+  }
+
   async function uploadImageToCloudinary() {
     setImageLoadingState(true);
     
@@ -63,12 +69,6 @@ function ProductImageUpload({
   useEffect(() => {
     if (imageFile.length > 0) uploadImageToCloudinary();
   }, [imageFile]);
-  
-  function handleRemoveImage(index) {
-    const newFiles = [...imageFile];
-    newFiles.splice(index, 1);
-    setImageFile(newFiles);
-  }
 
   return (
     <div

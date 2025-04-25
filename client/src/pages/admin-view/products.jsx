@@ -39,7 +39,7 @@ function AdminProducts() {
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState([]);
-  const [imageLoadingState, setImageLoadingState] = useState(false);
+  const [imageLoadingState, setImageLoadingState] = useState([]);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
   const { productList } = useSelector((state) => state.adminProducts);
