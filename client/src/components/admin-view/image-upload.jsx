@@ -106,21 +106,23 @@ function ProductImageUpload({
         ) : imageLoadingState ? (
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <FileIcon className="w-8 text-primary mr-2 h-8" />
+          imageFile.map((file, index) => (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <FileIcon className="w-8 text-primary mr-2 h-8" />
+              </div>
+              <p className="text-sm font-medium">{file.name}</p>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground"
+                onClick={handleRemoveImage(index)}
+              >
+                <XIcon className="w-4 h-4" />
+                <span className="sr-only">Remove File</span>
+              </Button>
             </div>
-            <p className="text-sm font-medium">{file.name}</p>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-foreground"
-              onClick={handleRemoveImage(index)}
-            >
-              <XIcon className="w-4 h-4" />
-              <span className="sr-only">Remove File</span>
-            </Button>
-          </div>
+          ))
         )}
       </div>
     </div>
