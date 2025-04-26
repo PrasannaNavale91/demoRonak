@@ -8,6 +8,7 @@ import { Skeleton } from "../ui/skeleton";
 
 function ProductImageUpload({
   imageFile,
+  setImages,
   setImageFile,
   imageLoadingState,
   uploadedImageUrl,
@@ -17,12 +18,13 @@ function ProductImageUpload({
   isCustomStyling = false,
 }) {
   const inputRef = useRef(null);
-
+  const [selectedFiles, setSelectedFiles] = useState([]);
   console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
     const files = Array.from(event.target.files || []);
-    setImageFile(prev => [...prev, ...files]);
+    setSelectedFiles(files);
+    setImages(files);
   }
 
   function handleDragOver(event) {
