@@ -59,10 +59,7 @@ function ProductImageUpload({
         uploadedUrls.push(response.data.result.url);
 
         if (uploadedUrls.length > 0) {
-          setUploadedImageUrl(prev => ({
-            ...prev,
-            image: uploadedUrls[0],
-          }));
+          setImageFile(downloadURL);
         }
       } catch (error) {
         console.error("Image upload error:", error);
@@ -96,6 +93,7 @@ function ProductImageUpload({
           type="file"
           className="hidden"
           ref={inputRef}
+          accept="image/*"
           onChange={handleImageFileChange}
           disabled={isEditMode}
           multiple
