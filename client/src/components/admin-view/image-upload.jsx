@@ -22,7 +22,11 @@ function ProductImageUpload({
   console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
-    const files = Array.from(event.target.files || []);
+    let files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    files = Array.from(files);
+
     setSelectedFiles(files);
     setImages(files);
   }
@@ -93,14 +97,14 @@ function ProductImageUpload({
         <Input
           id="image-upload"
           type="file"
+          multiple
           className="hidden"
           ref={inputRef}
           accept="image/*"
           onChange={handleImageFileChange}
           disabled={isEditMode}
-          multiple
         />
-        {!imageFile.length ? (
+        {!imageFile.length > 0 ? (
           <Label
             htmlFor="image-upload"
             className={`${
@@ -113,7 +117,7 @@ function ProductImageUpload({
         ) : imageLoadingState ? (
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
-          imageFile.map((file, index) => (
+          selectedFiles.map((file, index) => (
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <FileIcon className="w-8 text-primary mr-2 h-8" />
