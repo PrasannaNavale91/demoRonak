@@ -41,7 +41,7 @@ function ProductImageUpload({
     setImageFile(newFiles);
   }
 
-  async function uploadImageToCloudinary() {
+  async function uploadImageToCloudinary(imageFile) {
     setImageLoadingState(true);
     
     const uploadedUrls = [];
@@ -49,13 +49,20 @@ function ProductImageUpload({
     for (const file of imageFile) {
       const data = new FormData();
       data.append("my_file", file);
+      data.append("upload_preset", "ecommerce");
       try {
         const response = await axios.post(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
           data
         );
-        if (response?.data?.success) {
-          uploadedUrls.push(response.data.result.url);
+
+        uploadedUrls.push(response.data.result.url);
+
+        if (uploadedUrls.length > 0) {
+          setUploadedImageUrl(prev => ({
+            ...prev,
+            image: uploadedUrls[0],
+          }));
         }
       } catch (error) {
         console.error("Image upload error:", error);
