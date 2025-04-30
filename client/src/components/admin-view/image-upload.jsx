@@ -49,6 +49,7 @@ function ProductImageUpload({
   }
 
   async function uploadImageToCloudinary() {
+    setImageLoadingState(true);
     if (selectedFiles.length === 0) return;
     const uploadedUrls = [];
     
@@ -74,6 +75,7 @@ function ProductImageUpload({
 
       setUploadedImageUrl(uploadedUrls);
       setImages(uploadedUrls);
+      setImageLoadingState(true);
     } catch (error) {
       console.error("Error uploading images:", error);
     }
