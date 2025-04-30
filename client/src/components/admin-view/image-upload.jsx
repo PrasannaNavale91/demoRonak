@@ -77,7 +77,7 @@ function ProductImageUpload({
   }
 
   useEffect(() => {
-    if (imageFile.length) uploadAllImages();
+    if (imageFile.length) uploadImageToCloudinary();
   }, [imageFile]);
 
   return (
