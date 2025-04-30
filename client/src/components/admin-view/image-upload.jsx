@@ -49,7 +49,6 @@ function ProductImageUpload({
   }
 
   async function uploadImageToCloudinary() {
-    setImageLoadingState(true);
     if (selectedFiles.length === 0) return;
     const uploadedUrls = [];
     
@@ -68,14 +67,13 @@ function ProductImageUpload({
           }
         );
 
-        const imageUrl = response.data.result.secure_url;
+        const imageUrl = response.formData.result.secure_url;
         console.log("Uploaded image URL:", imageUrl);
         uploadedUrls.push(imageUrl);
       }
 
       setUploadedImageUrl(uploadedUrls);
       setImages(uploadedUrls);
-      setImageLoadingState(true);
     } catch (error) {
       console.error("Error uploading images:", error);
     }
