@@ -8,7 +8,6 @@ import { Skeleton } from "../ui/skeleton";
 
 function ProductImageUpload({
   imageFile,
-  setImages,
   setImageFile,
   imageLoadingState,
   uploadedImageUrl,
@@ -22,13 +21,10 @@ function ProductImageUpload({
   console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
-    let files = event.target.files;
-    if (!files || files.length === 0) return;
-
-    files = Array.from(files);
-
-    setSelectedFiles(files);
-    setImages(files);
+    const selectedFiles = Array.from(event.target.files);
+    if (selectedFiles.length) {
+      setImageFile((prev) => [...prev, ...selectedFiles]);
+    }
   }
 
   function handleDragOver(event) {
@@ -49,43 +45,40 @@ function ProductImageUpload({
   }
 
   async function uploadImageToCloudinary() {
-    if (selectedFiles.length === 0) return;
-
+    setImageLoadingState(true);
     const uploadedUrls = [];
     
-    try {
-      for (const file of selectedFiles) {
-        const formData = new FormData();
-        formData.append("my_file", file);
-        formData.append("upload_preset", "ml_default");
-        formData.append("cloud_name", "jackiieee");
+    for (const file of selectedFiles) {
+      const data = new FormData();
+      data.append("my_file", file);
+      data.append("upload_preset", "ml_default");
+      data.append("cloud_name", "jackiieee");
+
+      try {
         const response = await axios.post(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
-          formData,
+          data,
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           }
         );
-
-        const imageUrl = response.data.result.secure_url;
-        console.log("Uploaded image URL:", imageUrl);
-        uploadedUrls.push(imageUrl);
+        if (response?.data?.success) {
+          uploadedUrls.push(response.data.result.url);
+        }
+      } catch (error) {
+        console.error("Error uploading images:", error);
       }
-
+      
       setUploadedImageUrl(uploadedUrls);
-      setImages(uploadedUrls);
-    } catch (error) {
-      console.error("Error uploading images:", error);
+      setImages(false);
     }
   }
 
   useEffect(() => {
-    if (selectedFiles.length > 0) {
-      uploadImageToCloudinary();
-    }
-  }, [selectedFiles]);
+    if (imageFile.length) uploadAllImages();
+  }, [imageFile]);
 
   return (
     <div
@@ -105,41 +98,40 @@ function ProductImageUpload({
           multiple
           className="hidden"
           ref={inputRef}
-          accept="image/*"
           onChange={handleImageFileChange}
           disabled={isEditMode}
         />
-        {!imageFile.length > 0 ? (
-          <Label
-            htmlFor="image-upload"
-            className={`${
-              isEditMode ? "cursor-not-allowed" : ""
-            } flex flex-col items-center justify-center h-32 cursor-pointer`}
-          >
-            <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
-            <span>Drag & drop or click to upload image</span>
-          </Label>
-        ) : imageLoadingState ? (
-          <Skeleton className="h-10 bg-gray-100" />
-        ) : (
-          selectedFiles.map((file, index) => (
-            <div className="flex items-center justify-between" key={index}>
-              <div className="flex items-center">
-                <FileIcon className="w-8 text-primary mr-2 h-8" />
+        <Label
+          htmlFor="image-upload"
+          className={`${
+            isEditMode ? "cursor-not-allowed" : ""
+          } flex flex-col items-center justify-center h-32 cursor-pointer`}
+        >
+          <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
+          <span>Drag & drop or click to upload image</span>
+        </Label>
+        <div className="mt-4 space-y-2">
+          {imageFile.map((file, index) => (
+            <div key={index} className="flex items-center justify-between border rounded p-2">
+              <div className="flex items-center gap-2">
+                <FileIcon className="w-6 h-6 text-primary" />
+                <p className="text-sm truncate max-w-[200px]">{file.name}</p>
               </div>
-              <p className="text-sm font-medium">{file.name}</p>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground"
-                onClick={() => handleRemoveImage(index)}
-              >
-                <XIcon className="w-4 h-4" />
-                <span className="sr-only">Remove File</span>
-              </Button>
+              {imageLoadingState ? (
+                <Skeleton className="h-4 w-16 bg-gray-100" />
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-foreground"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  <XIcon className="w-4 h-4" />
+                </Button>
+              )}
             </div>
-          ))
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );

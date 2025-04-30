@@ -36,7 +36,6 @@ const initialFormData = {
 function AdminProducts() {
   const [openCreateProductsDialog, setOpenCreateProductsDialog] =useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [images, setImages] = useState([]);
   const [imageFile, setImageFile] = useState([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState([]);
   const [imageLoadingState, setImageLoadingState] = useState(false);
@@ -144,9 +143,9 @@ function AdminProducts() {
             setImageFile={setImageFile}
             uploadedImageUrl={uploadedImageUrl}
             setUploadedImageUrl={setUploadedImageUrl}
-            setImageLoadingState={setImageLoadingState}
             imageLoadingState={imageLoadingState}
-            isEditMode={currentEditedId !== null}
+            setImageLoadingState={setImageLoadingState}
+            isEditMode={false}
           />
           <div className="py-6">
             <CommonForm
