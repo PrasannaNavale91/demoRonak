@@ -73,38 +73,21 @@ function ProductImageUpload({
           return;
         }
         console.log("Uploaded image URL:", response.formData.secure_url);
-
-        const imageUrl = response.formData.result.secure_url;
-        uploadedUrls.push(imageUrl);
-  
-        // if (response.secure_url) {
-        //   uploadedUrls.push(response.formData.secure_url);
-        // } else {
-        //   console.error("Cloudinary upload failed:", response);
-        // }
-      }
-    
-      if (uploadedUrls.length > 0) {
-        setProductDetails((prev) => ({
-          ...prev,
-          image: uploadedUrls,
-        }));
-        console.log("Uploaded URLs:", uploadedUrls);
-      } else {
-        console.warn("No images were uploaded successfully.");
+        uploadedUrls.push(response.formData.result.secure_url);
       }
     } catch (error) {
       console.error("Error uploading images:", error);
     }
 
-    setSelectedFiles([]);
+    setUploadedImageUrl(uploadedUrls);
+    setImages(uploadedUrls);
   }
 
   useEffect(() => {
-    if (Array.isArray(imageFile) && imageFile.length > 0) {
-      uploadImageToCloudinary(imageFile);
+    if (selectedFiles.length > 0) {
+      uploadImageToCloudinary();
     }
-  }, [imageFile]);
+  }, [selectedFiles]);
 
   return (
     <div
