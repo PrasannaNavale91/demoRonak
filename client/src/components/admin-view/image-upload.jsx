@@ -50,8 +50,6 @@ function ProductImageUpload({
 
   async function uploadImageToCloudinary() {
     if (selectedFiles.length === 0) return;
-    // setImageLoadingState(true);
-    
     const uploadedUrls = [];
     
     try {
@@ -67,6 +65,13 @@ function ProductImageUpload({
             body: formData,
           }
         );
+
+        if (!response.ok) {
+          console.error("Upload failed:", response);
+          return;
+        }
+        
+        console.log("Uploaded image URL:", response.formData.secure_url);
   
         if (response.secure_url) {
           uploadedUrls.push(response.formData.secure_url);
