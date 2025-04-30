@@ -60,7 +60,7 @@ function ProductImageUpload({
         formData.append("my_file", file);
         formData.append("upload_preset", "ml_default");
         formData.append("cloud_name", "jackiieee")
-        const response = await fetch(
+        const response = await axios.post(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
           {
             method: "POST",
@@ -68,12 +68,10 @@ function ProductImageUpload({
           }
         );
   
-        const data = await response.json();
-  
-        if (data.secure_url) {
-          uploadedUrls.push(data.secure_url);
+        if (response.secure_url) {
+          uploadedUrls.push(response.formData.secure_url);
         } else {
-          console.error("Cloudinary upload failed:", data);
+          console.error("Cloudinary upload failed:", response);
         }
       }
     
