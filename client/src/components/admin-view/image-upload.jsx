@@ -48,33 +48,49 @@ function ProductImageUpload({
     setImageFile(newFiles);
   }
 
-  async function uploadImageToCloudinary(imageFile) {
-    setImageLoadingState(true);
+  async function uploadImageToCloudinary() {
+    if (selectedFiles.length === 0) return;
+    // setImageLoadingState(true);
     
     const uploadedUrls = [];
     
-    for (const file of imageFile) {
-      const data = new FormData();
-      data.append("my_file", file);
-      data.append("upload_preset", "ecommerce");
-      try {
+    try {
+      for (const file of selectedFiles) {
+        const formData = new FormData();
+        formData.append("my_file", file);
+        formData.append("upload_preset", "ml_default");
+        formData.append("cloud_name", "jackiieee")
         const response = await axios.post(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
-          data
+          {
+            method: "POST",
+            body: formData,
+          }
         );
-
-        uploadedUrls.push(response.data.result.url);
-
-        if (uploadedUrls.length > 0) {
-          setImageFile([]);
+  
+        const data = await response.json();
+  
+        if (data.secure_url) {
+          uploadedUrls.push(data.secure_url);
+        } else {
+          console.error("Cloudinary upload failed:", data);
         }
-      } catch (error) {
-        console.error("Image upload error:", error);
       }
-    }
     
-    setUploadedImageUrl(uploadedUrls);
-    setImageLoadingState(false);
+      if (uploadedUrls.length > 0) {
+        setProductDetails((prev) => ({
+          ...prev,
+          image: uploadedUrls,
+        }));
+        console.log("Uploaded URLs:", uploadedUrls);
+      } else {
+        console.warn("No images were uploaded successfully.");
+      }
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    }
+
+    setSelectedFiles([]);
   }
 
   useEffect(() => {
