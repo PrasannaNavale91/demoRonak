@@ -22,7 +22,7 @@ function ProductImageUpload({
   console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
-    let files = e.target.files;
+    let files = event.target.files;
     if (!files || files.length === 0) return;
 
     files = Array.from(files);
@@ -39,6 +39,7 @@ function ProductImageUpload({
     event.preventDefault();
     const files = Array.from(event.dataTransfer.files || []);
     setImageFile(prev => [...prev, ...files]);
+    setSelectedFiles(files);
   }
   
   function handleRemoveImage(index) {
@@ -65,7 +66,7 @@ function ProductImageUpload({
         uploadedUrls.push(response.data.result.url);
 
         if (uploadedUrls.length > 0) {
-          setImageFile(downloadURL);
+          setImageFile([]);
         }
       } catch (error) {
         console.error("Image upload error:", error);
@@ -78,7 +79,7 @@ function ProductImageUpload({
 
   useEffect(() => {
     if (Array.isArray(imageFile) && imageFile.length > 0) {
-      uploadImageToCloudinary();
+      uploadImageToCloudinary(imageFile);
     }
   }, [imageFile]);
 
@@ -118,7 +119,7 @@ function ProductImageUpload({
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
           selectedFiles.map((file, index) => (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between" key={index}>
               <div className="flex items-center">
                 <FileIcon className="w-8 text-primary mr-2 h-8" />
               </div>
@@ -127,7 +128,7 @@ function ProductImageUpload({
                 variant="ghost"
                 size="icon"
                 className="text-muted-foreground hover:text-foreground"
-                onClick={handleRemoveImage(index)}
+                onClick={() => handleRemoveImage(index)}
               >
                 <XIcon className="w-4 h-4" />
                 <span className="sr-only">Remove File</span>
