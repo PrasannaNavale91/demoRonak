@@ -56,8 +56,7 @@ function ProductImageUpload({
       for (const file of selectedFiles) {
         const formData = new FormData();
         formData.append("my_file", file);
-        formData.append("upload_preset", "ml_default");
-        formData.append("cloud_name", "jackiieee")
+
         const response = await axios.post(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
           formData,
@@ -68,19 +67,16 @@ function ProductImageUpload({
           }
         );
 
-        if (!response.ok) {
-          console.error("Upload failed:", response);
-          return;
-        }
-        console.log("Uploaded image URL:", response.formData.secure_url);
-        uploadedUrls.push(response.formData.result.secure_url);
+        const imageUrl = response.data.result.secure_url;
+        console.log("Uploaded image URL:", imageUrl);
+        uploadedUrls.push(imageUrl);
       }
+
+      setUploadedImageUrl(uploadedUrls);
+      setImages(uploadedUrls);
     } catch (error) {
       console.error("Error uploading images:", error);
     }
-
-    setUploadedImageUrl(uploadedUrls);
-    setImages(uploadedUrls);
   }
 
   useEffect(() => {
