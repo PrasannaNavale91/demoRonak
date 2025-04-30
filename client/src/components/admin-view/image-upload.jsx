@@ -60,7 +60,7 @@ function ProductImageUpload({
         formData.append("my_file", file);
         formData.append("upload_preset", "ml_default");
         formData.append("cloud_name", "jackiieee")
-        const response = await axios.post(
+        const response = await fetch(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
           {
             method: "POST",
