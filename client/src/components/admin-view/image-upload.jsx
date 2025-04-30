@@ -60,9 +60,11 @@ function ProductImageUpload({
         formData.append("cloud_name", "jackiieee")
         const response = await axios.post(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
+          formData,
           {
-            method: "POST",
-            body: formData,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
         );
 
