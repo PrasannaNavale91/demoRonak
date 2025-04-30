@@ -72,7 +72,8 @@ function ProductImageUpload({
       }
       
       setUploadedImageUrl(uploadedUrls);
-      setImages(false);
+      setImageFile([]);
+      setImageLoadingState(false);
     }
   }
 
