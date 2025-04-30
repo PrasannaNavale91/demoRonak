@@ -72,14 +72,16 @@ function ProductImageUpload({
           console.error("Upload failed:", response);
           return;
         }
-        
         console.log("Uploaded image URL:", response.formData.secure_url);
+
+        const imageUrl = response.formData.result.secure_url;
+        uploadedUrls.push(imageUrl);
   
-        if (response.secure_url) {
-          uploadedUrls.push(response.formData.secure_url);
-        } else {
-          console.error("Cloudinary upload failed:", response);
-        }
+        // if (response.secure_url) {
+        //   uploadedUrls.push(response.formData.secure_url);
+        // } else {
+        //   console.error("Cloudinary upload failed:", response);
+        // }
       }
     
       if (uploadedUrls.length > 0) {
