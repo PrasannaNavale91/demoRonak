@@ -50,13 +50,15 @@ function ProductImageUpload({
 
   async function uploadImageToCloudinary() {
     if (selectedFiles.length === 0) return;
+
     const uploadedUrls = [];
     
     try {
       for (const file of selectedFiles) {
         const formData = new FormData();
         formData.append("my_file", file);
-
+        formData.append("upload_preset", "ml_default");
+        formData.append("cloud_name", "jackiieee");
         const response = await axios.post(
           "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
           formData,
@@ -67,7 +69,7 @@ function ProductImageUpload({
           }
         );
 
-        const imageUrl = response.formData.result.secure_url;
+        const imageUrl = response.data.result.secure_url;
         console.log("Uploaded image URL:", imageUrl);
         uploadedUrls.push(imageUrl);
       }
