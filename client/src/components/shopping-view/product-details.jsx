@@ -13,10 +13,9 @@ import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState, useRef } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
-function ProductDetailsDialog({ open, setOpen, productDetails }) {
+function ProductDetailsDialog({ open, setOpen, productDetails, images }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
-  const [activeImage, setActiveImage] = useState(productDetails?.image || "");
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
@@ -73,22 +72,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     setReviewMsg("");
   }
 
-  function handleMouseMove(e) {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-  
-    if (zoomRef.current) {
-      zoomRef.current.style.backgroundPosition = `${x}% ${y}%`;
-    }
-  }
-  
-  function handleMouseLeave() {
-    if (!zoomRef.current) {
-      zoomRef.current.style.backgroundPosition = "center";
-    }
-  }
-
   function handleAddReview() {
     dispatch(
       addReview({
@@ -113,7 +96,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   useEffect(() => {
     if (productDetails !== null){
       dispatch(getReviews(productDetails?._id));
-      setActiveImage(productDetails?.image || "");
+      // setActiveImage(productDetails?.image || "");
     }
   }, [productDetails]);
 
@@ -128,38 +111,14 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-2 gap-8 sm:p-12 max-w-screen sm:max-w-[90vw]">
-        <div className="flex flex-col gap-3 w-full">
-          <div
-            className="relative overflow-hidden rounded-lg aspect-square w-full bg-center bg-no-repeat bg-cover border"
-            style={{
-              backgroundImage: `url(${activeImage})`,
-            }}
-            ref={zoomRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          >
-            <img
-              src={activeImage}
-              alt="Zoom Preview"
-              className="w-full h-full object-cover opacity-0"
-            />
-          </div>
-
-          {productDetails?.images?.length > 1 && (
-            <div className="flex gap-2 flex-wrap">
-              {productDetails.images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`Thumbnail ${idx}`}
-                  onClick={() => setActiveImage(img)}
-                  className={`w-16 h-16 object-cover rounded cursor-pointer border ${
-                    img === activeImage ? "ring-2 ring-primary" : ""
-                  }`}
-                />
-              ))}
-            </div>
-          )}
+        <div className="relative overflow-hidden rounded-lg">
+          <img
+            src={productDetails?.image}
+            alt={productDetails?.title}
+            width={600}
+            height={600}
+            className="aspect-square w-full object-cover"
+          />
         </div>
         <div className="">
           <div>

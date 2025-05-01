@@ -62,11 +62,11 @@ function ProductImageUpload({
       );
       if (response?.data?.success) {
         uploadedUrls.push(response.data.result.url);
-        setUploadedImageUrl(response.data.result.url);
-        setImageLoadingState(false);
+        setUploadedImageUrl(prev => [...prev, response.data.result.url]);
       }
-      setImageFile([]);
     }
+    setImageFile([]);
+    setImageLoadingState(false);
   }
 
   useEffect(() => {
