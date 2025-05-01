@@ -1,7 +1,7 @@
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
@@ -51,23 +51,19 @@ function ProductImageUpload({
       data.append("upload_preset", "ml_default");
       data.append("cloud_name", "jackiieee");
 
-      try {
-        const response = await axios.post(
-          "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
-          data,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        if (response?.data?.success) {
-          uploadedUrls.push(response.data.result.url);
-          setUploadedImageUrl(response.data.result.url);
-          setImageLoadingState(false);
+      const response = await axios.post(
+        "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      } catch (error) {
-        console.error("Error uploading images:", error);
+      );
+      if (response?.data?.success) {
+        uploadedUrls.push(response.data.result.url);
+        setUploadedImageUrl(response.data.result.url);
+        setImageLoadingState(false);
       }
       setImageFile([]);
     }

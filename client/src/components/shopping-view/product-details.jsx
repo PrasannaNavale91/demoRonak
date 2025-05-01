@@ -10,16 +10,18 @@ import { useToast } from "../ui/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
+  const [activeImage, setActiveImage] = useState(productDetails?.image || "");
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { reviews } = useSelector((state) => state.shopReview);
+  const zoomRef = useRef(null);
 
   const { toast } = useToast();
 
@@ -71,6 +73,18 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     setReviewMsg("");
   }
 
+  function handleMouseMove(e) {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+  
+    zoomRef.current.style.backgroundPosition = `${x}% ${y}%`;
+  }
+  
+  function handleMouseLeave() {
+    zoomRef.current.style.backgroundPosition = "center";
+  }
+
   function handleAddReview() {
     dispatch(
       addReview({
@@ -93,7 +107,10 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   }
 
   useEffect(() => {
-    if (productDetails !== null) dispatch(getReviews(productDetails?._id));
+    if (productDetails !== null){
+      dispatch(getReviews(productDetails?._id));
+      setActiveImage(productDetails?.image || "");
+    }
   }, [productDetails]);
 
   console.log(reviews, "reviews");
@@ -107,14 +124,38 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-2 gap-8 sm:p-12 max-w-screen sm:max-w-[90vw]">
-        <div className="relative overflow-hidden rounded-lg">
-          <img
-            src={productDetails?.image}
-            alt={productDetails?.title}
-            width={400}
-            height={400}
-            className="aspect-square w-full object-cover"
-          />
+        <div className="flex flex-col gap-4">
+          <div
+            className="relative overflow-hidden rounded-lg aspect-square w-full bg-center bg-no-repeat bg-cover border"
+            style={{
+              backgroundImage: `url(${activeImage})`,
+            }}
+            ref={zoomRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
+            <img
+              src={activeImage}
+              alt="Zoomed Product"
+              className="w-full h-full object-cover opacity-0 pointer-events-none"
+            />
+          </div>
+
+          {productDetails?.images?.length > 1 && (
+            <div className="flex gap-2">
+              {productDetails.images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt={`Thumbnail ${idx}`}
+                  onClick={() => setActiveImage(img)}
+                  className={`w-16 h-16 object-cover rounded cursor-pointer border ${
+                    img === activeImage ? "ring-2 ring-primary" : ""
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div className="">
           <div>
