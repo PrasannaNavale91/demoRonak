@@ -9,15 +9,10 @@ import { Skeleton } from "../ui/skeleton";
 function ProductImageUpload({
   imageFile,
   setImageFile,
-  imageLoadingState,
-  uploadedImageUrl,
-  setUploadedImageUrl,
-  setImageLoadingState,
   isEditMode,
   isCustomStyling = false,
 }) {
   const inputRef = useRef(null);
-  const [selectedFiles, setSelectedFiles] = useState([]);
 
   function handleImageFileChange(event) {
     const selectedFiles = Array.from(event.target.files || []);
@@ -39,14 +34,10 @@ function ProductImageUpload({
   }
   
   function handleRemoveImage(index) {
-    const newFiles = [...imageFile];
-    newFiles.splice(index, 1);
-    setImageFile(newFiles);
-    if (inputRef.current) inputRef.current.value = "";
+    setImageFile((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function uploadImageToCloudinary() {
-    setImageLoadingState(true);
     const uploadedUrls = [];
     
     for (const file of selectedFiles) {
@@ -71,16 +62,13 @@ function ProductImageUpload({
       } catch (error) {
         console.error("Error uploading images:", error);
       }
-      
-      setUploadedImageUrl(uploadedUrls);
       setImageFile([]);
-      setImageLoadingState(false);
     }
   }
 
-  // useEffect(() => {
-  //   if (imageFile.length) uploadImageToCloudinary();
-  // }, [imageFile]);
+  useEffect(() => {
+    if (imageFile !== null) uploadImageToCloudinary();
+  }, [imageFile]);
 
   return (
     <div
