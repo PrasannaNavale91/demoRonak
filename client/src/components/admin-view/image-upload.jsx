@@ -9,6 +9,10 @@ import { Skeleton } from "../ui/skeleton";
 function ProductImageUpload({
   imageFile,
   setImageFile,
+  imageLoadingState,
+  uploadedImageUrl,
+  setUploadedImageUrl,
+  setImageLoadingState,
   isEditMode,
   isCustomStyling = false,
 }) {
@@ -27,9 +31,9 @@ function ProductImageUpload({
 
   function handleDrop(event) {
     event.preventDefault();
-    const files = Array.from(event.dataTransfer.files || []);
-    if (files.length) {
-      setImageFile((prev) => [...prev, ...files]);
+    const droppedFile = Array.from(event.dataTransfer.files || []);
+    if (droppedFile.length) {
+      setImageFile((prev) => [...prev, ...droppedFile]);
     }
   }
   
@@ -38,6 +42,7 @@ function ProductImageUpload({
   }
 
   async function uploadImageToCloudinary() {
+    setImageLoadingState(true);
     const uploadedUrls = [];
     
     for (const file of imageFile) {
@@ -58,6 +63,8 @@ function ProductImageUpload({
         );
         if (response?.data?.success) {
           uploadedUrls.push(response.data.result.url);
+          setUploadedImageUrl(response.data.result.url);
+          setImageLoadingState(false);
         }
       } catch (error) {
         console.error("Error uploading images:", error);
@@ -66,9 +73,9 @@ function ProductImageUpload({
     }
   }
 
-  // useEffect(() => {
-  //   if (imageFile !== null) uploadImageToCloudinary();
-  // }, [imageFile]);
+  useEffect(() => {
+    if (imageFile !== null) uploadImageToCloudinary();
+  }, [imageFile]);
 
   return (
     <div
@@ -108,14 +115,18 @@ function ProductImageUpload({
                   <FileIcon className="w-6 h-6 text-primary" />
                   <p className="text-sm truncate max-w-[200px]">{file.name}</p>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground hover:text-foreground"
-                  onClick={() => handleRemoveImage(index)}
-                >
-                  <XIcon className="w-4 h-4" />
-                </Button>
+                {imageLoadingState ? (
+                  <Skeleton className="h-4 w-16 bg-gray-100" />
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-foreground"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    <XIcon className="w-4 h-4" />
+                  </Button>
+                )}
               </div>
             ))}
           </div>
