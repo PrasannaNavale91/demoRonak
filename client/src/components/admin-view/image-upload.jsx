@@ -40,7 +40,7 @@ function ProductImageUpload({
   async function uploadImageToCloudinary() {
     const uploadedUrls = [];
     
-    for (const file of selectedFiles) {
+    for (const file of imageFile) {
       const data = new FormData();
       data.append("my_file", file);
       data.append("upload_preset", "ml_default");
@@ -108,18 +108,14 @@ function ProductImageUpload({
                   <FileIcon className="w-6 h-6 text-primary" />
                   <p className="text-sm truncate max-w-[200px]">{file.name}</p>
                 </div>
-                {imageLoadingState ? (
-                  <Skeleton className="h-4 w-16 bg-gray-100" />
-                ) : (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-muted-foreground hover:text-foreground"
-                    onClick={() => handleRemoveImage(index)}
-                  >
-                    <XIcon className="w-4 h-4" />
-                  </Button>
-                )}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-foreground"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  <XIcon className="w-4 h-4" />
+                </Button>
               </div>
             ))}
           </div>
