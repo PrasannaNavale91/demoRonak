@@ -78,11 +78,15 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;
   
-    zoomRef.current.style.backgroundPosition = `${x}% ${y}%`;
+    if (zoomRef.current) {
+      zoomRef.current.style.backgroundPosition = `${x}% ${y}%`;
+    }
   }
   
   function handleMouseLeave() {
-    zoomRef.current.style.backgroundPosition = "center";
+    if (!zoomRef.current) {
+      zoomRef.current.style.backgroundPosition = "center";
+    }
   }
 
   function handleAddReview() {
@@ -124,7 +128,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-2 gap-8 sm:p-12 max-w-screen sm:max-w-[90vw]">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 w-full">
           <div
             className="relative overflow-hidden rounded-lg aspect-square w-full bg-center bg-no-repeat bg-cover border"
             style={{
@@ -136,13 +140,13 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           >
             <img
               src={activeImage}
-              alt="Zoomed Product"
-              className="w-full h-full object-cover opacity-0 pointer-events-none"
+              alt="Zoom Preview"
+              className="w-full h-full object-cover opacity-0"
             />
           </div>
 
           {productDetails?.images?.length > 1 && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {productDetails.images.map((img, idx) => (
                 <img
                   key={idx}
