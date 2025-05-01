@@ -17,6 +17,7 @@ function ProductImageUpload({
   isCustomStyling = false,
 }) {
   const inputRef = useRef(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   function handleImageFileChange(event) {
     const selectedFiles = Array.from(event.target.files || []);
