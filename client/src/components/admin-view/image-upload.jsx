@@ -17,11 +17,9 @@ function ProductImageUpload({
   isCustomStyling = false,
 }) {
   const inputRef = useRef(null);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
-    const selectedFiles = Array.from(event.target.files);
+    const selectedFiles = Array.from(event.target.files || []);
     if (selectedFiles.length) {
       setImageFile((prev) => [...prev, ...selectedFiles]);
     }
@@ -34,14 +32,16 @@ function ProductImageUpload({
   function handleDrop(event) {
     event.preventDefault();
     const files = Array.from(event.dataTransfer.files || []);
-    setImageFile(prev => [...prev, ...files]);
-    setSelectedFiles(files);
+    if (files.length) {
+      setImageFile((prev) => [...prev, ...files]);
+    }
   }
   
   function handleRemoveImage(index) {
     const newFiles = [...imageFile];
     newFiles.splice(index, 1);
     setImageFile(newFiles);
+    if (inputRef.current) inputRef.current.value = "";
   }
 
   async function uploadImageToCloudinary() {
@@ -111,28 +111,30 @@ function ProductImageUpload({
           <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
           <span>Drag & drop or click to upload image</span>
         </Label>
-        <div className="mt-4 space-y-2">
-          {imageFile.map((file, index) => (
-            <div key={index} className="flex items-center justify-between border rounded p-2">
-              <div className="flex items-center gap-2">
-                <FileIcon className="w-6 h-6 text-primary" />
-                <p className="text-sm truncate max-w-[200px]">{file.name}</p>
+        {imageFile.length > 0 && (
+          <div className="mt-4 space-y-2">
+            {imageFile.map((file, index) => (
+              <div key={index} className="flex items-center justify-between border rounded p-2">
+                <div className="flex items-center gap-2">
+                  <FileIcon className="w-6 h-6 text-primary" />
+                  <p className="text-sm truncate max-w-[200px]">{file.name}</p>
+                </div>
+                {imageLoadingState ? (
+                  <Skeleton className="h-4 w-16 bg-gray-100" />
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-foreground"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    <XIcon className="w-4 h-4" />
+                  </Button>
+                )}
               </div>
-              {imageLoadingState ? (
-                <Skeleton className="h-4 w-16 bg-gray-100" />
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground hover:text-foreground"
-                  onClick={() => handleRemoveImage(index)}
-                >
-                  <XIcon className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
