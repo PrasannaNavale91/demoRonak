@@ -129,6 +129,20 @@ export const registerFormControls = [
       ],
     },
     {
+      label: "Size",
+      name: "size",
+      componentType: "radio",
+      type: "radio",
+      value: ["S", "M", "L", "XL", "XXL"],
+    },
+    {
+      label: "Color",
+      name: "color",
+      componentType: "radio",
+      type: "radio",
+      value: ["Red", "Blue", "Green", "Yellow", "Black", "White"],
+    },
+    {
       label: "Price",
       name: "price",
       componentType: "input",
