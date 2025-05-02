@@ -83,25 +83,34 @@ function CommonForm({
         break;
       case "checkbox":
         element = (
-          <div className="flex flex-wrap gap-4">
-            {getControlItem.options?.map((option) => (
-              <label key={option.value} className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name={getControlItem.name}
-                  value={option.value}
-                  checked={formData[getControlItem.name] === option.value}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      [getControlItem.name]: e.target.value,
-                    })
-                  }
-                  className="form-checkbox"
-                />
-                {option.label}
-              </label>
-            ))}
+          <div className="flex flex-wrap gap-3">
+            {getControlItem.options?.map((optionItem) => {
+              const isChecked = value?.includes(optionItem.id);
+              return (
+                <div key={optionItem.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`${getControlItem.name}-${optionItem.id}`}
+                    checked={isChecked}
+                    onCheckedChange={(checked) => {
+                      const currentValue = formData[getControlItem.name] || [];
+                      const newValue = checked
+                        ? [...currentValue, optionItem.id]
+                        : currentValue.filter((v) => v !== optionItem.id);
+                      setFormData({
+                        ...formData,
+                        [getControlItem.name]: newValue,
+                      });
+                    }}
+                  />
+                  <label
+                    htmlFor={`${getControlItem.name}-${optionItem.id}`}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {optionItem.label}
+                  </label>
+                </div>
+              );
+            })}
           </div>
         );
         break;
