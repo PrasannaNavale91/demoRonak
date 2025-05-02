@@ -80,7 +80,30 @@ function CommonForm({
             </SelectContent>
           </Select>
         );
-
+        break;
+      case "radio":
+        element = (
+          <div className="flex flex-wrap gap-4">
+            {getControlItem.options?.map((option) => (
+              <label key={option.value} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name={getControlItem.name}
+                  value={option.value}
+                  checked={formData[getControlItem.name] === option.value}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      [getControlItem.name]: e.target.value,
+                    })
+                  }
+                  className="form-radio"
+                />
+                {option.label}
+              </label>
+            ))}
+          </div>
+        );
         break;
       case "textarea":
         element = (
