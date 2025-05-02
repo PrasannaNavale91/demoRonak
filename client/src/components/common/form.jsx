@@ -11,6 +11,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { Checkbox } from "@radix-ui/react-checkbox";
 
 function CommonForm({
   formControls,
@@ -89,6 +90,7 @@ function CommonForm({
               return (
                 <div key={optionItem.id} className="flex items-center space-x-2">
                   <Checkbox
+                    className="h-4 w-4"
                     id={`${getControlItem.name}-${optionItem.id}`}
                     checked={isChecked}
                     onCheckedChange={(checked) => {
