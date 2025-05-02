@@ -49,8 +49,8 @@ const addProduct = async (req, res) => {
       description,
       category,
       collection,
-      size: size ? size.split(",") : [],
-      color: color ? color.split(",") : [],
+      size: Array.isArray(size) ? size : [],
+      color: Array.isArray(color) ? color : [],
       price,
       salePrice,
       totalStock,
@@ -114,11 +114,11 @@ const editProduct = async (req, res) => {
         message: "Product not found",
       });
     
-    if (size !== undefined) {
-      findProduct.size = size === "" ? [] : size.split(",");
+    if (Array.isArray(size)) {
+      findProduct.size = size;
     }
-    if (color !== undefined) {
-      findProduct.color = color === "" ? [] : color.split(",");
+    if (Array.isArray(color)) {
+      findProduct.color = color;
     }
 
     findProduct.title = title || findProduct.title;
