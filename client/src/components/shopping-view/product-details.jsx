@@ -145,30 +145,29 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           {productDetails?.size && Array.isArray(productDetails.size) && (
             <div className="flex items-center gap-2 mt-2 flex-wrap">
               <Label className="text-sm text-muted-foreground">Sizes:</Label>
-              {productDetails.size.map((s, idx) => (
+              {productDetails.size.map((sizes, index) => (
                 <span
-                  key={idx}
+                  key={index}
                   className="text-sm px-3 py-1 border rounded-full bg-muted"
                 >
-                  {s}
+                  {sizes}
                 </span>
               ))}
             </div>
           )}
           {productDetails?.color && Array.isArray(productDetails.color) && (
             <div className="flex items-center gap-2 mt-2 flex-wrap">
-              <Label className="text-sm text-muted-foreground">Colors:</Label>
-              {productDetails.color.map((c, idx) => (
+              {productDetails.color.map((colors, index) => (
                 <span
-                  key={idx}
+                  key={index}
                   className="text-sm px-3 py-1 border rounded-full bg-muted"
                 >
-                  {c}
+                  {colors}
                 </span>
               ))}
             </div>
           )}
-          
+
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
               <StarRatingComponent rating={averageReview} />

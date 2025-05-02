@@ -90,7 +90,6 @@ function CommonForm({
               return (
                 <div key={optionItem.id} className="flex items-center space-x-2">
                   <Checkbox
-                    className="h-4 w-4"
                     id={`${getControlItem.name}-${optionItem.id}`}
                     checked={isChecked}
                     onCheckedChange={(checked) => {
