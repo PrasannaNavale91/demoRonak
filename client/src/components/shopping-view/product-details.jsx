@@ -129,17 +129,25 @@ function ProductDetailsDialog({ open, setOpen, productDetails, images }) {
           </div>
           <div className="flex items-center justify-between">
             <p
-              className={`text-3xl font-bold text-primary ${
+              className={`text-xl font-bold text-primary ${
                 productDetails?.salePrice > 0 ? "line-through" : ""
               }`}
             >
               ${productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 ? (
-              <p className="text-2xl font-bold text-muted-foreground">
+              <p className="text-xl font-bold text-muted-foreground">
                 ${productDetails?.salePrice}
               </p>
             ) : null}
+          </div>
+          <div className="flex items-center gap-2 mt-2">
+            <p className="text-primary">
+              ${productDetails?.size}
+            </p>
+            <p className="text-primary f">
+              ${productDetails?.color}
+            </p>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">

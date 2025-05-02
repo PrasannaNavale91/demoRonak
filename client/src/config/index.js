@@ -134,11 +134,11 @@ export const registerFormControls = [
       componentType: "radio",
       type: "radio",
       options: [
-        { label: "Small", value: "S" },
-        { label: "Medium", value: "M" },
-        { label: "Large", value: "L" },
-        { label: "Extra Large", value: "XL" },
-        { label: "Extra Extra Large", value: "XXL" },
+        { label: "S", value: "Small" },
+        { label: "M", value: "Medium" },
+        { label: "L", value: "Large" },
+        { label: "XL", value: "Extra Large" },
+        { label: "XXL", value: "Extra Extra Large" },
       ],
     },
     {

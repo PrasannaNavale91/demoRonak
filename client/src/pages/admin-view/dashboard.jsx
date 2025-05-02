@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function AdminDashboard() {
-  const [imageFile, setImageFile] = useState([]);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState([]);
-  const [imageLoadingState, setImageLoadingState] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [imageLoadingState, setImageLoadingState] = useState(false);
   const dispatch = useDispatch();
   const { featureImageList } = useSelector((state) => state.commonFeature);
 
