@@ -13,7 +13,7 @@ import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState, useRef } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 
-function ProductDetailsDialog({ open, setOpen, productDetails, images }) {
+function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
@@ -141,14 +141,34 @@ function ProductDetailsDialog({ open, setOpen, productDetails, images }) {
               </p>
             ) : null}
           </div>
-          <div className="flex items-center gap-2 mt-2">
-            <p className="text-primary">
-              ${productDetails?.size}
-            </p>
-            <p className="text-primary f">
-              ${productDetails?.color}
-            </p>
-          </div>
+
+          {productDetails?.size && Array.isArray(productDetails.size) && (
+            <div className="flex items-center gap-2 mt-2 flex-wrap">
+              <Label className="text-sm text-muted-foreground">Sizes:</Label>
+              {productDetails.size.map((s, idx) => (
+                <span
+                  key={idx}
+                  className="text-sm px-3 py-1 border rounded-full bg-muted"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          )}
+          {productDetails?.color && Array.isArray(productDetails.color) && (
+            <div className="flex items-center gap-2 mt-2 flex-wrap">
+              <Label className="text-sm text-muted-foreground">Colors:</Label>
+              {productDetails.color.map((c, idx) => (
+                <span
+                  key={idx}
+                  className="text-sm px-3 py-1 border rounded-full bg-muted"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+          )}
+          
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
               <StarRatingComponent rating={averageReview} />

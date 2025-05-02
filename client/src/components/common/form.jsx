@@ -81,13 +81,13 @@ function CommonForm({
           </Select>
         );
         break;
-      case "radio":
+      case "checkbox":
         element = (
           <div className="flex flex-wrap gap-4">
             {getControlItem.options?.map((option) => (
               <label key={option.value} className="flex items-center gap-2 cursor-pointer">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name={getControlItem.name}
                   value={option.value}
                   checked={formData[getControlItem.name] === option.value}
@@ -97,7 +97,7 @@ function CommonForm({
                       [getControlItem.name]: e.target.value,
                     })
                   }
-                  className="form-radio"
+                  className="form-checkbox"
                 />
                 {option.label}
               </label>
