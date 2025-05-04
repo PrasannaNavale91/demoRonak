@@ -52,11 +52,6 @@ function ProductImageUpload({
     const response = await axios.post(
       "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
       data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
     );
     console.log(response, "response");
 
