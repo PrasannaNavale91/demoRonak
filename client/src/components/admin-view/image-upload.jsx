@@ -21,11 +21,10 @@ function ProductImageUpload({
   console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
-    console.log(event.target.files, "event.target.files");
-    const selectedFile = event.target.files?.[0];
-    console.log(selectedFile);
-
-    if (selectedFile) setImageFile(selectedFile);
+    const selectedFiles = Array.from(event.target.files || []);
+    if (selectedFiles.length > 0) {
+      setImageFile((prev) => [...prev, ...selectedFiles]);
+    }
   }
 
   function handleDragOver(event) {
@@ -34,19 +33,21 @@ function ProductImageUpload({
 
   function handleDrop(event) {
     event.preventDefault();
-    const droppedFile = event.dataTransfer.files?.[0];
-    if (droppedFile) setImageFile(droppedFile);
+    const droppedFile = Array.from(event.dataTransfer.files || []);
+    if (droppedFile.length > 0) {
+      setImageFile((prev) => [...prev, ...droppedFiles]);
+    }
   }
 
-  function handleRemoveImage() {
-    setImageFile(null);
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
+  function handleRemoveImage(indexToRemove) {
+    setImageFile((prev) => prev.filter((_, idx) => idx !== indexToRemove));
+    setUploadedImageUrl((prev) => prev.filter((_, idx) => idx !== indexToRemove));
   }
 
   async function uploadImageToCloudinary() {
     setImageLoadingState(true);
+    const uploadedUrls = [];
+
     const data = new FormData();
     data.append("my_file", imageFile);
     const response = await axios.post(
@@ -62,7 +63,9 @@ function ProductImageUpload({
   }
 
   useEffect(() => {
-    if (imageFile !== null) uploadImageToCloudinary();
+    if (imageFile.length > 0) {
+      uploadAllImages();
+    }
   }, [imageFile]);
 
   return (
@@ -84,9 +87,9 @@ function ProductImageUpload({
           ref={inputRef}
           onChange={handleImageFileChange}
           disabled={isEditMode}
+          multiple
         />
-        {!imageFile ? (
-          <Label
+        <Label
             htmlFor="image-upload"
             className={`${
               isEditMode ? "cursor-not-allowed" : ""
@@ -95,24 +98,31 @@ function ProductImageUpload({
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload image</span>
           </Label>
-        ) : imageLoadingState ? (
-          <Skeleton className="h-10 bg-gray-100" />
-        ) : (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <FileIcon className="w-8 text-primary mr-2 h-8" />
-            </div>
-            <p className="text-sm font-medium">{imageFile.name}</p>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-foreground"
-              onClick={handleRemoveImage}
+      </div>
+
+      <div className="mt-4 space-y-2">
+        {imageFile.length > 0 &&
+          imageFile.map((file, idx) => (
+            <div
+              key={idx}
+              className="flex items-center justify-between p-2 border rounded-md"
             >
-              <XIcon className="w-4 h-4" />
-              <span className="sr-only">Remove File</span>
-            </Button>
-          </div>
+              <div className="flex items-center gap-2">
+                <FileIcon className="w-5 h-5 text-primary" />
+                <p className="text-sm">{file.name}</p>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => handleRemoveImage(idx)}
+              >
+                <XIcon className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+
+        {imageLoadingState && (
+          <Skeleton className="h-10 w-full bg-gray-100" />
         )}
       </div>
     </div>

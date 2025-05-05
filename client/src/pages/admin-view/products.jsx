@@ -36,8 +36,8 @@ const initialFormData = {
 function AdminProducts() {
   const [openCreateProductsDialog, setOpenCreateProductsDialog] =useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState([]);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState([]);
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
@@ -74,6 +74,7 @@ function AdminProducts() {
             dispatch(fetchAllProducts());
             setOpenCreateProductsDialog(false);
             setImageFile([]);
+            setUploadedImageUrl([]);
             setFormData(initialFormData);
             toast({
               title: "Product add successfully",
