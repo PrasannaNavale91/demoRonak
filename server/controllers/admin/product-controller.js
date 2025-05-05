@@ -44,13 +44,13 @@ const addProduct = async (req, res) => {
     console.log(averageReview, "averageReview");
 
     const newlyCreatedProduct = new Product({
-      image: image || [],
+      image,
       title,
       description,
       category,
       collection,
-      size: Array.isArray(size) ? size : [],
-      color: Array.isArray(color) ? color : [],
+      size,
+      color,
       price,
       salePrice,
       totalStock,
@@ -113,13 +113,6 @@ const editProduct = async (req, res) => {
         success: false,
         message: "Product not found",
       });
-    
-    if (Array.isArray(size)) {
-      findProduct.size = size;
-    }
-    if (Array.isArray(color)) {
-      findProduct.color = color;
-    }
 
     findProduct.title = title || findProduct.title;
     findProduct.description = description || findProduct.description;
@@ -130,6 +123,8 @@ const editProduct = async (req, res) => {
       salePrice === "" ? 0 : salePrice || findProduct.salePrice;
     findProduct.totalStock = totalStock || findProduct.totalStock;
     findProduct.image = image || findProduct.image;
+    findProduct.size = size || findProduct.size;
+    findProduct.color = color || findProduct.color;
     findProduct.averageReview = averageReview || findProduct.averageReview;
 
     await findProduct.save();
