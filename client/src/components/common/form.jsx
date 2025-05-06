@@ -86,7 +86,7 @@ function CommonForm({
         element = (
           <div className="flex flex-wrap gap-3">
             {getControlItem.options?.map((optionItem) => {
-              const isChecked = value?.includes(optionItem.id);
+              const isChecked = formData[getControlItem.name]?.includes(optionItem.label);
               return (
                 <div key={optionItem.id} className="flex items-center space-x-2">
                   <Checkbox
@@ -94,12 +94,17 @@ function CommonForm({
                     checked={isChecked}
                     onCheckedChange={(checked) => {
                       const currentValue = formData[getControlItem.name] || [];
-                      const newValue = checked
-                        ? [...currentValue, optionItem.id]
-                        : currentValue.filter((v) => v !== optionItem.id);
+                      let updatedValues;
+
+                      if (checked) {
+                        updatedValues = [...currentValues, optionItem.label];
+                      } else {
+                        updatedValues = currentValue.filter((val) => val !== optionItem.label);
+                      }
+
                       setFormData({
                         ...formData,
-                        [getControlItem.name]: newValue,
+                        [getControlItem.name]: updatedValues,
                       });
                     }}
                   />
