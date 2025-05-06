@@ -11,7 +11,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { Checkbox } from "../ui/checkbox";
 
 function CommonForm({
   formControls,
@@ -103,12 +103,12 @@ function CommonForm({
                       });
                     }}
                   />
-                  <label
+                  <Label
                     htmlFor={`${getControlItem.name}-${optionItem.id}`}
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {optionItem.label}
-                  </label>
+                  </Label>
                 </div>
               );
             })}
