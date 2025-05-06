@@ -88,20 +88,26 @@ function CommonForm({
             {getControlItem.options?.map((optionItem) => {
               const fieldValues = formData[getControlItem.name] || [];
               const isChecked = fieldValues.includes(optionItem.id);
+
               return (
                 <div key={optionItem.id} className="flex items-center space-x-2">
                   <Checkbox
                     id={`${getControlItem.name}-${optionItem.id}`}
                     checked={isChecked}
                     onCheckedChange={(checked) => {
-                      const updatedValues = checked
-                        ? [...fieldValues, optionItem.id]
-                        : fieldValues.filter((v) => v !== optionItem.id);
-
-                      setFormData({
-                        ...formData,
-                        [getControlItem.name]: updatedValues,
-                      });
+                      if (checked === true) {
+                        if (!fieldValues.includes(optionItem.id)) {
+                          setFormData({
+                            ...formData,
+                            [getControlItem.name]: [...fieldValues, optionItem.id],
+                          });
+                        }
+                      } else if (checked === false) {
+                        setFormData({
+                          ...formData,
+                          [getControlItem.name]: fieldValues.filter((v) => v !== optionItem.id),
+                        });
+                      }
                     }}
                   />
                   <Label
