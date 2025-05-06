@@ -141,6 +141,32 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
+          <div className="flex items-center justify-between">
+            {productDetails?.colors?.length > 0 && (
+              <div className="mt-4">
+                <Label>Available Colors</Label>
+                <div className="flex gap-2">
+                  {productDetails.colors.map((color) => (
+                    <div
+                      key={color}
+                      className="w-6 h-6 rounded-full border"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+            {productDetails?.sizes?.length > 0 && (
+              <div className="mt-4">
+                <Label>Available Sizes</Label>
+                <div className="flex gap-2">
+                  {productDetails.sizes.map((size) => (
+                    <Button key={size} variant="outline">{size}</Button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
               <StarRatingComponent rating={averageReview} />
