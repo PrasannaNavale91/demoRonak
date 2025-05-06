@@ -97,7 +97,7 @@ function CommonForm({
                       let updatedValues;
 
                       if (checked) {
-                        updatedValues = [...currentValues, optionItem.label];
+                        updatedValues = [...currentValue, optionItem.label];
                       } else {
                         updatedValues = currentValue.filter((val) => val !== optionItem.label);
                       }
