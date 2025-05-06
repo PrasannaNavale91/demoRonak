@@ -95,19 +95,14 @@ function CommonForm({
                     id={`${getControlItem.name}-${optionItem.id}`}
                     checked={isChecked}
                     onCheckedChange={(checked) => {
-                      if (checked === true) {
-                        if (!fieldValues.includes(optionItem.id)) {
-                          setFormData({
-                            ...formData,
-                            [getControlItem.name]: [...fieldValues, optionItem.id],
-                          });
-                        }
-                      } else if (checked === false) {
-                        setFormData({
-                          ...formData,
-                          [getControlItem.name]: fieldValues.filter((v) => v !== optionItem.id),
-                        });
-                      }
+                      const currentValue = formData[getControlItem.name] || [];
+                      const newValue = checked
+                        ? [...currentValue, optionItem.id]
+                        : currentValue.filter((v) => v !== optionItem.id);
+                      setFormData({
+                        ...formData,
+                        [getControlItem.name]: newValue,
+                      });
                     }}
                   />
                   <Label
