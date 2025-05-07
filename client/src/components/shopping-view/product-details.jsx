@@ -110,7 +110,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
-      <DialogContent className="grid lg:grid-cols-2 sm:grid-rows-2 gap-8 sm:p-12 max-w-screen sm:max-w-[70vw] md:max-w-[100vw]">
+      <DialogContent className="grid lg:grid-cols-2 sm:grid-rows-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[70vw] md:max-w-[100vw]">
         <div className="relative overflow-hidden rounded-lg">
           <img
             src={productDetails?.image}
@@ -120,7 +120,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             className="aspect-square w-full object-cover"
           />
         </div>
-        <div className="flex flex-col">
+        <div className="">
           <div>
             <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
             <p className="text-muted-foreground text-2xl mb-5 mt-4">
