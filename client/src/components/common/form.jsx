@@ -84,36 +84,30 @@ function CommonForm({
         break;
       case "checkbox":
         element = (
-          <div className="flex flex-wrap gap-3">
-            {getControlItem.options?.map((optionItem) => {
-              const fieldValues = formData[getControlItem.name] || [];
-              const isChecked = fieldValues.includes(optionItem.id);
+          <div>
+            {options.map((option, index) => (
+              <Label key={index} className="flex items-center gap-2 mb-1">
+                <Checkbox
+                  type="checkbox"
+                  value={option}
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    const value = e.target.value;
+                    const prevValues = formData[name] || [];
+                    const updatedValues = isChecked
+                      ? [...prevValues, value]
+                      : prevValues.filter((v) => v !== value);
 
-              return (
-                <div key={optionItem.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`${getControlItem.name}-${optionItem.id}`}
-                    checked={isChecked}
-                    onCheckedChange={(checked) => {
-                      const currentValue = formData[getControlItem.name] || [];
-                      const newValue = checked
-                        ? [...currentValue, optionItem.id]
-                        : currentValue.filter((v) => v !== optionItem.id);
-                      setFormData({
-                        ...formData,
-                        [getControlItem.name]: newValue,
-                      });
-                    }}
-                  />
-                  <Label
-                    htmlFor={`${getControlItem.name}-${optionItem.id}`}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {optionItem.label}
-                  </Label>
-                </div>
-              );
-            })}
+                    setFormData((prev) => ({
+                      ...prev,
+                      [name]: updatedValues,
+                    }));
+                  }}
+                  checked={formData[name]?.includes(option) || false}
+                />
+                {option}
+              </Label>
+            ))}
           </div>
         );
         break;

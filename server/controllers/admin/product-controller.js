@@ -43,14 +43,22 @@ const addProduct = async (req, res) => {
 
     console.log(averageReview, "averageReview");
 
+    const sanitizedSizes = Array.isArray(size)
+    ? size.filter((val) => val !== null && val !== '')
+    : [];
+
+    const sanitizedColors = Array.isArray(color)
+    ? color.filter((val) => val !== null && val !== '')
+    : [];
+
     const newlyCreatedProduct = new Product({
       image,
       title,
       description,
       category,
       collection,
-      size,
-      color,
+      size: sanitizedSizes,
+      color: sanitizedColors,
       price,
       salePrice,
       totalStock,

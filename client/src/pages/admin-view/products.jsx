@@ -48,11 +48,18 @@ function AdminProducts() {
   function onSubmit(event) {
     event.preventDefault();
 
+    const cleanFormData = {
+      ...formData,
+      size: formData.size?.filter(Boolean) || [],
+      color: formData.color?.filter(Boolean) || [],
+    };
+
     currentEditedId !== null
       ? dispatch(
           editProduct({
             id: currentEditedId,
             formData,
+            cleanFormData
           })
         ).then((data) => {
           console.log(data, "edit");
@@ -68,6 +75,7 @@ function AdminProducts() {
           addNewProduct({
             ...formData,
             image: uploadedImageUrl,
+            cleanFormData
           })
         ).then((data) => {
           if (data?.payload?.success) {
