@@ -96,8 +96,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   useEffect(() => {
     if (productDetails !== null){
       dispatch(getReviews(productDetails?._id));
-      // setActiveImage(productDetails?.image || "");
     }
+    console.log("Product Details", productDetails);
   }, [productDetails]);
 
   console.log(reviews, "reviews");
@@ -110,7 +110,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
-      <DialogContent className="grid grid-cols-2 gap-8 sm:p-12 max-w-screen sm:max-w-[90vw]">
+      <DialogContent className="grid lg:grid-cols-2 sm:grid-rows-2 gap-8 sm:p-12 max-w-screen sm:max-w-[70vw] md:max-w-[100vw]">
         <div className="relative overflow-hidden rounded-lg">
           <img
             src={productDetails?.image}
@@ -120,7 +120,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             className="aspect-square w-full object-cover"
           />
         </div>
-        <div className="">
+        <div className="flex flex-col">
           <div>
             <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
             <p className="text-muted-foreground text-2xl mb-5 mt-4">
