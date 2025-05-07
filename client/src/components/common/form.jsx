@@ -22,8 +22,6 @@ function CommonForm({
   isBtnDisabled,
 }) {
   const [showPassword, setShowPassword] = useState(false);
-  const { type } = element;
-
 
   function renderInputsByComponentType(getControlItem) {
     let element = null;
