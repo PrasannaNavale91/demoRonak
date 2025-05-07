@@ -85,29 +85,33 @@ function CommonForm({
       case "checkbox":
         element = (
           <div>
-            {options.map((option, index) => (
-              <Label key={index} className="flex items-center gap-2 mb-1">
-                <Checkbox
-                  type="checkbox"
-                  value={option}
-                  onChange={(e) => {
-                    const isChecked = e.target.checked;
-                    const value = e.target.value;
-                    const prevValues = formData[name] || [];
-                    const updatedValues = isChecked
-                      ? [...prevValues, value]
-                      : prevValues.filter((v) => v !== value);
+            {type === 'checkbox-group' && options && (
+              <div>
+                {options.map((option, index) => (
+                  <Label key={index} className="flex items-center gap-2 mb-1">
+                    <Checkbox
+                      type="checkbox"
+                      value={option}
+                      onChange={(e) => {
+                        const isChecked = e.target.checked;
+                        const value = e.target.value;
+                        const prevValues = formData[name] || [];
+                        const updatedValues = isChecked
+                          ? [...prevValues, value]
+                          : prevValues.filter((v) => v !== value);
 
-                    setFormData((prev) => ({
-                      ...prev,
-                      [name]: updatedValues,
-                    }));
-                  }}
-                  checked={formData[name]?.includes(option) || false}
-                />
-                {option}
-              </Label>
-            ))}
+                        setFormData((prev) => ({
+                          ...prev,
+                          [name]: updatedValues,
+                        }));
+                      }}
+                      checked={formData[name]?.includes(option) || false}
+                    />
+                    {option}
+                  </Label>
+                ))}
+              </div>
+            )}
           </div>
         );
         break;
