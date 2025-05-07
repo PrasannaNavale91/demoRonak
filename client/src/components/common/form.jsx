@@ -22,6 +22,8 @@ function CommonForm({
   isBtnDisabled,
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  const { type } = element;
+
 
   function renderInputsByComponentType(getControlItem) {
     let element = null;
@@ -85,7 +87,7 @@ function CommonForm({
       case "checkbox":
         element = (
           <div>
-            {type === 'checkbox-group' && options && (
+            {element.type === 'checkbox-group' && options && (
               <div>
                 {options.map((option, index) => (
                   <Label key={index} className="flex items-center gap-2 mb-1">
