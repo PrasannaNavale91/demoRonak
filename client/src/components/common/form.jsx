@@ -84,8 +84,7 @@ function CommonForm({
         break;
       case "checkbox":
         element = (
-          <div>
-            {element.type === 'checkbox-group' && options && (
+
               <div>
                 {options.map((option, index) => (
                   <Label key={index} className="flex items-center gap-2 mb-1">
@@ -111,8 +110,7 @@ function CommonForm({
                   </Label>
                 ))}
               </div>
-            )}
-          </div>
+            
         );
         break;
       case "textarea":
