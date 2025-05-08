@@ -53,7 +53,6 @@ function AdminProducts() {
           editProduct({
             id: currentEditedId,
             formData,
-            cleanFormData
           })
         ).then((data) => {
           console.log(data, "edit");
