@@ -84,33 +84,42 @@ function CommonForm({
         break;
       case "checkbox":
         element = (
+          <div className="flex flex-wrap gap-3">
+            {getControlItem.options && getControlItem.options.length > 0
+              ? getControlItem.options.map((optionItem) => {
+                  const isChecked =
+                    formData[getControlItem.name]?.includes(optionItem.id) || false;
 
-              <div>
-                {options.map((option, index) => (
-                  <Label key={index} className="flex items-center gap-2 mb-1">
-                    <Checkbox
-                      type="checkbox"
-                      value={option}
-                      onChange={(e) => {
-                        const isChecked = e.target.checked;
-                        const value = e.target.value;
-                        const prevValues = formData[name] || [];
-                        const updatedValues = isChecked
-                          ? [...prevValues, value]
-                          : prevValues.filter((v) => v !== value);
-
-                        setFormData((prev) => ({
-                          ...prev,
-                          [name]: updatedValues,
-                        }));
-                      }}
-                      checked={formData[name]?.includes(option) || false}
-                    />
-                    {option}
-                  </Label>
-                ))}
-              </div>
-            
+                  return (
+                    <div
+                      key={optionItem.id}
+                      className="flex items-center gap-2 border px-2 py-1 rounded"
+                    >
+                      <Checkbox
+                        id={`${getControlItem.name}_${optionItem.id}`}
+                        checked={isChecked}
+                        onCheckedChange={(checked) => {
+                          const current = formData[getControlItem.name] || [];
+                          const updated = checked
+                            ? [...current, optionItem.id]
+                            : current.filter((val) => val !== optionItem.id);
+                          setFormData({
+                            ...formData,
+                            [getControlItem.name]: updated,
+                          });
+                        }}
+                      />
+                      <Label
+                        htmlFor={`${getControlItem.name}_${optionItem.id}`}
+                        className="text-sm"
+                      >
+                        {optionItem.label}
+                      </Label>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
         );
         break;
       case "textarea":

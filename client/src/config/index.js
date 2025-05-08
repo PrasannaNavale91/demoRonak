@@ -132,7 +132,7 @@ export const registerFormControls = [
       label: "Size",
       name: "size",
       componentType: "checkbox",
-      type: "checkbox-group",
+      type: "checkbox",
       options: [
         { label: "S", value: "Small" },
         { label: "M", value: "Medium" },
@@ -145,7 +145,7 @@ export const registerFormControls = [
       label: "Color",
       name: "color",
       componentType: "checkbox",
-      type: "checkbox-group",
+      type: "checkbox",
       options: [
         { label: "Red", value: "red" },
         { label: "Blue", value: "blue" },
