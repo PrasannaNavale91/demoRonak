@@ -84,38 +84,29 @@ function CommonForm({
         break;
       case "checkbox":
         element = (
-          <div className="flex flex-wrap gap-3">
-            {getControlItem.options && getControlItem.options.length > 0
-              ? getControlItem.options.map((optionItem) => {
-                  const isChecked =
-                    formData[getControlItem.name]?.includes(optionItem.id) || false;
-
-                  return (
-                    <div
-                      key={optionItem.id}
-                      className="flex items-center gap-2 border px-2 py-1 rounded"
-                    >
-                      <input
-                        type="checkbox"
-                        value={options.value}
-                        checked={formData[field.name].includes(options.value)}
-                        onChange={(e) => {
-                          const updated = e.target.checked
-                            ? [...formData[field.name], options.value]
-                            : formData[field.name].filter((val) => val !== options.value);
-                          setFormData({ ...formData, [field.name]: updated });
-                        }}
-                      />
-                      <Label
-                        htmlFor={`${getControlItem.name}_${optionItem.id}`}
-                        className="text-sm"
-                      >
-                        {optionItem.label}
-                      </Label>
-                    </div>
-                  );
-                })
-              : null}
+          <div className="flex flex-wrap gap-2">
+            {getControlItem.options.map((optionItem) => (
+              <Label key={optionItem.value} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`${getControlItem.name}-${optionItem.value}`}
+                  value={optionItem.value}
+                  checked={formData[getControlItem.name]?.includes(optionItem.value)}
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    const updatedArray = isChecked
+                      ? [...(formData[getControlItem.name] || []), optionItem.value]
+                      : (formData[getControlItem.name] || []).filter(
+                          (val) => val !== optionItem.value
+                        );
+                    setFormData({
+                      ...formData,
+                      [getControlItem.name]: updatedArray,
+                    });
+                  }}
+                />
+                <span>{optionItem.label}</span>
+              </Label>
+            ))}
           </div>
         );
         break;
