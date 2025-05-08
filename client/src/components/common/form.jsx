@@ -97,12 +97,12 @@ function CommonForm({
                     >
                       <input
                         type="checkbox"
-                        value={option.value}
-                        checked={formData[field.name].includes(option.value)}
+                        value={options.value}
+                        checked={formData[field.name].includes(options.value)}
                         onChange={(e) => {
                           const updated = e.target.checked
-                            ? [...formData[field.name], option.value]
-                            : formData[field.name].filter((val) => val !== option.value);
+                            ? [...formData[field.name], options.value]
+                            : formData[field.name].filter((val) => val !== options.value);
                           setFormData({ ...formData, [field.name]: updated });
                         }}
                       />
