@@ -84,29 +84,31 @@ function CommonForm({
         break;
       case "checkbox":
         element = (
-          <div className="flex flex-wrap gap-2">
-            {getControlItem.options.map((optionItem) => (
-              <Label key={optionItem.value} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`${getControlItem.name}-${optionItem.value}`}
-                  value={optionItem.value}
-                  checked={formData[getControlItem.name]?.includes(optionItem.value)}
-                  onChange={(e) => {
-                    const isChecked = e.target.checked;
-                    const updatedArray = isChecked
-                      ? [...(formData[getControlItem.name] || []), optionItem.value]
-                      : (formData[getControlItem.name] || []).filter(
-                          (val) => val !== optionItem.value
-                        );
-                    setFormData({
-                      ...formData,
-                      [getControlItem.name]: updatedArray,
-                    });
-                  }}
-                />
-                <span>{optionItem.label}</span>
-              </Label>
-            ))}
+          <div className="flex flex-wrap gap-3">
+            {getControlItem.options.map((optionItem) => {
+              const isChecked = formData[getControlItem.name]?.includes(optionItem.value);
+
+              return (
+                <label key={optionItem.value} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`${getControlItem.name}-${optionItem.value}`}
+                    value={optionItem.value}
+                    checked={isChecked}
+                    onCheckedChange={(checked) => {
+                      const updatedArray = checked
+                        ? [...(formData[getControlItem.name] || []), optionItem.value]
+                        : (formData[getControlItem.name] || []).filter(val => val !== optionItem.value);
+
+                      setFormData({
+                        ...formData,
+                        [getControlItem.name]: updatedArray,
+                      });
+                    }}
+                  />
+                  <span className="capitalize">{optionItem.label}</span>
+                </label>
+              );
+            })}
           </div>
         );
         break;
