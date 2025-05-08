@@ -122,9 +122,9 @@ const editProduct = async (req, res) => {
     findProduct.salePrice =
       salePrice === "" ? 0 : salePrice || findProduct.salePrice;
     findProduct.totalStock = totalStock || findProduct.totalStock;
-    findProduct.image = image || findProduct.image;
-    findProduct.size = size || findProduct.size;
-    findProduct.color = color || findProduct.color;
+    findProduct.image = image || findProduct.image[""];
+    findProduct.size = size || findProduct.size[""];
+    findProduct.color = color || findProduct.color[""];
     findProduct.averageReview = averageReview || findProduct.averageReview;
 
     await findProduct.save();
