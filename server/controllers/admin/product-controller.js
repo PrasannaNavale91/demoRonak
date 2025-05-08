@@ -33,13 +33,16 @@ const addProduct = async (req, res) => {
       description,
       category,
       collection,
-      size: [...size],
-      color: [...color],
+      size,
+      color,
       price,
       salePrice,
       totalStock,
       averageReview,
     } = req.body;
+
+    const sizeArray = Array.isArray(size) ? size : [];
+    const colorArray = Array.isArray(color) ? color : [];
 
     console.log(averageReview, "averageReview");
 
@@ -49,8 +52,8 @@ const addProduct = async (req, res) => {
       description,
       category,
       collection,
-      size: [...size],
-      color: [...color],
+      size: sizeArray,
+      color: colorArray,
       price,
       salePrice,
       totalStock,
@@ -99,8 +102,8 @@ const editProduct = async (req, res) => {
       description,
       category,
       collection,
-      size: [...size],
-      color: [...color],
+      size,
+      color,
       price,
       salePrice,
       totalStock,
@@ -123,8 +126,8 @@ const editProduct = async (req, res) => {
       salePrice === "" ? 0 : salePrice || findProduct.salePrice;
     findProduct.totalStock = totalStock || findProduct.totalStock;
     findProduct.image = image || findProduct.image[""];
-    findProduct.size = size || findProduct.size[""];
-    findProduct.color = color || findProduct.color[""];
+    findProduct.size = Array.isArray(size) ? size : findProduct.size;
+    findProduct.color = Array.isArray(color) ? color : findProduct.color;
     findProduct.averageReview = averageReview || findProduct.averageReview;
 
     await findProduct.save();

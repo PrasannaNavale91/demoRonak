@@ -95,18 +95,15 @@ function CommonForm({
                       key={optionItem.id}
                       className="flex items-center gap-2 border px-2 py-1 rounded"
                     >
-                      <Checkbox
-                        id={`${getControlItem.name}_${optionItem.id}`}
-                        checked={isChecked}
-                        onCheckedChange={(checked) => {
-                          const current = formData[getControlItem.name] || [];
-                          const updated = checked
-                            ? [...current, optionItem.id]
-                            : current.filter((val) => val !== optionItem.id);
-                          setFormData({
-                            ...formData,
-                            [getControlItem.name]: updated,
-                          });
+                      <input
+                        type="checkbox"
+                        value={option.value}
+                        checked={formData[field.name].includes(option.value)}
+                        onChange={(e) => {
+                          const updated = e.target.checked
+                            ? [...formData[field.name], option.value]
+                            : formData[field.name].filter((val) => val !== option.value);
+                          setFormData({ ...formData, [field.name]: updated });
                         }}
                       />
                       <Label
