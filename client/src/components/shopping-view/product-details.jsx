@@ -97,8 +97,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   }
 
   useEffect(() => {
-    if (productDetails?._id && selectedColor && selectedSize){
-      const found = productDetails?._id.find(
+    if (productDetails?._v && selectedColor && selectedSize){
+      const found = productDetails?._v.find(
         (variant) =>
           variant.color?.includes(selectedColor) &&
           variant.size?.includes(selectedSize)
@@ -150,7 +150,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
-          <div className="flex flex-col flex-cols-2 gap-4 mt-4">
+          <div className="flex flex-row gap-4 mt-4">
             <div className="flex flex-row gap-2">
               {productDetails?.color?.map((color) => (
                 <button
