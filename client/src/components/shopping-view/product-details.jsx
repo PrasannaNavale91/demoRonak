@@ -98,7 +98,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
   useEffect(() => {
     if (productDetails?._id && selectedColor && selectedSize){
-      const found = productDetails._id.find(
+      const found = productDetails?._id.find(
         (variant) =>
           variant.color?.includes(selectedColor) &&
           variant.size?.includes(selectedSize)
