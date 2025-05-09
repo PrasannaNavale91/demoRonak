@@ -22,7 +22,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const { reviews } = useSelector((state) => state.shopReview);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
-
+  const [MatchedVariant, setMatchedVariant] = useState(null);
   const zoomRef = useRef(null);
 
   const { toast } = useToast();
