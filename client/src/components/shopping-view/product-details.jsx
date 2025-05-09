@@ -150,24 +150,28 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
-          <div className="flex flex-col gap-4 mt-4">
-            {productDetails?.color?.map((color) => (
-              <button
-                key={color}
-                onClick={() => setSelectedColor(color)}
-                className={`w-6 h-6 rounded-full mx-1 ${selectedColor === color ? "ring-2 ring-black" : ""}`}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-            {productDetails?.size?.map((size) => (
-              <button
-                key={size}
-                onClick={() => setSelectedSize(size)}
-                className={`border px-3 py-1 rounded mx-1 ${selectedSize === size ? "bg-black text-white" : ""}`}
-              >
-                {size}
-              </button>
-            ))}
+          <div className="flex flex-col flex-cols-2 gap-4 mt-4">
+            <div className="flex flex-row gap-2">
+              {productDetails?.color?.map((color) => (
+                <button
+                  key={color}
+                  onClick={() => setSelectedColor(color)}
+                  className={`w-6 h-6 rounded-full mx-1 ${selectedColor === color ? "ring-2 ring-black" : ""}`}
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </div>
+            <div className="flex flex-row gap-2">
+              {productDetails?.size?.map((size) => (
+                <button
+                  key={size}
+                  onClick={() => setSelectedSize(size)}
+                  className={`border px-3 py-1 rounded mx-1 ${selectedSize === size ? "bg-black text-white" : ""}`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
