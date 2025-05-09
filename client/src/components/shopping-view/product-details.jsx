@@ -141,7 +141,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4 mt-4">
             {productDetails?.colors?.length > 0 && (
               <div className="mt-4">
                 <Label>Available Colors</Label>

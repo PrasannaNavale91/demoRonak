@@ -87,7 +87,6 @@ function CommonForm({
           <div className="flex flex-wrap gap-3">
             {getControlItem.options.map((optionItem) => {
               const isChecked = formData[getControlItem.name]?.includes(optionItem.value);
-
               return (
                 <Label key={optionItem.value} className="flex items-center space-x-2">
                   <Checkbox
