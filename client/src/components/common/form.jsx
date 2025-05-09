@@ -89,7 +89,7 @@ function CommonForm({
               const isChecked = formData[getControlItem.name]?.includes(optionItem.value);
 
               return (
-                <label key={optionItem.value} className="flex items-center space-x-2">
+                <Label key={optionItem.value} className="flex items-center space-x-2">
                   <Checkbox
                     id={`${getControlItem.name}-${optionItem.value}`}
                     value={optionItem.value}
@@ -106,7 +106,7 @@ function CommonForm({
                     }}
                   />
                   <span className="capitalize">{optionItem.label}</span>
-                </label>
+                </Label>
               );
             })}
           </div>
