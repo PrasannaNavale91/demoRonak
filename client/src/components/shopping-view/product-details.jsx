@@ -20,6 +20,9 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { reviews } = useSelector((state) => state.shopReview);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+
   const zoomRef = useRef(null);
 
   const { toast } = useToast();
@@ -94,11 +97,17 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   }
 
   useEffect(() => {
-    if (productDetails !== null){
-      dispatch(getReviews(productDetails?._id));
+    if (productDetails?._id && selectedColor && selectedSize){
+      const found = productDetails._id.find(
+        (variant) =>
+          variant.color?.includes(selectedColor) &&
+          variant.size?.includes(selectedSize)
+      );
+      setMatchedVariant(found);
+    }else {
+      setMatchedVariant(null);
     }
-    console.log("Product Details", productDetails);
-  }, [productDetails]);
+  }, [selectedColor, selectedSize, productDetails]);
 
   console.log(reviews, "reviews");
 
@@ -142,30 +151,23 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             ) : null}
           </div>
           <div className="flex flex-col gap-4 mt-4">
-            {productDetails?.colors?.length > 0 && (
-              <div className="mt-4">
-                <Label>Available Colors</Label>
-                <div className="flex gap-2">
-                  {productDetails.colors.map((color) => (
-                    <div
-                      key={color}
-                      className="w-6 h-6 rounded-full border"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-            {productDetails?.sizes?.length > 0 && (
-              <div className="mt-4">
-                <Label>Available Sizes</Label>
-                <div className="flex gap-2">
-                  {productDetails.sizes.map((size) => (
-                    <Button key={size} variant="outline">{size}</Button>
-                  ))}
-                </div>
-              </div>
-            )}
+            {productDetails?.color?.map((color) => (
+              <button
+                key={color}
+                onClick={() => setSelectedColor(color)}
+                className={`w-6 h-6 rounded-full mx-1 ${selectedColor === color ? "ring-2 ring-black" : ""}`}
+                style={{ backgroundColor: color }}
+              />
+            ))}
+            {productDetails?.size?.map((size) => (
+              <button
+                key={size}
+                onClick={() => setSelectedSize(size)}
+                className={`border px-3 py-1 rounded mx-1 ${selectedSize === size ? "bg-black text-white" : ""}`}
+              >
+                {size}
+              </button>
+            ))}
           </div>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
