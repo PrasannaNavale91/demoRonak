@@ -4,16 +4,25 @@ const Product = require("../../models/Product");
 const handleImageUpload = async (req, res) => {
   try {
     const fileBuffer = req.file.buffer;
-    const base64String = fileBuffer.toString("base64");
-    const dataURI = `data:${req.file.mimetype};base64,${base64String}`;
 
-    const result = await imageUploadUtil(dataURI);
+    if (!fileBuffer || fileBuffer.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No files uploaded"
+      });
+    }
+    const uploadResults = await Promise.all(
+      fileBuffer.map(async (file) => {
+        const base64String = file.buffer.toString("base64");
+        const dataURI = `data:${file.mimetype};base64,${base64String}`;
+        const result = await imageUploadUtil(dataURI);
+        return result.secure_url;
+      })
+    );
 
     res.json({
       success: true,
-      result: {
-        secure_url: result.secure_url,
-      },
+      result: uploadResults,
     });
   } catch (error) {
     console.log(error);

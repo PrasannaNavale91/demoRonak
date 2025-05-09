@@ -21,11 +21,10 @@ function ProductImageUpload({
   console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
-    console.log(event.target.files, "event.target.files");
-    const selectedFile = event.target.files?.[0];
-    console.log(selectedFile);
-
-    if (selectedFile) setImageFile(selectedFile);
+    const selectedFiles = Array.from(event.target.files || []);
+    if (selectedFiles.length > 0) {
+      setImageFile(selectedFiles);
+    }
   }
 
   function handleDragOver(event) {
@@ -34,8 +33,10 @@ function ProductImageUpload({
 
   function handleDrop(event) {
     event.preventDefault();
-    const droppedFile = event.dataTransfer.files?.[0];
-    if (droppedFile) setImageFile(droppedFile);
+    const droppedFile = Array.from(event.dataTransfer.files || []);
+    if (droppedFile.length > 0) {
+      setImageFile(droppedFile);
+    }
   }
 
   function handleRemoveImage() {
@@ -48,19 +49,18 @@ function ProductImageUpload({
   async function uploadImageToCloudinary() {
     setImageLoadingState(true);
     const data = new FormData();
-    data.append("my_file", imageFile);
+    imageFile.forEach((file) => {
+      data.append("my_file", file);
+    });
     const response = await axios.post(
       "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
       data,
     );
-    console.log(response, "response");
 
-    if (response?.data?.success && response.data?.result?.secure_url) {
-      setUploadedImageUrl(response.data.result.secure_url);
-      setImageLoadingState(false);
-    } else {
-      throw new Error("Image upload failed");
+    if (response?.data?.success) {
+      setUploadedImageUrl(response.data.result);
     }
+    setImageLoadingState(false);
   }
 
   useEffect(() => {
@@ -87,6 +87,18 @@ function ProductImageUpload({
           onChange={handleImageFileChange}
           disabled={isEditMode}
         />
+        {uploadedImageUrl?.length > 0 && (
+          <div className="flex flex-wrap gap-4 mt-2">
+            {uploadedImageUrl.map((url, index) => (
+              <img
+                key={index}
+                src={url}
+                alt={`Uploaded ${index}`}
+                className="w-24 h-24 object-cover border"
+              />
+            ))}
+          </div>
+        )}
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
