@@ -55,9 +55,11 @@ function ProductImageUpload({
     );
     console.log(response, "response");
 
-    if (response?.data?.success) {
-      setUploadedImageUrl(response.data.result.url);
+    if (response?.data?.success && response.data?.result?.secure_url) {
+      setUploadedImageUrl(response.data.result.secure_url);
       setImageLoadingState(false);
+    } else {
+      throw new Error("Image upload failed");
     }
   }
 
@@ -84,7 +86,6 @@ function ProductImageUpload({
           ref={inputRef}
           onChange={handleImageFileChange}
           disabled={isEditMode}
-          multiple
         />
         {!imageFile ? (
           <Label
