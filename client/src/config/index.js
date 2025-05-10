@@ -119,11 +119,11 @@ export const registerFormControls = [
       name: "size",
       componentType: "checkbox",
       options: [
-        { label: "S", value: "Small" },
-        { label: "M", value: "Medium" },
-        { label: "L", value: "Large" },
-        { label: "XL", value: "Extra Large" },
-        { label: "XXL", value: "Extra Extra Large" },
+        { label: "S", value: "S" },
+        { label: "M", value: "M" },
+        { label: "L", value: "L" },
+        { label: "XL", value: "XL" },
+        { label: "XXL", value: "2XL" },
       ],
     },
     {
