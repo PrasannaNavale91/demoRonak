@@ -18,8 +18,6 @@ function ProductImageUpload({
 }) {
   const inputRef = useRef(null);
 
-  console.log(isEditMode, "isEditMode");
-
   function handleImageFileChange(event) {
     const selectedFiles = Array.from(event.target.files || []);
     if (selectedFiles.length > 0) {
@@ -39,9 +37,16 @@ function ProductImageUpload({
     }
   }
 
-  function handleRemoveImage() {
-    setImageFile(null);
-    if (inputRef.current) {
+  function handleRemoveImage(index) {
+    const newFiles = [...imageFile];
+    newFiles.splice(index, 1);
+    setImageFile(newFiles);
+
+    const newUrls = [...uploadedImageUrl];
+    newUrls.splice(index, 1);
+    setUploadedImageUrl(newUrls);
+
+    if (newFiles.length === 0 && inputRef.current) {
       inputRef.current.value = "";
     }
   }
@@ -52,19 +57,27 @@ function ProductImageUpload({
     imageFile.forEach((file) => {
       data.append("my_file", file);
     });
-    const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
-      data,
-    );
 
-    if (response?.data?.success) {
-      setUploadedImageUrl(response.data.result);
+    try {
+      const response = await axios.post(
+        "https://ecommerce-app-xg3v.onrender.com/api/admin/products/upload-image",
+        data,
+      );
+  
+      if (response?.data?.success) {
+        setUploadedImageUrl(response.data.result);
+      }    
+    } catch (error) {
+      console.error("Image upload failed", error);
+    } finally {
+      setImageLoadingState(false);
     }
-    setImageLoadingState(false);
   }
 
   useEffect(() => {
-    if (imageFile !== null) uploadImageToCloudinary();
+    if (imageFile !== null && imageFile.length > 0) {
+      uploadImageToCloudinary();
+    }
   }, [imageFile]);
 
   return (
@@ -82,24 +95,13 @@ function ProductImageUpload({
         <Input
           id="image-upload"
           type="file"
+          multiple
           className="hidden"
           ref={inputRef}
           onChange={handleImageFileChange}
           disabled={isEditMode}
         />
-        {uploadedImageUrl?.length > 0 && (
-          <div className="flex flex-wrap gap-4 mt-2">
-            {uploadedImageUrl.map((url, index) => (
-              <img
-                key={index}
-                src={url}
-                alt={`Uploaded ${index}`}
-                className="w-24 h-24 object-cover border"
-              />
-            ))}
-          </div>
-        )}
-        {!imageFile ? (
+        {!imageFile && imageFile?.length === 0 ? (
           <Label
             htmlFor="image-upload"
             className={`${
@@ -112,20 +114,35 @@ function ProductImageUpload({
         ) : imageLoadingState ? (
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <FileIcon className="w-8 text-primary mr-2 h-8" />
-            </div>
-            <p className="text-sm font-medium">{imageFile.name}</p>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-foreground"
-              onClick={handleRemoveImage}
-            >
-              <XIcon className="w-4 h-4" />
-              <span className="sr-only">Remove File</span>
-            </Button>
+          <div className="flex flex-wrap gap-4 mt-2 items-center justify-between">
+            {imageFile.map((file, index) => (
+              <div key={index} className="relative group">
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`Preview ${index}`}
+                  className="w-24 h-24 object-cover border rounded"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(index)}
+                  className="absolute top-1 right-1 bg-white rounded-full p-1 shadow hover:bg-gray-100"
+                >
+                  <XIcon className="w-4 h-4 text-red-500" />
+                </button>
+              </div>
+            ))}
+            {uploadedImageUrl?.length > 0 && (
+              <div className="flex flex-wrap gap-4 mt-4">
+                {uploadedImageUrl.map((url, index) => (
+                  <img
+                    key={index}
+                    src={url}
+                    alt={`Uploaded ${index}`}
+                    className="w-24 h-24 object-cover border rounded"
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
