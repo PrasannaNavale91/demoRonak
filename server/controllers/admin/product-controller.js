@@ -3,16 +3,16 @@ const Product = require("../../models/Product");
 
 const handleImageUpload = async (req, res) => {
   try {
-    const fileBuffer = req.file.buffer;
+    const files = req.file;
 
-    if (!fileBuffer || fileBuffer.length === 0) {
+    if (!files || files.length === 0) {
       return res.status(400).json({
         success: false,
         message: "No files uploaded"
       });
     }
     const uploadResults = await Promise.all(
-      fileBuffer.map(async (file) => {
+      files.map(async (file) => {
         const base64String = file.buffer.toString("base64");
         const dataURI = `data:${file.mimetype};base64,${base64String}`;
         const result = await imageUploadUtil(dataURI);
@@ -134,7 +134,7 @@ const editProduct = async (req, res) => {
     findProduct.salePrice =
       salePrice === "" ? 0 : salePrice || findProduct.salePrice;
     findProduct.totalStock = totalStock || findProduct.totalStock;
-    findProduct.image = image || findProduct.image[""];
+    findProduct.image = image || findProduct.image;
     findProduct.size = Array.isArray(size) ? size : findProduct.size;
     findProduct.color = Array.isArray(color) ? color : findProduct.color;
     findProduct.averageReview = averageReview || findProduct.averageReview;
