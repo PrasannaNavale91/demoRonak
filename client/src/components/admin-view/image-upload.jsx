@@ -115,7 +115,7 @@ function ProductImageUpload({
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
           <div className="flex flex-wrap gap-4 mt-2 items-center justify-between">
-            {imageFile.map((file, index) => (
+            {imageFile && imageFile.map((file, index) => (
               <div key={index} className="relative group">
                 <img
                   src={URL.createObjectURL(file)}
@@ -131,7 +131,7 @@ function ProductImageUpload({
                 </button>
               </div>
             ))}
-            {uploadedImageUrl?.length > 0 && (
+            {uploadedImageUrl && uploadedImageUrl?.length > 0 && (
               <div className="flex flex-wrap gap-4 mt-4">
                 {uploadedImageUrl.map((url, index) => (
                   <img
