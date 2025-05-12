@@ -55,7 +55,7 @@ function ProductImageUpload({
     setImageLoadingState(true);
     const data = new FormData();
     imageFile.forEach((file) => {
-      data.append("my_file", file);
+      data.append("my_file[]", file);
     });
 
     try {
