@@ -37,7 +37,7 @@ function AdminProducts() {
   const [openCreateProductsDialog, setOpenCreateProductsDialog] =useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState([]);
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
@@ -130,6 +130,8 @@ function AdminProducts() {
           setOpenCreateProductsDialog(false);
           setCurrentEditedId(null);
           setFormData(initialFormData);
+          setImageFile(null);
+          setUploadedImageUrl([]);
         }}
       >
         <SheetContent side="right" className="overflow-auto">
