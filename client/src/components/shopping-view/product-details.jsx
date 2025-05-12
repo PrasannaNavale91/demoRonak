@@ -127,10 +127,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             width={600}
             height={600}
             className="aspect-square w-full object-cover"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/placeholder-image.png";
-            }}
           />
         </div>
         <div className="">
