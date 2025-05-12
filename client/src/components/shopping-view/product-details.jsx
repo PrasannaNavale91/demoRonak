@@ -10,7 +10,7 @@ import { useToast } from "../ui/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -28,9 +28,14 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [MatchedVariant, setMatchedVariant] = useState(null);
-  const zoomRef = useRef(null);
 
   const { toast } = useToast();
+
+  const images = Array.isArray(product.image)
+  ? product.image
+  : [product.image];
+
+  const uniqueImages = [...new Set(images)];
 
   function handleRatingChange(getRating) {
     console.log(getRating, "getRating");
@@ -132,7 +137,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             pagination={{ clickable: true }}
             className="w-full aspect-square"
           >
-            {(Array.isArray(productDetails?.image) ? productDetails.image : [productDetails?.image]).map((img, index) => (  
+            {uniqueImages.map((img, index) => (  
               <SwiperSlide key={index}>
                 <img
                   src={
