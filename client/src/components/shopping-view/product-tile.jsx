@@ -14,9 +14,8 @@ function ShoppingProductTile({
       <div onClick={() => handleGetProductDetails(product?._id)}>
         <div className="relative">
           <img
-            src={product?.image.startsWith("http") ? product?.image : `https://ecommerce-app-xg3v.onrender.com/api/admin/products/${product?.image}`}
+            src={product?.image}
             alt={product?.title}
-            onError={(e) => (e.target.src = "/fallback.jpg")}
             className="w-full h-[300px] object-cover rounded-t-lg"
           />
           {product?.totalStock === 0 ? (
