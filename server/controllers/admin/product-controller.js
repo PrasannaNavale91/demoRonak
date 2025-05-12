@@ -3,7 +3,7 @@ const Product = require("../../models/Product");
 
 const handleImageUpload = async (req, res) => {
   try {
-    const files = req.file;
+    const files = req.files;
 
     if (!files || files.length === 0) {
       return res.status(400).json({
