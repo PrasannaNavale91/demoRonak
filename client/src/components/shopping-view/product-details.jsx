@@ -12,6 +12,11 @@ import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState, useRef } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
@@ -121,17 +126,28 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[90vw] md:max-w-[100vw] max-h-screen overflow-y-auto">
         <div className="relative overflow-hidden rounded-lg">
-          <img
-            src={
-              Array.isArray(productDetails?.image)
-              ? productDetails.image[0]
-              : productDetails?.image
-            }
-            alt={productDetails?.title}
-            width={600}
-            height={600}
-            className="aspect-square w-full object-cover"
-          />
+          <Swiper
+            modules={[Navigation, Pagination]}
+            navigation
+            pagination={{ clickable: true }}
+            className="w-full aspect-square"
+          >
+            {(Array.isArray(productDetails?.image) ? productDetails.image : [productDetails?.image]).map((img, index) => (  
+              <SwiperSlide key={index}>
+                <img
+                  src={
+                    Array.isArray(productDetails?.image)
+                    ? productDetails.image[0]
+                    : productDetails?.image
+                  }
+                  alt={productDetails?.title}
+                  width={500}
+                  height={500}
+                  className="aspect-square w-full object-cover"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
         <div className="">
           <div>
