@@ -135,11 +135,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             {(Array.isArray(productDetails?.image) ? productDetails.image : [productDetails?.image]).map((img, index) => (  
               <SwiperSlide key={index}>
                 <img
-                  src={
-                    Array.isArray(productDetails?.image)
-                    ? productDetails.image[0]
-                    : productDetails?.image
-                  }
+                  src={img}
                   alt={productDetails?.title}
                   width={500}
                   height={500}
