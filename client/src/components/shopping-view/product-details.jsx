@@ -31,9 +31,9 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
   const { toast } = useToast();
 
-  const images = Array.isArray(product.image)
-  ? product.image
-  : [product.image];
+  const images = Array.isArray(productDetails.image)
+  ? productDetails.image
+  : [productDetails.image];
 
   const uniqueImages = [...new Set(images)];
 
