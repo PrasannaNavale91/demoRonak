@@ -80,7 +80,7 @@ function ProductImageUpload({
   }
 
   useEffect(() => {
-    if (imageFile !== null && imageFile.length > 0) {
+    if (imageFile.length > 0) {
       uploadImageToCloudinary();
     }
   }, [imageFile]);
