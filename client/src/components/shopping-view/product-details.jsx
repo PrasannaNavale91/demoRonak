@@ -139,7 +139,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                   alt={productDetails?.title}
                   width={500}
                   height={500}
-                  className="aspect-square w-full object-cover"
+                  className="aspect-square w-full"
                 />
               </SwiperSlide>
             ))}
