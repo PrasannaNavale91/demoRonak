@@ -139,7 +139,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                   alt={productDetails?.title}
                   width={400}
                   height={500}
-                  className="aspect-square w-full"
+                  className="aspect-square w-full object-contain"
                 />
               </SwiperSlide>
             ))}
@@ -147,8 +147,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         </div>
         <div className="">
           <div>
-            <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
-            <p className="text-muted-foreground text-2xl mb-5 mt-4">
+            <h1 className="text-3xl sm-text-lg font-extrabold">{productDetails?.title}</h1>
+            <p className="text-muted-foreground text-2xl sm-text-base mb-5 mt-4">
               {productDetails?.description}
             </p>
           </div>
@@ -166,7 +166,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
-          <div className="flex flex-row gap-4 mt-4">
+          <div className="flex flex-row sm-flex-col gap-4 mt-4">
             <div className="flex flex-row gap-2">
               {productDetails?.color?.map((color) => (
                 <button
