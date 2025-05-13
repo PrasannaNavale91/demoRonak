@@ -137,7 +137,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 <img
                   src={img}
                   alt={productDetails?.title}
-                  width={500}
+                  width={400}
                   height={500}
                   className="aspect-square w-full"
                 />
