@@ -27,30 +27,27 @@ function AdminOrderDetailsView({ orderDetails }) {
 
   function handleUpdateStatus(event) {
     event.preventDefault();
-    const { status } = formData;
+    const { orderStatus, paymentStatus } = formData;
 
-    dispatch(
-      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
-        dispatch(getAllOrdersForAdmin());
-        setFormData(initialFormData);
-        toast({
-          title: data?.payload?.message,
-        });
-      }
-    });
+    if (orderStatus) {
+      dispatch(updateOrderStatus({ id: orderDetails?._id, orderStatus })).then((data) => {
+        if (data?.payload?.success) {
+          toast({ title: data?.payload?.message });
+        }
+      });
+    }
 
-    dispatch(
-      updatePaymentStatus({ id: orderDetails?._id, paymentStatus: status })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
-        dispatch(getAllOrdersForAdmin());
-        
-      }
-    });
+    if (paymentStatus) {
+      dispatch(updatePaymentStatus({ id: orderDetails?._id, paymentStatus })).then((data) => {
+        if (data?.payload?.success) {
+          toast({ title: data?.payload?.message });
+        }
+      });
+    }
+
+    dispatch(getOrderDetailsForAdmin(orderDetails?._id));
+    dispatch(getAllOrdersForAdmin());
+    setFormData(initialFormData);
   }
 
   return (
@@ -142,7 +139,7 @@ function AdminOrderDetailsView({ orderDetails }) {
             formControls={[
               {
                 label: "Order Status",
-                name: "status",
+                name: "orderStatus",
                 componentType: "select",
                 options: [
                   { id: "Pending", label: "Pending" },
@@ -154,7 +151,7 @@ function AdminOrderDetailsView({ orderDetails }) {
               },
               {
                 label: "Payment Status",
-                name: "status",
+                name: "paymentStatus",
                 componentType: "select",
                 options: [
                   { id: "pending", label: "Pending" },
