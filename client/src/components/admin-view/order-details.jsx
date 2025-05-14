@@ -38,7 +38,7 @@ function AdminOrderDetailsView({ orderDetails }) {
     }
 
     if (paymentStatus) {
-      dispatch(updatePaymentStatus({ id: orderDetails?._id, paymentStatus })).then((data) => {
+      dispatch(updateOrderStatus({ id: orderDetails?._id, paymentStatus })).then((data) => {
         if (data?.payload?.success) {
           toast({ title: data?.payload?.message });
         }
