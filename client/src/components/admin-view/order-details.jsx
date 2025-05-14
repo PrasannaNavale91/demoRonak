@@ -9,6 +9,7 @@ import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
   updateOrderStatus,
+  updatePaymentStatus
 } from "@/store/admin/order-slice";
 import { useToast } from "../../hooks/use-toast";
 
@@ -38,6 +39,16 @@ function AdminOrderDetailsView({ orderDetails }) {
         toast({
           title: data?.payload?.message,
         });
+      }
+    });
+
+    dispatch(
+      updatePaymentStatus({ id: orderDetails?._id, paymentStatus: status })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
+        dispatch(getAllOrdersForAdmin());
+        
       }
     });
   }

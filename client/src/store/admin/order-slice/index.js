@@ -42,6 +42,21 @@ export const updateOrderStatus = createAsyncThunk(
   }
 );
 
+export const updatePaymentStatus = createAsyncThunk(
+  "/order/updatePaymentStatus",
+  async ({ orderId, paymentStatus, orderStatus }) => {
+    const response = await axios.patch(
+      `https://ecommerce-app-xg3v.onrender.com/api/shop/order/update/${orderId}`,
+      {
+        paymentStatus,
+        orderStatus,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 const adminOrderSlice = createSlice({
   name: "adminOrderSlice",
   initialState,

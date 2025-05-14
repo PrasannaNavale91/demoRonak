@@ -59,21 +59,6 @@ export const getOrderDetails = createAsyncThunk(
   }
 );
 
-export const updatePaymentStatus = createAsyncThunk(
-  "/order/updatePaymentStatus",
-  async ({ orderId, paymentStatus, orderStatus }) => {
-    const response = await axios.patch(
-      `https://ecommerce-app-xg3v.onrender.com/api/shop/order/update/${orderId}`,
-      {
-        paymentStatus,
-        orderStatus,
-      }
-    );
-
-    return response.data;
-  }
-);
-
 const shoppingOrderSlice = createSlice({
   name: "shoppingOrderSlice",
   initialState,
@@ -122,16 +107,6 @@ const shoppingOrderSlice = createSlice({
       .addCase(getOrderDetails.rejected, (state) => {
         state.isLoading = false;
         state.orderDetails = null;
-      })
-      .addCase(updatePaymentStatus.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(updatePaymentStatus.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.orderDetails = action.payload.order;
-      })
-      .addCase(updatePaymentStatus.rejected, (state) => { 
-        state.isLoading = false;
       });
   },
 });
