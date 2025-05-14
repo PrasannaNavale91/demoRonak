@@ -91,7 +91,7 @@ function HeaderRightContent() {
       {isAuthenticated ? (
         <>
           <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-            <div>
+            {/* <div>
               <Button
                 onClick={() => setOpenCartSheet(true)}
                 variant="outline"
@@ -112,8 +112,7 @@ function HeaderRightContent() {
                     : []
                 }
               />
-            </div>
-            <div>
+            </div> */}
               <Button
                 onClick={() => setOpenCartSheet(true)}
                 variant="outline"
@@ -134,7 +133,8 @@ function HeaderRightContent() {
                     : []
                 }
               />
-            </div>
+            {/* <div>
+            </div> */}
           </Sheet>
 
           <DropdownMenu>

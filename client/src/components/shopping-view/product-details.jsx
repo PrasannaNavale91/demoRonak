@@ -5,7 +5,7 @@ import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { addToCart, addToWishlist, } from "@/store/shop/cart-slice";
 import { useToast } from "../ui/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
@@ -75,40 +75,40 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     });
   }
 
-  function handleAddToWishlist(getCurrentProductId) {
-    let getWishlistItems = wishlistItems.items || [];
+  // function handleAddToWishlist(getCurrentProductId) {
+  //   let getWishlistItems = wishlistItems.items || [];
 
-    if (getWishlistItems.length) {
-      const indexOfCurrent = getWishlistItems.findIndex(
-        (item) => item.productId === getCurrentProductId
-      );
-      if (indexOfCurrent > -1) {
-        const getProduct = getWishlistItems[indexOfCurrent].itemFav;
-        if (getProduct + 1 > getTotalStock) {
-          toast({
-            title: `Only ${getProduct} can be added for this item`,
-            variant: "destructive",
-          });
+  //   if (getWishlistItems.length) {
+  //     const indexOfCurrent = getWishlistItems.findIndex(
+  //       (item) => item.productId === getCurrentProductId
+  //     );
+  //     if (indexOfCurrent > -1) {
+  //       const getProduct = getWishlistItems[indexOfCurrent].itemFav;
+  //       if (getProduct + 1 > getTotalStock) {
+  //         toast({
+  //           title: `Only ${getProduct} can be added for this item`,
+  //           variant: "destructive",
+  //         });
 
-          return;
-        }
-      }
-    }
-    dispatch(
-      addToCart({
-        userId: user?.id,
-        productId: getCurrentProductId,
-        itemFav: 1,
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchCartItems(user?.id));
-        toast({
-          title: "Product is added to wishlist",
-        });
-      }
-    });
-  }
+  //         return;
+  //       }
+  //     }
+  //   }
+  //   dispatch(
+  //     addToWishlist({
+  //       userId: user?.id,
+  //       productId: getCurrentProductId,
+  //       itemFav: 1,
+  //     })
+  //   ).then((data) => {
+  //     if (data?.payload?.success) {
+  //       dispatch(fetchWishlistItems(user?.id));
+  //       toast({
+  //         title: "Product is added to wishlist",
+  //       });
+  //     }
+  //   });
+  // }
 
   function handleDialogClose() {
     setOpen(false);
@@ -252,13 +252,13 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 <ShoppingCartIcon />  Add to Cart
               </Button>
             )}
-            <Button
+            {/* <Button
               className="w-[50%]"
               onClick={() =>
                 handleAddToWishlist(productDetails?._id)
               }>
               <HeartIcon/> Wishlist
-            </Button>
+            </Button> */}
           </div>
           <Separator />
           <div className="mt-4">
