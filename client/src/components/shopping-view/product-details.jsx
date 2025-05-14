@@ -147,8 +147,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         </div>
         <div className="">
           <div>
-            <h1 className="sm:text-lg text-3xl font-extrabold">{productDetails?.title}</h1>
-            <p className="text-muted-foreground sm:text-base text-2xl mb-5 mt-4">
+            <h1 className="text-lg md:text-3xl font-extrabold">{productDetails?.title}</h1>
+            <p className="text-muted-foreground text-base md:text-2xl mb-5 mt-4">
               {productDetails?.description}
             </p>
           </div>
@@ -166,7 +166,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
-          <div className="flex sm:flex-col md:flex-row gap-4 mt-4">
+          <div className="flex flex-col md:flex-row gap-4 mt-4">
             <div className="flex flex-row gap-2">
               {productDetails?.color?.map((color) => (
                 <button
