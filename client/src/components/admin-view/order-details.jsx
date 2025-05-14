@@ -30,24 +30,28 @@ function AdminOrderDetailsView({ orderDetails }) {
     event.preventDefault();
     const { orderStatus, paymentStatus } = formData;
 
-    if (orderStatus) {
-      dispatch(updateOrderStatus({ id: orderDetails?._id, orderStatus })).then((data) => {
-        if (data?.payload?.success) {
-          toast({ title: data?.payload?.message });
-        }
-      });
+    if (!orderDetails?._id) {
+      toast({ title: "Order ID is missing. Cannot update status." });
+      return;
     }
 
-    if (paymentStatus) {
-      dispatch(updatePaymentStatus({ id: orderDetails?._id, paymentStatus })).then((data) => {
+    dispatch(updateOrderStatus({ id: orderDetails._id, orderStatus }))
+      .then((data) => {
         if (data?.payload?.success) {
-          toast({ title: data?.payload?.message });
+          dispatch(getOrderDetailsForAdmin(orderDetails._id));
+          dispatch(getAllOrdersForAdmin());
+          toast({ title: data.payload.message });
         }
       });
-    }
 
-    dispatch(getOrderDetailsForAdmin(orderDetails?._id));
-    dispatch(getAllOrdersForAdmin());
+    dispatch(updatePaymentStatus({ id: orderDetails._id, paymentStatus }))
+      .then((data) => {
+        if (data?.payload?.success) {
+          dispatch(getOrderDetailsForAdmin(orderDetails._id));
+          dispatch(getAllOrdersForAdmin());
+        }
+      });
+
     setFormData(initialFormData);
   }
 
@@ -76,9 +80,9 @@ function AdminOrderDetailsView({ orderDetails }) {
             <Label>
               <Badge
                 className={`py-1 px-3 ${
-                  orderDetails?.paymentStatus === "confirmed" || orderDetails?.paymentStatus === "delivered"
+                  orderDetails?.paymentStatus === "paid"
                     ? "bg-green-500"
-                    : orderDetails?.paymentStatus === "rejected"
+                    : orderDetails?.paymentStatus === "failed"
                     ? "bg-red-600"
                     : "bg-sky-700"
                 }`}
@@ -92,9 +96,9 @@ function AdminOrderDetailsView({ orderDetails }) {
             <Label>
               <Badge
                 className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === "paid"
+                  orderDetails?.orderStatus === "confirmed" || orderDetails?.orderStatus === "delivered"
                     ? "bg-green-500"
-                    : orderDetails?.orderStatus === "failed"
+                    : orderDetails?.orderStatus === "rejected"
                     ? "bg-red-600"
                     : "bg-sky-700"
                 }`}
@@ -139,6 +143,16 @@ function AdminOrderDetailsView({ orderDetails }) {
           <CommonForm
             formControls={[
               {
+                label: "Payment Status",
+                name: "paymentStatus",
+                componentType: "select",
+                options: [
+                  { id: "pending", label: "Pending" },
+                  { id: "paid", label: "Paid" },
+                  { id: "failed", label: "Failed" },
+                ],
+              },
+              {
                 label: "Order Status",
                 name: "orderStatus",
                 componentType: "select",
@@ -148,16 +162,6 @@ function AdminOrderDetailsView({ orderDetails }) {
                   { id: "inShipping", label: "In Shipping" },
                   { id: "Delivered", label: "Delivered" },
                   { id: "Rejected", label: "Rejected" },
-                ],
-              },
-              {
-                label: "Payment Status",
-                name: "paymentStatus",
-                componentType: "select",
-                options: [
-                  { id: "pending", label: "Pending" },
-                  { id: "paid", label: "Paid" },
-                  { id: "failed", label: "Failed" },
                 ],
               },
             ]}
