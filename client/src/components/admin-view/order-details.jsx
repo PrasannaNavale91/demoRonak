@@ -14,7 +14,8 @@ import {
 import { useToast } from "../../hooks/use-toast";
 
 const initialFormData = {
-  status: "",
+  orderStatus: "",
+  paymentStatus: "",
 };
 
 function AdminOrderDetailsView({ orderDetails }) {
