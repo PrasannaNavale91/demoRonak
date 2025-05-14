@@ -1,4 +1,4 @@
-import { ShoppingCartIcon, StarIcon } from "lucide-react";
+import { HeartIcon, ShoppingCartIcon, StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
@@ -24,10 +24,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
+  const { wishlistItems } = useSelector((state) => state.shopWishlist);
   const { reviews } = useSelector((state) => state.shopReview);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [MatchedVariant, setMatchedVariant] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const zoomRef = useRef(null);
 
   const { toast } = useToast();
@@ -68,6 +70,41 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         dispatch(fetchCartItems(user?.id));
         toast({
           title: "Product is added to cart",
+        });
+      }
+    });
+  }
+
+  function handleAddToWishlist(getCurrentProductId) {
+    let getWishlistItems = wishlistItems.items || [];
+
+    if (getWishlistItems.length) {
+      const indexOfCurrent = getWishlistItems.findIndex(
+        (item) => item.productId === getCurrentProductId
+      );
+      if (indexOfCurrent > -1) {
+        const getProduct = getWishlistItems[indexOfCurrent].itemFav;
+        if (getProduct + 1 > getTotalStock) {
+          toast({
+            title: `Only ${getProduct} can be added for this item`,
+            variant: "destructive",
+          });
+
+          return;
+        }
+      }
+    }
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        itemFav: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title: "Product is added to wishlist",
         });
       }
     });
@@ -154,14 +191,14 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           </div>
           <div className="flex items-center justify-between">
             <p
-              className={`text-xl sm:text-lg font-bold text-primary ${
+              className={`text-lg md:text-xl font-bold text-primary ${
                 productDetails?.salePrice > 0 ? "line-through" : ""
               }`}
             >
               ₹{productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 ? (
-              <p className="text-xl sm:text-lg font-bold text-muted-foreground">
+              <p className="text-lg md:text-xl font-bold text-muted-foreground">
                 ₹{productDetails?.salePrice}
               </p>
             ) : null}
@@ -199,12 +236,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           </div>
           <div className="mt-5 mb-5">
             {productDetails?.totalStock === 0 ? (
-              <Button className="w-full opacity-60 cursor-not-allowed">
+              <Button className="w-[50%] opacity-60 cursor-not-allowed">
                 Out of Stock
               </Button>
             ) : (
               <Button
-                className="w-full"
+                className="w-[50%]"
                 onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
@@ -215,10 +252,39 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 <ShoppingCartIcon />  Add to Cart
               </Button>
             )}
+            <Button
+              className="w-[50%]"
+              onClick={() =>
+                handleAddToWishlist(productDetails?._id)
+              }>
+              <HeartIcon/> Wishlist
+            </Button>
+          </div>
+          <Separator />
+          <div className="mt-4">
+            <Button
+              className="w-full text-left p-4 flex justify-between items-center bg-gray-100 hover:bg-gray-200"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <h3>Returns & Exchange</h3>
+              <span>{isOpen ? "−" : "+"}</span>
+            </Button>
+            {isOpen && (
+              <div className="p-4 border-t text-sm text-gray-700">
+                <ol className="list-decimal pl-5 space-y-2">
+                  <li>Hassle-free returns within 7 days under specific product and promotion conditions.</li>
+                  <li>Refunds for prepaid orders revert to the original payment method, while COD orders receive a wallet refund.</li>
+                  <li>Report defective, incorrect, or damaged items within 24 hours of delivery.</li>
+                  <li>Products bought during special promotions like BOGO are not eligible for returns.</li>
+                  <li>For excessive returns, reverse shipment fee up to Rs 100 can be charged, which will be deducted from the refund.</li>
+                  <li>Non-returnable items include accessories, sunglasses, perfumes, masks, and innerwear due to hygiene concerns.</li>
+                </ol>
+              </div>
+            )}
           </div>
           <Separator />
           <div className="max-h-[300px] overflow-auto">
-            <h2 className="text-xl font-bold mb-4">Reviews</h2>
+            <h2 className="text-xl font-bold mb-4">Product Reviews</h2>
             <div className="grid gap-6">
               {reviews && reviews.length > 0 ? (
                 reviews.map((reviewItem) => (

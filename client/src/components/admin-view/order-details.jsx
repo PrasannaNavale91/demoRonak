@@ -9,13 +9,11 @@ import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
   updateOrderStatus,
-  updatePaymentStatus
 } from "@/store/admin/order-slice";
 import { useToast } from "../../hooks/use-toast";
 
 const initialFormData = {
-  orderStatus: "",
-  paymentStatus: "",
+  status: "",
 };
 
 function AdminOrderDetailsView({ orderDetails }) {
@@ -28,31 +26,20 @@ function AdminOrderDetailsView({ orderDetails }) {
 
   function handleUpdateStatus(event) {
     event.preventDefault();
-    const { orderStatus, paymentStatus } = formData;
+    const { status } = formData;
 
-    if (!orderDetails?._id) {
-      toast({ title: "Order ID is missing. Cannot update status." });
-      return;
-    }
-
-    dispatch(updateOrderStatus({ id: orderDetails._id, orderStatus }))
-      .then((data) => {
-        if (data?.payload?.success) {
-          dispatch(getOrderDetailsForAdmin(orderDetails._id));
-          dispatch(getAllOrdersForAdmin());
-          toast({ title: data.payload.message });
-        }
-      });
-
-    dispatch(updatePaymentStatus({ id: orderDetails._id, paymentStatus }))
-      .then((data) => {
-        if (data?.payload?.success) {
-          dispatch(getOrderDetailsForAdmin(orderDetails._id));
-          dispatch(getAllOrdersForAdmin());
-        }
-      });
-
-    setFormData(initialFormData);
+    dispatch(
+      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
+        dispatch(getAllOrdersForAdmin());
+        setFormData(initialFormData);
+        toast({
+          title: data?.payload?.message,
+        });
+      }
+    });
   }
 
   return (
@@ -78,17 +65,7 @@ function AdminOrderDetailsView({ orderDetails }) {
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Payment Status</p>
             <Label>
-              <Badge
-                className={`py-1 px-3 ${
-                  orderDetails?.paymentStatus === "paid"
-                    ? "bg-green-500"
-                    : orderDetails?.paymentStatus === "failed"
-                    ? "bg-red-600"
-                    : "bg-sky-700"
-                }`}
-              >
-                {orderDetails?.paymentStatus}
-              </Badge>
+              {orderDetails?.paymentStatus}
             </Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
@@ -143,18 +120,8 @@ function AdminOrderDetailsView({ orderDetails }) {
           <CommonForm
             formControls={[
               {
-                label: "Payment Status",
-                name: "paymentStatus",
-                componentType: "select",
-                options: [
-                  { id: "pending", label: "Pending" },
-                  { id: "paid", label: "Paid" },
-                  { id: "failed", label: "Failed" },
-                ],
-              },
-              {
                 label: "Order Status",
-                name: "orderStatus",
+                name: "status",
                 componentType: "select",
                 options: [
                   { id: "Pending", label: "Pending" },

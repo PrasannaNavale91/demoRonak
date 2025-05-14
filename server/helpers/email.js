@@ -36,7 +36,7 @@ const sendOTP = async (email, otp) => {
   }
 };
 
-const sendEmail = async (email, subject, html) => {
+const sendEmail = async (email, username, html) => {
   try {
     await resend.emails.send({
       from: 'TrendCrave <support@trendcrave.it.com>',
@@ -46,7 +46,7 @@ const sendEmail = async (email, subject, html) => {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
           <img src="https://res.cloudinary.com/jackiieee/image/upload/v1747199401/icon-192x192_c5cnz1.png" alt="Logo" width="100" height="100"/>
           <h2 style="color:rgb(29, 29, 29); text-align: center;">Welcome to Store</h2>
-          <p style="font-size: 16px; color: #333;">Dear User,</p>
+          <p style="font-size: 16px; color: #333;">Dear ${username},</p>
           <p style="font-size: 16px; color: #333;">Thank you for shopping with us also do check out new arrivals on our store.</p>
           <p style="font-size: 16px; color: #333;">Also do checkout for brand new seasonal products.</p>
           <p style="font-size: 16px; color: #333;">We have offer for newly registered users <span style="display: inline-block; font-size: 24px; font-weight: bold; color:rgb(105, 105, 105); padding: 10px 20px; border: 1px solidrgb(101, 128, 202); border-radius: 5px; background-color: #e8f5e9;">

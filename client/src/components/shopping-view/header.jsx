@@ -1,4 +1,4 @@
-import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
+import { HeartIcon, HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
 import {
   Link,
   useLocation,
@@ -68,6 +68,7 @@ function MenuItems() {
 function HeaderRightContent() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
+  const { wishlistItems } = useSelector((state) => state.shopWishlist);
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -90,6 +91,18 @@ function HeaderRightContent() {
       {isAuthenticated ? (
         <>
           <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+            <Button
+              onClick={() => setOpenCartSheet(true)}
+              variant="outline"
+              size="icon"
+              className="relative"
+            >
+              <HeartIcon className="w-6 h-6" />
+              <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
+                {wishlistItems?.items?.length || 0}
+              </span>
+              <span className="sr-only">User Wishlist</span>
+            </Button>
             <Button
               onClick={() => setOpenCartSheet(true)}
               variant="outline"
