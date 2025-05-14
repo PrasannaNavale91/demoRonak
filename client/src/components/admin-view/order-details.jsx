@@ -94,9 +94,9 @@ function AdminOrderDetailsView({ orderDetails }) {
             <Label>
               <Badge
                 className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === "confirmed" || orderDetails?.orderStatus === "delivered"
+                  orderDetails?.orderStatus === "paid"
                     ? "bg-green-500"
-                    : orderDetails?.orderStatus === "rejected"
+                    : orderDetails?.orderStatus === "failed"
                     ? "bg-red-600"
                     : "bg-sky-700"
                 }`}
@@ -145,11 +145,11 @@ function AdminOrderDetailsView({ orderDetails }) {
                 name: "status",
                 componentType: "select",
                 options: [
-                  { id: "pending", label: "Pending" },
+                  { id: "Pending", label: "Pending" },
                   { id: "inProcess", label: "In Process" },
                   { id: "inShipping", label: "In Shipping" },
-                  { id: "delivered", label: "Delivered" },
-                  { id: "rejected", label: "Rejected" },
+                  { id: "Delivered", label: "Delivered" },
+                  { id: "Rejected", label: "Rejected" },
                 ],
               },
               {
