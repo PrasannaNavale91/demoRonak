@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
-  updateOrderStatus,
-  updatePaymentStatus
+  updateOrderStatus
 } from "@/store/admin/order-slice";
 import { useToast } from "../../hooks/use-toast";
 
