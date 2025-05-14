@@ -64,7 +64,19 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Payment Status</p>
-            <Label>{orderDetails?.paymentStatus}</Label>
+            <Label>
+              <Badge
+                className={`py-1 px-3 ${
+                  orderDetails?.paymentStatus === "confirmed" || orderDetails?.paymentStatus === "delivered"
+                    ? "bg-green-500"
+                    : orderDetails?.paymentStatus === "rejected"
+                    ? "bg-red-600"
+                    : "bg-sky-700"
+                }`}
+              >
+                {orderDetails?.paymentStatus}
+              </Badge>
+            </Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Status</p>
@@ -127,6 +139,16 @@ function AdminOrderDetailsView({ orderDetails }) {
                   { id: "inShipping", label: "In Shipping" },
                   { id: "delivered", label: "Delivered" },
                   { id: "rejected", label: "Rejected" },
+                ],
+              },
+              {
+                label: "Payment Status",
+                name: "status",
+                componentType: "select",
+                options: [
+                  { id: "pending", label: "Pending" },
+                  { id: "paid", label: "Paid" },
+                  { id: "failed", label: "Failed" },
                 ],
               },
             ]}
