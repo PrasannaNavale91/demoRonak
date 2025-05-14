@@ -35,6 +35,19 @@ export const updateOrderStatus = createAsyncThunk(
       `https://ecommerce-app-xg3v.onrender.com/api/admin/orders/update/${id}`,
       {
         orderStatus,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+export const updatePaymentStatus = createAsyncThunk(
+  "/order/updateOrderStatus",
+  async ({ orderId, paymentStatus }) => {
+    const response = await axios.put(
+      `https://ecommerce-app-xg3v.onrender.com/api/admin/orders/update/${orderId}`,
+      {
         paymentStatus,
       }
     );

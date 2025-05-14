@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
-  updateOrderStatus
+  updateOrderStatus,
+  updatePaymentStatus
 } from "@/store/admin/order-slice";
 import { useToast } from "../../hooks/use-toast";
 
@@ -38,7 +39,7 @@ function AdminOrderDetailsView({ orderDetails }) {
     }
 
     if (paymentStatus) {
-      dispatch(updateOrderStatus({ id: orderDetails?._id, paymentStatus })).then((data) => {
+      dispatch(updatePaymentStatus({ id: orderDetails?._id, paymentStatus })).then((data) => {
         if (data?.payload?.success) {
           toast({ title: data?.payload?.message });
         }
@@ -162,7 +163,7 @@ function AdminOrderDetailsView({ orderDetails }) {
             ]}
             formData={formData}
             setFormData={setFormData}
-            buttonText={"Update Order Status"}
+            buttonText={"Update Status"}
             onSubmit={handleUpdateStatus}
           />
         </div>
