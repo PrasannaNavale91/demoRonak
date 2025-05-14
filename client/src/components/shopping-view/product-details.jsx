@@ -166,7 +166,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </p>
             ) : null}
           </div>
-          <div className="flex sm:flex-col flex-row gap-4 mt-4">
+          <div className="flex sm:flex-col md:flex-row gap-4 mt-4">
             <div className="flex flex-row gap-2">
               {productDetails?.color?.map((color) => (
                 <button
