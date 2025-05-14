@@ -147,26 +147,26 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         </div>
         <div className="">
           <div>
-            <h1 className="sm-text-lg text-3xl font-extrabold">{productDetails?.title}</h1>
-            <p className="text-muted-foreground sm-text-base text-2xl mb-5 mt-4">
+            <h1 className="sm:text-lg text-3xl font-extrabold">{productDetails?.title}</h1>
+            <p className="text-muted-foreground sm:text-base text-2xl mb-5 mt-4">
               {productDetails?.description}
             </p>
           </div>
           <div className="flex items-center justify-between">
             <p
-              className={`text-xl font-bold text-primary ${
+              className={`text-xl sm:text-lg font-bold text-primary ${
                 productDetails?.salePrice > 0 ? "line-through" : ""
               }`}
             >
-              ${productDetails?.price}
+              ₹{productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 ? (
-              <p className="text-xl font-bold text-muted-foreground">
-                ${productDetails?.salePrice}
+              <p className="text-xl sm:text-lg font-bold text-muted-foreground">
+                ₹{productDetails?.salePrice}
               </p>
             ) : null}
           </div>
-          <div className="flex flex-row sm-flex-col gap-4 mt-4">
+          <div className="flex sm:flex-col flex-row gap-4 mt-4">
             <div className="flex flex-row gap-2">
               {productDetails?.color?.map((color) => (
                 <button

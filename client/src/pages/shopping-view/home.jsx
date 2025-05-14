@@ -332,40 +332,6 @@ function ShoppingHome() {
         </div>
       </section>
 
-      <section className="py-8">
-        <div className="conainter mx-auto">
-          <div className="grid grid-cols1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:p-12">
-            <div className="bg-cover py-4 px-2" style={{ backgroundImage: `url(${Bgwomen})`}}>
-              <h3 className="text-lg font-semibold w-[120px]">Buy women products with low price</h3>
-              <Link className="underline uppercase">
-                <span>Shop Now</span>
-              </Link>
-            </div>
-            <div className="bg-cover py-4 px-2" style={{ backgroundImage: `url(${Bgbag})`}}>
-              <h3 className="text-lg font-semibold w-[130px]">Buy Men's Bag products with low price</h3>
-              <p className="text-red-400 font-semibold">₹499</p>
-              <Link className="underline uppercase">
-                <span>Shop Now</span>
-              </Link>
-            </div>
-            <div className="bg-cover py-4 px-2">
-              <h3 className="text-lg font-semibold w-[130px]">Buy Men's Bag products with low price</h3>
-              <p className="text-red-400 font-semibold">₹799</p>
-              <Link className="underline uppercase">
-                <span>Shop Now</span>
-              </Link>
-            </div>
-            <div className="bg-cover py-4 px-2" style={{ backgroundImage: `url(${Bgfootwear})`}}>
-              <h3 className="text-lg font-semibold w-[130px]">Buy Men's Footwear products with low price</h3>
-              <p className="text-red-400 font-semibold">₹999</p>
-              <Link className="underline uppercase">
-                <span>Shop Now</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="py-12 border-t-2">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:p-12 max-w-[90vw]">

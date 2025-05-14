@@ -3,6 +3,7 @@ const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
+const { sendOrdermail } = require("../../helpers/email");
 
 require("dotenv").config();
 
@@ -115,6 +116,7 @@ const verifyPayment = async (req, res) => {
       message: "Payment verified and order confirmed!",
       order,
     });
+    await sendOrdermail(order.addressInfo.email);
   } catch (e) {
     console.log(e);
     res.status(500).json({
