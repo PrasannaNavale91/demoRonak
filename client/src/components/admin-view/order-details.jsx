@@ -129,6 +129,16 @@ function AdminOrderDetailsView({ orderDetails }) {
                   { id: "rejected", label: "Rejected" },
                 ],
               },
+              {
+                label: "Payment Status",
+                name: "paymentStatus",
+                componentType: "select",
+                options: [
+                  { id: "pending", label: "Pending" },
+                  { id: "paid", label: "Paid" },
+                  { id: "failed", label: "Failed" },
+                ],
+              },
             ]}
             formData={formData}
             setFormData={setFormData}

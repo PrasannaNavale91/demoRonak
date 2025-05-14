@@ -178,9 +178,45 @@ const getOrderDetails = async (req, res) => {
   }
 };
 
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { paymentStatus, orderStatus, razorpayPaymentId, razorpaySignature } = req.body;
+
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found!",
+      });
+    }
+
+    if (paymentStatus) order.paymentStatus = paymentStatus;
+    if (orderStatus) order.orderStatus = orderStatus;
+    if (razorpayPaymentId) order.razorpayPaymentId = razorpayPaymentId;
+    if (razorpaySignature) order.razorpaySignature = razorpaySignature;
+    order.orderUpdateDate = Date.now();
+
+    await order.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment status updated successfully!",
+      order,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Error updating payment status",
+    });
+  }
+};
+
 module.exports = {
   createOrder,
   verifyPayment,
   getAllOrdersByUser,
   getOrderDetails,
+  updatePaymentStatus
 };
