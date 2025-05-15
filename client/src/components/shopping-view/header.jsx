@@ -76,7 +76,7 @@ function HeaderRightContent() {
   
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(fetchCartItems(user?.id),fetchWishlistItems(user?.id));
+      dispatch(fetchCartItems(user?.id));
     }
   }, [dispatch, isAuthenticated, user?.id]);
   
@@ -92,7 +92,7 @@ function HeaderRightContent() {
       {isAuthenticated ? (
         <>
           <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-            <div>
+            {/* <div>
               <Button
                 onClick={() => setOpenCartSheet(true)}
                 variant="outline"
@@ -107,6 +107,7 @@ function HeaderRightContent() {
               </Button>
             </div>
             <div>
+            </div> */}
               <Button
                 onClick={() => setOpenCartSheet(true)}
                 variant="outline"
@@ -127,7 +128,6 @@ function HeaderRightContent() {
                     : []
                 }
               />
-            </div>
           </Sheet>
 
           <DropdownMenu>
