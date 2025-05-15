@@ -236,12 +236,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           </div>
           <div className="mt-5 mb-5 flex item-center justify-between">
             {productDetails?.totalStock === 0 ? (
-              <Button className="w-[40%] opacity-60 cursor-not-allowed">
+              <Button className="w-[50%] opacity-60 cursor-not-allowed">
                 Out of Stock
               </Button>
             ) : (
               <Button
-                className="w-[40%]"
+                className="w-[50%]"
                 onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
@@ -253,7 +253,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </Button>
             )}
             <Button
-              className="w-[40%]"
+              className="w-[50%]"
               // onClick={() =>
               //   handleAddToWishlist(productDetails?._id)
               // }
@@ -264,10 +264,10 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <Separator />
           <div className="mt-4">
             <Button
-              className="w-full text-left p-4 flex justify-between items-center bg-transparent"
+              className="w-full text-left p-4 flex justify-between items-center bg-transparent hover:bg-transparent"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <h3 className="text-lg md:text-xl font-bold py-4">Returns & Exchange</h3>
+              <h3 className="text-lg md:text-xl text-black font-bold py-4">Returns & Exchange</h3>
               <span className="text-lg font-bold">{isOpen ? "−" : "+"}</span>
             </Button>
             {isOpen && (
