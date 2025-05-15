@@ -7,7 +7,7 @@ import { HeartIcon } from "lucide-react";
 function ShoppingProductTile({
   product,
   handleGetProductDetails,
-  handleAddtoCart,
+  handleAddToWishlist,
 }) {
   return (
     <Card className="w-full max-w-sm mx-auto">

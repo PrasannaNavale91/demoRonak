@@ -36,7 +36,7 @@ const sendOTP = async (email, otp) => {
   }
 };
 
-const sendEmail = async (email, username, html) => {
+const sendEmail = async (email, username) => {
   try {
     await resend.emails.send({
       from: 'TrendCrave <support@trendcrave.it.com>',
@@ -65,7 +65,7 @@ const sendEmail = async (email, username, html) => {
   }
 };
 
-const sendOrdermail = async (email, subject, html) => {
+const sendOrdermail = async (email, orderId) => {
   try {
     await resend.emails.send({
       from: 'TrendCrave <support@trendcrave.it.com>',
