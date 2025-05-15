@@ -267,7 +267,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               className="w-full text-left p-4 flex justify-between items-center"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <h3 className="text-lg md:text-xl font-bold mb-4">Returns & Exchange</h3>
+              <h3 className="text-lg md:text-xl font-bold py-4 bg-transparent">Returns & Exchange</h3>
               <span className="text-lg font-bold">{isOpen ? "−" : "+"}</span>
             </Button>
             {isOpen && (
