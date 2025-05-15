@@ -188,13 +188,13 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 />
               </SwiperSlide>
             ))}
-            <Button className="custom-prev absolute top-1/2 left-2 z-10 -translate-y-1/2 bg-gray/50 text-white p-2 rounded-full">
+            <Button className="custom-prev absolute top-1/2 left-2 z-10 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full">
               <ArrowLeftIcon />
             </Button>
-            <Button className="custom-next absolute top-1/2 right-2 z-10 -translate-y-1/2 bg-gray/50 text-white p-2 rounded-full">
+            <Button className="custom-next absolute top-1/2 right-2 z-10 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full">
               <ArrowRightIcon />
             </Button>
-            <div className="custom-pagination absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10" />
+            <div className="custom-pagination absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10 bg-black" />
           </Swiper>
         </div>
         <div className="">
