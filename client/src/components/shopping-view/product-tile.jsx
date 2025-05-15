@@ -2,7 +2,7 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { collectionOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
-import { ShoppingCart } from "lucide-react";
+import { HeartIcon } from "lucide-react";
 
 function ShoppingProductTile({
   product,
@@ -65,10 +65,10 @@ function ShoppingProductTile({
           </Button>
         ) : (
           <Button
-            onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
+            onClick={() => handleAddToWishlist(productDetails?._id)}
             className="w-full text-black bg-transparent hover:bg-black hover:text-white border border-black"
           >
-            <ShoppingCart className="w-4 h-4" /> Add to cart
+            <HeartIcon className="w-6 h-6" /> Wishlist
           </Button>
         )}
       </CardFooter>
