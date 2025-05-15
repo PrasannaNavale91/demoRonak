@@ -252,13 +252,14 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 <ShoppingCartIcon />  Add to Cart
               </Button>
             )}
-            {/* <Button
+            <Button
               className="w-[50%]"
-              onClick={() =>
-                handleAddToWishlist(productDetails?._id)
-              }>
+              // onClick={() =>
+              //   handleAddToWishlist(productDetails?._id)
+              // }
+            >
               <HeartIcon/> Wishlist
-            </Button> */}
+            </Button>
           </div>
           <Separator />
           <div className="mt-4">
