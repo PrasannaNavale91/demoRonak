@@ -111,9 +111,9 @@ function HeaderRightContent() {
             </Button>
             <UserWishlistWrapper
               setOpenWishlistSheet={setOpenWishlistSheet}
-              cartItems={
-                cartItems && cartItems.items && cartItems.items.length > 0
-                  ? cartItems.items
+              wishlistItems={
+                wishlistItems && wishlistItems.items && wishlistItems.items.length > 0
+                  ? wishlistItems.items
                   : []
               }
             />
