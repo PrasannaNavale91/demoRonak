@@ -65,7 +65,7 @@ function ShoppingProductTile({
           </Button>
         ) : (
           <Button
-            onClick={() => handleAddToWishlist(productDetails?._id)}
+            onClick={() => handleAddToWishlist(product?._id)}
             className="w-full text-black bg-transparent hover:bg-black hover:text-white border border-black"
           >
             <HeartIcon className="w-6 h-6" /> Wishlist
