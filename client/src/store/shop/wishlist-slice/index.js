@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const addToWishlist = createAsyncThunk(
-  "cart/addToWishlist",
+  "wishlist/addToWishlist",
   async ({ userId, productId }) => {
     const response = await axios.post(
       "https://ecommerce-app-xg3v.onrender.com/api/shop/wishlist/add",
@@ -22,7 +22,7 @@ export const addToWishlist = createAsyncThunk(
 );
 
 export const fetchWishlistItems = createAsyncThunk(
-  "cart/fetchWishlistItems",
+  "wishlist/fetchWishlistItems",
   async (userId) => {
     const response = await axios.get(
       `https://ecommerce-app-xg3v.onrender.com/api/shop/wishlist/get/${userId}`
@@ -32,8 +32,8 @@ export const fetchWishlistItems = createAsyncThunk(
   }
 );
 
-export const deleteWihslistItem = createAsyncThunk(
-  "cart/deleteWihslistItem",
+export const deleteWishlistItem = createAsyncThunk(
+  "wishlist/deleteWihslistItem",
   async ({ userId, productId }) => {
     const response = await axios.delete(
       `https://ecommerce-app-xg3v.onrender.com/api/shop/wishlist/${userId}/${productId}`
@@ -44,7 +44,7 @@ export const deleteWihslistItem = createAsyncThunk(
 );
 
 const shoppingWishlistSlice = createSlice({
-  name: "shoppingCart",
+  name: "shoppingWishlist",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -54,33 +54,33 @@ const shoppingWishlistSlice = createSlice({
       })
       .addCase(addToWishlist.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartItems = action.payload.data;
+        state.wishlistItems = action.payload.data;
       })
       .addCase(addToWishlist.rejected, (state) => {
         state.isLoading = false;
-        state.cartItems = [];
+        state.wishlistItems = [];
       })
       .addCase(fetchWishlistItems.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(fetchWishlistItems.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartItems = action.payload.data;
+        state.wishlistItems = action.payload.data;
       })
       .addCase(fetchWishlistItems.rejected, (state) => {
         state.isLoading = false;
-        state.cartItems = [];
+        state.wishlistItems = [];
       })
-      .addCase(deleteWihslistItem.pending, (state) => {
+      .addCase(deleteWishlistItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteWihslistItem.fulfilled, (state, action) => {
+      .addCase(deleteWishlistItem.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartItems = action.payload.data;
+        state.wishlistItems = action.payload.data;
       })
-      .addCase(deleteWihslistItem.rejected, (state) => {
+      .addCase(deleteWishlistItem.rejected, (state) => {
         state.isLoading = false;
-        state.cartItems = [];
+        state.wishlistItems = [];
       });
   },
 });

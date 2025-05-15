@@ -24,7 +24,7 @@ const addToWishlist = async (req, res) => {
     let wishlist = await Wishlist.findOne({ userId });
 
     if (!wishlist) {
-      wishlist = new Cart({ userId, items: [] });
+      wishlist = new Wishlist({ userId, items: [] });
     }
 
     const findCurrentProductIndex = wishlist.items.findIndex(
@@ -38,7 +38,7 @@ const addToWishlist = async (req, res) => {
     await wishlist.save();
     res.status(200).json({
       success: true,
-      data: cart,
+      data: wishlist,
     });
   } catch (error) {
     console.log(error);
@@ -68,7 +68,7 @@ const fetchWishlistItems = async (req, res) => {
     if (!wishlist) {
       return res.status(404).json({
         success: false,
-        message: "Cart not found!",
+        message: "Wishlist not found!",
       });
     }
 
@@ -92,7 +92,7 @@ const fetchWishlistItems = async (req, res) => {
     res.status(200).json({
       success: true,
       data: {
-        ...cart._doc,
+        ...wishlist._doc,
         items: populateWishlistItems,
       },
     });
@@ -123,7 +123,7 @@ const deleteWishlistItem = async (req, res) => {
     if (!wishlist) {
       return res.status(404).json({
         success: false,
-        message: "Cart not found!",
+        message: "Wishlist not found!",
       });
     }
 
@@ -138,7 +138,7 @@ const deleteWishlistItem = async (req, res) => {
       select: "image title price salePrice",
     });
 
-    const populateWishlistItems = cart.items.map((item) => ({
+    const populateWishlistItems = wishlist.items.map((item) => ({
       productId: item.productId ? item.productId._id : null,
       image: item.productId ? item.productId.image : null,
       title: item.productId ? item.productId.title : "Product not found",
