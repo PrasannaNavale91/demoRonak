@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
 import Logo from "../../assets/logo.png";
+import { fetchWishlistItems } from "@/store/shop/wishlist-slice";
 
 function MenuItems() {
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ function HeaderRightContent() {
   
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(fetchCartItems(user?.id));
+      dispatch(fetchCartItems(user?.id),fetchWishlistItems(user?.id));
     }
   }, [dispatch, isAuthenticated, user?.id]);
   
@@ -91,7 +92,7 @@ function HeaderRightContent() {
       {isAuthenticated ? (
         <>
           <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-            {/* <div>
+            <div>
               <Button
                 onClick={() => setOpenCartSheet(true)}
                 variant="outline"
@@ -112,7 +113,8 @@ function HeaderRightContent() {
                     : []
                 }
               />
-            </div> */}
+            </div>
+            <div>
               <Button
                 onClick={() => setOpenCartSheet(true)}
                 variant="outline"
@@ -133,8 +135,7 @@ function HeaderRightContent() {
                     : []
                 }
               />
-            {/* <div>
-            </div> */}
+            </div>
           </Sheet>
 
           <DropdownMenu>

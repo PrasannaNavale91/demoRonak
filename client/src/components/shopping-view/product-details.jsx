@@ -5,7 +5,8 @@ import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, addToWishlist, } from "@/store/shop/cart-slice";
+import { addToCart, fetchCartItems, } from "@/store/shop/cart-slice";
+import { addToWishlist, fetchWishlistItems, } from "@/store/shop/wishlist-slice";
 import { useToast } from "../ui/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
@@ -75,40 +76,40 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     });
   }
 
-  // function handleAddToWishlist(getCurrentProductId) {
-  //   let getWishlistItems = wishlistItems.items || [];
+  function handleAddToWishlist(getCurrentProductId) {
+    let getWishlistItems = wishlistItems.items || [];
 
-  //   if (getWishlistItems.length) {
-  //     const indexOfCurrent = getWishlistItems.findIndex(
-  //       (item) => item.productId === getCurrentProductId
-  //     );
-  //     if (indexOfCurrent > -1) {
-  //       const getProduct = getWishlistItems[indexOfCurrent].itemFav;
-  //       if (getProduct + 1 > getTotalStock) {
-  //         toast({
-  //           title: `Only ${getProduct} can be added for this item`,
-  //           variant: "destructive",
-  //         });
+    if (getWishlistItems.length) {
+      const indexOfCurrent = getWishlistItems.findIndex(
+        (item) => item.productId === getCurrentProductId
+      );
+      if (indexOfCurrent > -1) {
+        const getProduct = getWishlistItems[indexOfCurrent].itemFav;
+        if (getProduct + 1 > getTotalStock) {
+          toast({
+            title: `Only ${getProduct} can be added for this item`,
+            variant: "destructive",
+          });
 
-  //         return;
-  //       }
-  //     }
-  //   }
-  //   dispatch(
-  //     addToWishlist({
-  //       userId: user?.id,
-  //       productId: getCurrentProductId,
-  //       itemFav: 1,
-  //     })
-  //   ).then((data) => {
-  //     if (data?.payload?.success) {
-  //       dispatch(fetchWishlistItems(user?.id));
-  //       toast({
-  //         title: "Product is added to wishlist",
-  //       });
-  //     }
-  //   });
-  // }
+          return;
+        }
+      }
+    }
+    dispatch(
+      addToWishlist({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        itemFav: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchWishlistItems(user?.id));
+        toast({
+          title: "Product is added to wishlist",
+        });
+      }
+    });
+  }
 
   function handleDialogClose() {
     setOpen(false);
@@ -254,9 +255,9 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             )}
             <Button
               className="w-[49%]"
-              // onClick={() =>
-              //   handleAddToWishlist(productDetails?._id)
-              // }
+              onClick={() =>
+                handleAddToWishlist(productDetails?._id)
+              }
             >
               <HeartIcon/> Wishlist
             </Button>
@@ -264,7 +265,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <Separator />
           <div className="mt-4">
             <Button
-              className="w-full text-left flex justify-between items-center bg-transparent hover:bg-transparent"
+              className="w-full text-left flex justify-between items-center bg-transparent hover:bg-transparent p-0"
               onClick={() => setIsOpen(!isOpen)}
             >
               <h3 className="text-lg md:text-xl text-black font-bold py-4">Returns & Exchange</h3>
