@@ -175,7 +175,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               el: ".custom-pagination",
               clickable: true
             }}
-            className="w-full aspect-square"
+            className="relative w-full aspect-square"
           >
             {(Array.isArray(productDetails?.image) ? productDetails.image : [productDetails?.image]).map((img, index) => (  
               <SwiperSlide key={index}>
@@ -194,13 +194,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             <Button className="custom-next absolute top-1/2 right-2 z-10 -translate-y-1/2 bg-black/50 text-white p-2 rounded-md">
               <ArrowRightIcon />
             </Button>
-            <div className="relative mx-auto">
-              <div className="custom-pagination absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-50">
-                <div className="w-2 h-2 rounded-full bg-white/80" />
-                <div className="w-2 h-2 rounded-full bg-white/30" />
-                <div className="w-2 h-2 rounded-full bg-white/30" />
-              </div>
-            </div>
+            <div className="custom-pagination absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-50" />
           </Swiper>
         </div>
         <div className="">
