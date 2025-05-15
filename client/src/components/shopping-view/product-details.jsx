@@ -194,7 +194,9 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             <Button className="custom-next absolute top-1/2 right-2 z-10 -translate-y-1/2 bg-black/50 text-white p-2 rounded-lg">
               <ArrowRightIcon />
             </Button>
-            <div className="custom-pagination absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10" />
+            <div className="relative">
+              <div className="custom-pagination absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10" />
+            </div>
           </Swiper>
         </div>
         <div className="">
