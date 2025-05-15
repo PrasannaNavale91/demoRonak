@@ -264,11 +264,11 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <Separator />
           <div className="mt-4">
             <Button
-              className="w-full text-left p-4 flex justify-between items-center bg-gray-100 hover:bg-gray-200"
+              className="w-full text-left p-4 flex justify-between items-center"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <h3>Returns & Exchange</h3>
-              <span>{isOpen ? "−" : "+"}</span>
+              <h3 className="text-lg md:text-xl font-bold mb-4">Returns & Exchange</h3>
+              <span className="text-lg font-bold">{isOpen ? "−" : "+"}</span>
             </Button>
             {isOpen && (
               <div className="p-4 border-t text-sm text-gray-700">
@@ -285,7 +285,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           </div>
           <Separator />
           <div className="max-h-[300px] overflow-auto">
-            <h2 className="text-xl font-bold mb-4">Product Reviews</h2>
+            <h2 className="text-lg md:text-xl font-bold mb-4">Product Reviews</h2>
             <div className="grid gap-6">
               {reviews && reviews.length > 0 ? (
                 reviews.map((reviewItem) => (
