@@ -166,8 +166,14 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         <div className="relative overflow-hidden rounded-lg">
           <Swiper
             modules={[Navigation, Pagination]}
-            navigation
-            pagination={{ clickable: true }}
+            navigation={{
+              nextEl: ".custom-next",
+              prevEl: ".custom-prev",
+            }}
+            pagination={{
+              el: ".custom-pagination",
+              clickable: true
+            }}
             className="w-full aspect-square"
           >
             {(Array.isArray(productDetails?.image) ? productDetails.image : [productDetails?.image]).map((img, index) => (  
@@ -181,6 +187,13 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 />
               </SwiperSlide>
             ))}
+            <Button className="custom-prev absolute top-1/2 left-2 z-10 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full">
+              ←
+            </Button>
+            <Button className="custom-next absolute top-1/2 right-2 z-10 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full">
+              →
+            </Button>
+            <div className="custom-pagination absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10" />
           </Swiper>
         </div>
         <div className="">
