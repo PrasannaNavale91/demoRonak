@@ -22,9 +22,9 @@ import { logoutUser } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
+import { fetchWishlistItems } from "@/store/shop/wishlist-slice";
 import { Label } from "../ui/label";
 import Logo from "../../assets/logo.png";
-import { fetchWishlistItems } from "@/store/shop/wishlist-slice";
 
 function MenuItems() {
   const navigate = useNavigate();
@@ -105,14 +105,6 @@ function HeaderRightContent() {
                 </span>
                 <span className="sr-only">User Wishlist</span>
               </Button>
-              <UserCartWrapper
-                setOpenCartSheet={setOpenCartSheet}
-                wishlistItems={
-                  wishlistItems && wishlistItems.items && wishlistItems.items.length > 0
-                    ? wishlistItems.items
-                    : []
-                }
-              />
             </div>
             <div>
               <Button
