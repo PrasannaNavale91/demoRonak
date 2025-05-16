@@ -5,7 +5,7 @@ const addToWishlist = async (req, res) => {
   try {
     const { userId, productId } = req.body;
 
-    if (!userId || !productId <= 0) {
+    if (!userId || !productId ) {
       return res.status(400).json({
         success: false,
         message: "Invalid data provided!",
@@ -128,7 +128,7 @@ const deleteWishlistItem = async (req, res) => {
     }
 
     wishlist.items = wishlist.items.filter(
-      (item) => item.productId._id.toString() !== productId
+      (item) => item.productId && item.productId._id.toString() !== productId
     );
 
     await wishlist.save();

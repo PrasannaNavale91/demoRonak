@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const addToWishlist = createAsyncThunk(
-  "wishlist/addToWishlist",
+  "/wishlist/addToWishlist",
   async ({ userId, productId }) => {
     const response = await axios.post(
       "https://ecommerce-app-xg3v.onrender.com/api/shop/wishlist/add",
@@ -22,7 +22,7 @@ export const addToWishlist = createAsyncThunk(
 );
 
 export const fetchWishlistItems = createAsyncThunk(
-  "wishlist/fetchWishlistItems",
+  "/wishlist/fetchWishlistItems",
   async (userId) => {
     const response = await axios.get(
       `https://ecommerce-app-xg3v.onrender.com/api/shop/wishlist/get/${userId}`
@@ -33,7 +33,7 @@ export const fetchWishlistItems = createAsyncThunk(
 );
 
 export const deleteWishlistItem = createAsyncThunk(
-  "wishlist/deleteWihslistItem",
+  "/wishlist/deleteWihslistItem",
   async ({ userId, productId }) => {
     const response = await axios.delete(
       `https://ecommerce-app-xg3v.onrender.com/api/shop/wishlist/${userId}/${productId}`

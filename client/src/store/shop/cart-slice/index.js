@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const addToCart = createAsyncThunk(
-  "cart/addToCart",
+  "/cart/addToCart",
   async ({ userId, productId, quantity }) => {
     const response = await axios.post(
       "https://ecommerce-app-xg3v.onrender.com/api/shop/cart/add",
@@ -23,7 +23,7 @@ export const addToCart = createAsyncThunk(
 );
 
 export const fetchCartItems = createAsyncThunk(
-  "cart/fetchCartItems",
+  "/cart/fetchCartItems",
   async (userId) => {
     const response = await axios.get(
       `https://ecommerce-app-xg3v.onrender.com/api/shop/cart/get/${userId}`
@@ -34,7 +34,7 @@ export const fetchCartItems = createAsyncThunk(
 );
 
 export const deleteCartItem = createAsyncThunk(
-  "cart/deleteCartItem",
+  "/cart/deleteCartItem",
   async ({ userId, productId }) => {
     const response = await axios.delete(
       `https://ecommerce-app-xg3v.onrender.com/api/shop/cart/${userId}/${productId}`
@@ -45,7 +45,7 @@ export const deleteCartItem = createAsyncThunk(
 );
 
 export const updateCartQuantity = createAsyncThunk(
-  "cart/updateCartQuantity",
+  "/cart/updateCartQuantity",
   async ({ userId, productId, quantity }) => {
     const response = await axios.put(
       "https://ecommerce-app-xg3v.onrender.com/api/shop/cart/update-cart",
