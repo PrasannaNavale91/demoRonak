@@ -103,7 +103,7 @@ function HeaderRightContent() {
               size="icon"
               className="relative"
             >
-              <HeartIcon className="w-6 h-6" />
+              <HeartIcon className="w-6 h-6 text-red-700" />
               <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
                 {wishlistItems?.items?.length || 0}
               </span>
@@ -125,7 +125,7 @@ function HeaderRightContent() {
               size="icon"
               className="relative"
             >
-              <ShoppingCart className="w-6 h-6 text-red-500" />
+              <ShoppingCart className="w-6 h-6 text-blue-600" />
               <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
                 {cartItems?.items?.length || 0}
               </span>
