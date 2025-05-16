@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
-import { DeleteIcon, User } from "lucide-react";
+import UserWishlistItemsContent from "./wishlist-item-content";
+
 
 function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet }) {
   const navigate = useNavigate();
