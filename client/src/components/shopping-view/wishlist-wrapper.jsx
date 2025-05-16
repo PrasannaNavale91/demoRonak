@@ -1,18 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
+import { deleteWishlistItem } from "@/store/shop/wishlist-slice";
+import { DeleteIcon } from "lucide-react";
 
-function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet, handleGetProductDetails }) {
+function UserWishlistWrapper({ wishlistItem, setOpenWishlistSheet, handleGetProductDetails }) {
   const navigate = useNavigate();
+  const { wishlistItems } = useSelector((state) => state.shopWishlist);
 
   const totalWishlistAmount =
-    wishlistItems && wishlistItems.length > 0
-      ? wishlistItems.reduce(
+    wishlistItem && wishlistItem.length > 0
+      ? wishlistItem.reduce(
           (sum, item) =>
             sum + (item?.salePrice > 0 ? item?.salePrice : item?.price),
           0
         )
       : 0;
+
+  function handleWishlistItemDelete(getWishlistItems) {
+    dispatch(
+      deleteCartItem({ userId: user?.id, productId: getWishlistItems?.productId })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        toast({
+          title: "Wishlist item is deleted successfully",
+        });
+      }
+    });
+  }
 
   return (
     <SheetContent className="sm:max-w-md">
@@ -40,10 +55,19 @@ function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet, handleGetPro
                   </p>
                 </div>
               </div>
+              <div>
+                <Button
+                  onClick={() => {
+                    handleWishlistItemDelete(wishlistItem);
+                  }}
+                >
+                  <DeleteIcon className="w-5 h-5 text-gray-500"/>
+                </Button>
+              </div>
             </div>
           )) : (
-            <p className="text-gray-500">No items in your wishlist.</p>
-          )}
+          <p className="text-gray-500">No items in your wishlist.</p>
+        )}
       </div>
       <div className="mt-8 space-y-4">
         <div className="flex justify-between">
