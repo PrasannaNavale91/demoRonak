@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { deleteWishlistItem } from "@/store/shop/wishlist-slice";
 import { DeleteIcon } from "lucide-react";
+import { useSelector } from "react-redux";
 
 function UserWishlistWrapper({ wishlistItem, setOpenWishlistSheet, handleGetProductDetails }) {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function UserWishlistWrapper({ wishlistItem, setOpenWishlistSheet, handleGetProd
 
   function handleWishlistItemDelete(getWishlistItems) {
     dispatch(
-      deleteCartItem({ userId: user?.id, productId: getWishlistItems?.productId })
+      deleteWishlistItem({ userId: user?.id, productId: getWishlistItems?.productId })
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
