@@ -37,7 +37,7 @@ function UserWishlistWrapper({ setOpenWishlistSheet, handleGetProductDetails }) 
         <SheetTitle>Your Wishlist</SheetTitle>
       </SheetHeader>
       <div className="mt-8 space-y-4">
-        {wishlistItems && wishlistItems.length > 0
+        {wishlistItems && wishlistItems.length === 0
           ? wishlistItems.map((item) => (
             <div
               onClick={() => handleGetProductDetails(item.productId)}

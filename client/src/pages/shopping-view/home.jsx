@@ -39,9 +39,6 @@ import Jackets from "../../assets/Jacket.png";
 import Shorts from "../../assets/mens-shorts.webp";
 import Shoes from "../../assets/shoes.webp"
 import Formals from "../../assets/formal-wear.png"
-import Bgwomen from "../../assets/women.jpg"
-import Bgbag from "../../assets/bag.png"
-import Bgfootwear from "../../assets/footwear.jpg"
 
 const categoriesWithImages = [
   { id: "men", label: "Men", image: Men },
@@ -115,7 +112,7 @@ function ShoppingHome() {
       if (data?.payload?.success) {
         dispatch(fetchWishlistItems(user?.id));
         toast({
-          title: "Product is added to cart",
+          title: "Product is added to wishlist",
         });
       }
     });
