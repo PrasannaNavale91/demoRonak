@@ -12,7 +12,7 @@ function ShoppingAccount() {
           className="h-full w-full object-cover object-center"
         />
       </div>
-      <div className="container mx-auto grid grid-cols-1 gap-8 py-8">
+      <div className="container mx-auto grid grid-cols-1 gap-8 py-8 overflow-x-auto">
         <div className="flex flex-col rounded-lg border bg-background p-6 shadow-sm">
           <Tabs defaultValue="orders">
             <TabsList>

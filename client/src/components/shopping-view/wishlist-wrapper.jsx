@@ -3,24 +3,25 @@ import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { deleteWishlistItem } from "@/store/shop/wishlist-slice";
 import { DeleteIcon } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-function UserWishlistWrapper({ wishlistItem, setOpenWishlistSheet, handleGetProductDetails }) {
+function UserWishlistWrapper({ setOpenWishlistSheet, handleGetProductDetails }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { wishlistItems } = useSelector((state) => state.shopWishlist);
 
   const totalWishlistAmount =
-    wishlistItem && wishlistItem.length > 0
-      ? wishlistItem.reduce(
+    wishlistItems && wishlistItems.length > 0
+      ? wishlistItems.reduce(
           (sum, item) =>
             sum + (item?.salePrice > 0 ? item?.salePrice : item?.price),
           0
         )
       : 0;
 
-  function handleWishlistItemDelete(getWishlistItems) {
+  function handleWishlistItemDelete(item) {
     dispatch(
-      deleteWishlistItem({ userId: user?.id, productId: getWishlistItems?.productId })
+      deleteWishlistItem({ userId: user?.id, productId: item?.productId })
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
@@ -59,7 +60,7 @@ function UserWishlistWrapper({ wishlistItem, setOpenWishlistSheet, handleGetProd
               <div>
                 <Button
                   onClick={() => {
-                    handleWishlistItemDelete(wishlistItem);
+                    handleWishlistItemDelete(item);
                   }}
                 >
                   <DeleteIcon className="w-5 h-5 text-gray-500"/>
