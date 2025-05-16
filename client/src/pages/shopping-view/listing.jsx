@@ -114,7 +114,7 @@ function ShoppingListing() {
       if (data?.payload?.success) {
         dispatch(fetchWishlistItems(user?.id));
         toast({
-          title: "Product is added to cart",
+          title: "Product is added to wishlist",
         });
       }
     });

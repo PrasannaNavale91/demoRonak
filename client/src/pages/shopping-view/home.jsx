@@ -11,7 +11,7 @@ import {
 } from "@/store/shop/products-slice";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Link, useNavigate } from "react-router-dom";
-import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { addToWishlist, fetchWishlistItems } from "@/store/shop/wishlist-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
@@ -104,16 +104,16 @@ function ShoppingHome() {
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
-  function handleAddtoCart(getCurrentProductId) {
+  function handleAddtoWishlist(getCurrentProductId) {
     dispatch(
-      addToCart({
+      addToWishlist({
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
-        dispatch(fetchCartItems(user?.id));
+        dispatch(fetchWishlistItems(user?.id));
         toast({
           title: "Product is added to cart",
         });
@@ -277,7 +277,7 @@ function ShoppingHome() {
                     <ShoppingProductTile
                       handleGetProductDetails={handleGetProductDetails}
                       product={productItem}
-                      handleAddtoCart={handleAddtoCart}
+                      handleAddToWishlist={handleAddtoWishlist}
                       className="h-full flex justify-center items-center"
                     />
                   </div>
