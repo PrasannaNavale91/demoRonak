@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import { sortOptions } from "@/config";
-import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { addToWishlist, fetchWishlistItems } from "@/store/shop/wishlist-slice";
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
@@ -42,7 +42,7 @@ function ShoppingListing() {
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
-  const { cartItems } = useSelector((state) => state.shopCart);
+  const { wishlistItems } = useSelector((state) => state.shopWishlist);
   const { user } = useSelector((state) => state.auth);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
@@ -83,16 +83,16 @@ function ShoppingListing() {
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
-  function handleAddtoCart(getCurrentProductId, getTotalStock) {
-    console.log(cartItems);
-    let getCartItems = cartItems.items || [];
+  function handleAddtoWishlist(getCurrentProductId, getTotalStock) {
+    console.log(wishlistItems);
+    let getWishlistItems = wishlistItems.items || [];
 
-    if (getCartItems.length) {
-      const indexOfCurrentItem = getCartItems.findIndex(
+    if (getWishlistItems.length) {
+      const indexOfCurrentItem = getWishlistItems.findIndex(
         (item) => item.productId === getCurrentProductId
       );
       if (indexOfCurrentItem > -1) {
-        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+        const getQuantity = getWishlistItems[indexOfCurrentItem].quantity;
         if (getQuantity + 1 > getTotalStock) {
           toast({
             title: `Only ${getQuantity} quantity can be added for this item`,
@@ -105,14 +105,14 @@ function ShoppingListing() {
     }
 
     dispatch(
-      addToCart({
+      addToWishlist({
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
-        dispatch(fetchCartItems(user?.id));
+        dispatch(fetchWishlistItems(user?.id));
         toast({
           title: "Product is added to cart",
         });
@@ -187,7 +187,7 @@ function ShoppingListing() {
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
-                  handleAddtoCart={handleAddtoCart}
+                  handleAddToWishlist={handleAddtoWishlist}
                 />
               ))
             : null}
