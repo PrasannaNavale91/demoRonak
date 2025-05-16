@@ -1,19 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 
-function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet }) {
-  const navigate = useNavigate();
+function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet, handleGetProductDetails }) {
 
   const totalWishlistAmount =
     wishlistItems && wishlistItems.length > 0
       ? wishlistItems.reduce(
-          (sum, currentItem) =>
-            sum +
-            (currentItem?.salePrice > 0
-              ? currentItem?.salePrice
-              : currentItem?.price) *
-              currentItem?.quantity,
+          (sum, item) =>
+            sum + (item?.salePrice > 0 ? item?.salePrice : item?.price),
           0
         )
       : 0;
@@ -25,8 +19,28 @@ function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet }) {
       </SheetHeader>
       <div className="mt-8 space-y-4">
         {wishlistItems && wishlistItems.length > 0
-          ? wishlistItems.map((item) => 0)
-          : null}
+          ? wishlistItems.map((item) => (
+            <div
+              key={item.productId}
+              className="flex items-center justify-between border p-2 rounded"
+            >
+              <div className="flex items-center space-x-4">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-16 h-16 object-cover rounded"
+                />
+                <div>
+                  <h4 className="font-medium">{item.title}</h4>
+                  <p className="text-sm text-gray-500">
+                    ₹{item.salePrice > 0 ? item.salePrice : item.price}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )) : (
+            <p className="text-gray-500">No items in your wishlist.</p>
+          )}
       </div>
       <div className="mt-8 space-y-4">
         <div className="flex justify-between">
@@ -36,7 +50,7 @@ function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet }) {
       </div>
       <Button
         onClick={() => {
-          navigate("/shop/listing");
+          handleGetProductDetails(product?.id)
           setOpenWishlistSheet(false);
         }}
         className="w-full mt-6"
