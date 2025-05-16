@@ -77,7 +77,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     });
   }
 
-  function handleAddToWishlist(getCurrentProductId) {
+  function handleAddToWishlist(getCurrentProductId, getTotalStock) {
     let getWishlistItems = wishlistItems.items || [];
 
     if (getWishlistItems.length) {
