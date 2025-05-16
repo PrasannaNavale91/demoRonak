@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 
 function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet, handleGetProductDetails }) {
+  const navigate = useNavigate();
 
   const totalWishlistAmount =
     wishlistItems && wishlistItems.length > 0
@@ -21,12 +23,13 @@ function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet, handleGetPro
         {wishlistItems && wishlistItems.length > 0
           ? wishlistItems.map((item) => (
             <div
+              onClick={() => handleGetProductDetails(item.productId)}
               key={item.productId}
               className="flex items-center justify-between border p-2 rounded"
             >
               <div className="flex items-center space-x-4">
                 <img
-                  src={item.image}
+                  src={Array.isArray(item?.image) ? item?.image[0] : item?.image}
                   alt={item.title}
                   className="w-16 h-16 object-cover rounded"
                 />
@@ -50,7 +53,7 @@ function UserWishlistWrapper({ wishlistItems, setOpenWishlistSheet, handleGetPro
       </div>
       <Button
         onClick={() => {
-          handleGetProductDetails(product?.id)
+          navigate("/shop/listing");
           setOpenWishlistSheet(false);
         }}
         className="w-full mt-6"
