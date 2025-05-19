@@ -113,7 +113,7 @@ function UserCartItemsContent({ cartItem }) {
         </p>
         <Trash
           onClick={() => handleCartItemDelete(cartItem)}
-          className="cursor-pointer mt-1"
+          className="cursor-pointer mt-1 text-gray-600"
           size={20}
         />
       </div>

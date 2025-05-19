@@ -25,6 +25,7 @@ import SearchProducts from "./pages/shopping-view/search";
 import AuthForgotPassword from "./pages/auth/forgotPassword";
 import AuthVerifyOtp from "./pages/auth/VerifyOtp";
 import AuthResetPassword from "./pages/auth/resetPassword";
+import Loader from "./components/ui/Loader";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -36,7 +37,7 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (isLoading) return <Skeleton className="w-[800] bg-black h-screen" />;
+  if (isLoading) return <Loader className="w-[800] bg-black h-screen" />;
 
   console.log(isLoading, user);
 

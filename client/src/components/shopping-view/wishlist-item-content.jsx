@@ -52,7 +52,7 @@ function UserCartItemsContent({ wishlistItem }) {
         </p>
         <Trash
           onClick={() => handleWishlistItemDelete(wishlistItem)}
-          className="cursor-pointer mt-1"
+          className="cursor-pointer mt-1 text-gray-600"
           size={20}
         />
       </div>

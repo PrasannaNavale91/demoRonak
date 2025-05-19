@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import bannerOne from "../../assets/banner_1.png";
-import bannerTwo from "../../assets/banner_2.png";
-import bannerThree from "../../assets/banner_3.png";
+import bannerOne from "../../assets/banner_1.webp";
+import bannerTwo from "../../assets/banner_2.webp";
+import bannerThree from "../../assets/banner_3.webp";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,22 +23,22 @@ import {
   LinkedinIcon, 
   Mail,  
   YoutubeIcon } from "lucide-react";
-import Men from "../../assets/men.png"
-import Women from "../../assets/women.png";
-import Kids from "../../assets/kids.png";
-import Shirt from "../../assets/Shirt.png";
-import TShirt from "../../assets/t-shirt.png";
-import Trousers from "../../assets/Trouser.png";
-import Jeans from "../../assets/jeans.png";
+import Men from "../../assets/men.webp"
+import Women from "../../assets/women.webp";
+import Kids from "../../assets/kids.webp";
+import Shirt from "../../assets/Shirt.webp";
+import TShirt from "../../assets/t-shirt.webp";
+import Trousers from "../../assets/Trouser.webp";
+import Jeans from "../../assets/jeans.webp";
 import Cargos from "../../assets/cargos.webp";
 import Joggers from "../../assets/joggers.webp";
 import Oversized from "../../assets/oversized.webp";
 import Hoodies from "../../assets/hoodie.webp";
 import SweatShirts from "../../assets/black-sweatshirt.webp";
-import Jackets from "../../assets/Jacket.png";
+import Jackets from "../../assets/Jacket.webp";
 import Shorts from "../../assets/mens-shorts.webp";
 import Shoes from "../../assets/shoes.webp"
-import Formals from "../../assets/formal-wear.png"
+import Formals from "../../assets/formal-wear.webp";
 
 const categoriesWithImages = [
   { id: "men", label: "Men", image: Men },
