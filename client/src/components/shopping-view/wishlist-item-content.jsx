@@ -6,6 +6,7 @@ import { useToast } from "../../hooks/use-toast";
 function UserCartItemsContent({ wishlistItem }) {
   const { user } = useSelector((state) => state.auth);
   const { wishlistItems } = useSelector((state) => state.shopWishlist);
+  const { productList } = useSelector((state) => state.shopProducts);
   const dispatch = useDispatch();
   const { toast } = useToast();
 
@@ -16,6 +17,13 @@ function UserCartItemsContent({ wishlistItem }) {
       const indexOfCurrentWishlistItem = getWishlistItems.findIndex(
         (item) => item.productId === item?.productId
       );
+
+      const getCurrentProductIndex = productList.findIndex(
+        (product) => product._id === getCartItem?.productId
+      );
+      const getTotalStock = productList[getCurrentProductIndex].totalStock;
+      
+      console.log(getCurrentProductIndex, getTotalStock, "getTotalStock");
 
       if (indexOfCurrentWishlistItem > -1) {
         getWishlistItems.splice(indexOfCurrentWishlistItem, 1);
