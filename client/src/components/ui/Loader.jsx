@@ -6,7 +6,7 @@ function Loader() {
       <img
         src={Logo}
         alt="Loading..."
-        className="w-20 h-20 animate-bounce"
+        className="w-20 h-20 animate-bounce shadow-lg"
       />
     </div>
   );

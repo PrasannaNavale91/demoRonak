@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteWishlistItem } from "@/store/shop/wishlist-slice";
 import { useToast } from "../../hooks/use-toast";
 
-function UserCartItemsContent({ wishlistItem }) {
+function UserWishlistItemsContent({ wishlistItem }) {
   const { user } = useSelector((state) => state.auth);
   const { wishlistItems } = useSelector((state) => state.shopWishlist);
   const { productList } = useSelector((state) => state.shopProducts);
@@ -12,23 +12,6 @@ function UserCartItemsContent({ wishlistItem }) {
 
   function handleWishlistItemDelete(item) {
     let getWishlistItems = wishlistItems.items || [];
-
-    if (getWishlistItems.length) {
-      const indexOfCurrentWishlistItem = getWishlistItems.findIndex(
-        (item) => item.productId === item?.productId
-      );
-
-      const getCurrentProductIndex = productList.findIndex(
-        (product) => product._id === getCartItem?.productId
-      );
-      const getTotalStock = productList[getCurrentProductIndex].totalStock;
-      
-      console.log(getCurrentProductIndex, getTotalStock, "getTotalStock");
-
-      if (indexOfCurrentWishlistItem > -1) {
-        getWishlistItems.splice(indexOfCurrentWishlistItem, 1);
-      }
-    }
       dispatch(
         deleteWishlistItem({ userId: user?.id, productId: item?.productId })
       ).then((data) => {
@@ -54,8 +37,7 @@ function UserCartItemsContent({ wishlistItem }) {
         <p className="font-semibold">
           ₹
           {(
-            (wishlistItem?.salePrice > 0 ? wishlistItem?.salePrice : wishlistItem?.price) *
-            wishlistItem?.quantity
+            (wishlistItem?.salePrice > 0 ? wishlistItem?.salePrice : wishlistItem?.price)
           ).toFixed(2)}
         </p>
         <Trash
@@ -68,4 +50,4 @@ function UserCartItemsContent({ wishlistItem }) {
   );
 }
 
-export default UserCartItemsContent;
+export default UserWishlistItemsContent;
