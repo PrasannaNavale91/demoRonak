@@ -277,28 +277,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             </Button>
           </div>
           <Separator />
-          <div className="">
-            <Button
-              className="w-full text-left flex justify-between items-center bg-transparent hover:bg-transparent p-0"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              <h3 className="text-lg md:text-xl text-black font-bold py-4">Returns & Exchange</h3>
-              <span className="text-lg text-black font-bold">{isOpen ? "−" : "+"}</span>
-            </Button>
-            {isOpen && (
-              <div className="p-4 border-t text-sm text-gray-700">
-                <ol className="list-decimal pl-5 space-y-2">
-                  <li>Hassle-free returns within 7 days under specific product and promotion conditions.</li>
-                  <li>Refunds for prepaid orders revert to the original payment method, while COD orders receive a wallet refund.</li>
-                  <li>Report defective, incorrect, or damaged items within 24 hours of delivery.</li>
-                  <li>Products bought during special promotions like BOGO are not eligible for returns.</li>
-                  <li>For excessive returns, reverse shipment fee up to Rs 100 can be charged, which will be deducted from the refund.</li>
-                  <li>Non-returnable items include accessories, sunglasses, perfumes, masks, and innerwear due to hygiene concerns.</li>
-                </ol>
-              </div>
-            )}
-          </div>
-          <Separator />
           <div className="max-h-[300px] overflow-auto">
             <h2 className="text-lg md:text-xl font-bold mb-4">Product Reviews</h2>
             <div className="grid gap-6">
@@ -348,6 +326,28 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 Submit
               </Button>
             </div>
+          </div>
+          <Separator />
+          <div className="">
+            <Button
+              className="w-full text-left flex justify-between items-center bg-transparent hover:bg-transparent p-0"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <h3 className="text-lg md:text-xl text-black font-bold py-4">Returns & Exchange</h3>
+              <span className="text-lg text-black font-bold">{isOpen ? "−" : "+"}</span>
+            </Button>
+            {isOpen && (
+              <div className="p-4 border-t text-sm text-gray-700">
+                <ol className="list-decimal pl-5 space-y-2">
+                  <li>Hassle-free returns within 7 days under specific product and promotion conditions.</li>
+                  <li>Refunds for prepaid orders revert to the original payment method, while COD orders receive a wallet refund.</li>
+                  <li>Report defective, incorrect, or damaged items within 24 hours of delivery.</li>
+                  <li>Products bought during special promotions like BOGO are not eligible for returns.</li>
+                  <li>For excessive returns, reverse shipment fee up to Rs 100 can be charged, which will be deducted from the refund.</li>
+                  <li>Non-returnable items include accessories, sunglasses, perfumes, masks, and innerwear due to hygiene concerns.</li>
+                </ol>
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>
