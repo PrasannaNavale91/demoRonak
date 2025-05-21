@@ -277,7 +277,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             </Button>
           </div>
           <Separator />
-          <div className="mt-4">
+          <div className="">
             <Button
               className="w-full text-left flex justify-between items-center bg-transparent hover:bg-transparent p-0"
               onClick={() => setIsOpen(!isOpen)}
