@@ -6,7 +6,6 @@ import { useToast } from "../../hooks/use-toast";
 function UserWishlistItemsContent({ wishlistItem }) {
   const { user } = useSelector((state) => state.auth);
   const { wishlistItems } = useSelector((state) => state.shopWishlist);
-  const { productList } = useSelector((state) => state.shopProducts);
   const dispatch = useDispatch();
   const { toast } = useToast();
 
@@ -17,7 +16,7 @@ function UserWishlistItemsContent({ wishlistItem }) {
       ).then((data) => {
         if (data?.payload?.success) {
           toast({
-            title: "Wishlist item is deleted successfully",
+            title: "Wishlist item is remove successfully",
           });
         }
       });
