@@ -20,37 +20,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Helmet } from 'react-helmet-async';
 
-<Helmet>
-  <title>{product.name}| Men's Clothing | Women's Clothing | TrendCrave</title>
-  <meta name="description" content={product.description.slice(0, 150)} />
-  <meta property="og:title" content={product.name} />
-  <meta property="og:description" content={product.description} />
-  <meta property="og:image" content={product.mainImage} />
-  <link rel="canonical" href={`https://trendcrave.it.com/product/${product.slug}`} />
-  <script type="application/ld+json">
-  {JSON.stringify({
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": product.name,
-    "image": [product.mainImage],
-    "description": product.description,
-    "sku": product.sku,
-    "brand": {
-      "@type": "Brand",
-      "name": product.brand
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": `https://trendcrave.it.com/product/${product.slug}`,
-      "priceCurrency": "USD",
-      "price": product.price,
-      "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
-    }
-  })}
-</script>
-
-</Helmet>
-
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
@@ -382,6 +351,35 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             )}
           </div>
         </div>
+        <Helmet>
+          <title>{product.name}| Men's Clothing | Women's Clothing | TrendCrave</title>
+          <meta name="description" content={product.description.slice(0, 150)} />
+          <meta property="og:title" content={product.name} />
+          <meta property="og:description" content={product.description} />
+          <meta property="og:image" content={product.mainImage} />
+          <link rel="canonical" href={`https://trendcrave.it.com/product/${product.slug}`} />
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org/",
+              "@type": "Product",
+              "name": product.name,
+              "image": [product.mainImage],
+              "description": product.description,
+              "sku": product.sku,
+              "brand": {
+                "@type": "Brand",
+                "name": product.brand
+              },
+              "offers": {
+                "@type": "Offer",
+                "url": `https://trendcrave.it.com/product/${product.slug}`,
+                "priceCurrency": "USD",
+                "price": product.price,
+                "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+              }
+            })}
+          </script>
+        </Helmet>
       </DialogContent>
     </Dialog>
   );
