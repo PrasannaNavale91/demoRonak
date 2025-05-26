@@ -28,6 +28,7 @@ function UserWishlistItemsContent({ wishlistItem }) {
         src={Array.isArray(wishlistItem?.image) ? wishlistItem?.image[0] : wishlistItem?.image}
         alt={wishlistItem?.title}
         className="w-20 h-20 rounded object-cover"
+        loading="lazy"
       />
       <div className="flex-1">
         <h3 className="font-extrabold">{wishlistItem?.title}</h3>

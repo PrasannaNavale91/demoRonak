@@ -126,6 +126,7 @@ function ProductImageUpload({
                   src={URL.createObjectURL(file)}
                   alt={`Preview ${index}`}
                   className="w-24 h-24 object-cover border rounded"
+                  loading="lazy"
                 />
                 <button
                   type="button"

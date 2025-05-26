@@ -51,6 +51,7 @@ function AdminDashboard() {
                 <img
                   src={featureImgItem.image}
                   className="w-full h-[300px] object-cover rounded-t-lg"
+                  loading="lazy"
                 />
               </div>
             ))

@@ -77,6 +77,7 @@ function UserCartItemsContent({ cartItem }) {
         src={Array.isArray(cartItem?.image) ? cartItem?.image[0] : cartItem?.image}
         alt={cartItem?.title}
         className="w-20 h-20 rounded object-cover"
+        loading="lazy"
       />
       <div className="flex-1">
         <h3 className="font-extrabold">{cartItem?.title}</h3>

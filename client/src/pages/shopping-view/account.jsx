@@ -10,6 +10,7 @@ function ShoppingAccount() {
         <img
           src={accImg}
           className="h-full w-full object-cover object-center"
+          loading="lazy"
         />
       </div>
       <div className="container mx-auto grid grid-cols-1 gap-8 py-8 overflow-x-auto">
