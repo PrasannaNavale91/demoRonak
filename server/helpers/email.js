@@ -10,7 +10,9 @@ const sendOTP = async (email, otp) => {
       subject: 'Your OTP Code',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
-          <img src="https://res.cloudinary.com/jackiieee/image/upload/v1747199401/icon-192x192_c5cnz1.png" alt="Logo" width="100" height="100"/>
+          <div style="margin: 0 auto; text-align: center;">
+            <img src="https://res.cloudinary.com/jackiieee/image/upload/v1747199401/icon-192x192_c5cnz1.png" alt="Logo" width="80" height="80"/>
+          </div>
           <h2 style="color:rgb(29, 29, 29); text-align: center;">Verification Code</h2>
           <p style="font-size: 16px; color: #333;">Dear User,</p>
           <p style="font-size: 16px; color: #333;">Your verification code is:</p>
@@ -44,12 +46,14 @@ const sendEmail = async (email, username) => {
       subject: 'Welcome to our stored',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
-          <img src="https://res.cloudinary.com/jackiieee/image/upload/v1747199401/icon-192x192_c5cnz1.png" alt="Logo" width="100" height="100"/>
+          <div style="margin: 0 auto; text-align: center;">
+            <img src="https://res.cloudinary.com/jackiieee/image/upload/v1747199401/icon-192x192_c5cnz1.png" alt="Logo" width="80" height="80"/>
+          </div>
           <h2 style="color:rgb(29, 29, 29); text-align: center;">Welcome to Store</h2>
           <p style="font-size: 16px; color: #333;">Dear ${username},</p>
           <p style="font-size: 16px; color: #333;">Thank you for shopping with us also do check out new arrivals on our store.</p>
           <p style="font-size: 16px; color: #333;">Also do checkout for brand new seasonal products.</p>
-          <p style="font-size: 16px; color: #333;">We have offer for newly registered users <span style="display: inline-block; font-size: 24px; font-weight: bold; color:rgb(105, 105, 105); padding: 10px 20px; border: 1px solidrgb(101, 128, 202); border-radius: 5px; background-color: #e8f5e9;">
+          <p style="font-size: 16px; color: #333;">We have offer for newly registered users <span style="display: inline-block; font-size: 24px; font-weight: bold; color:rgb(105, 105, 105); padding: 10px 20px; border: 1px solid rgb(101, 128, 202); border-radius: 5px; background-color: #e8f5e9;">
             flat 10%</span> off on top-wears.</p>
           <footer style="margin-top: 20px; text-align: center; font-size: 14px; color: #999;">
             <p>Thank you,<br>TrendCrave Team</p>
@@ -73,12 +77,15 @@ const sendOrdermail = async (email, orderId) => {
       subject: 'Your order has confirmed',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
-          <img src="https://res.cloudinary.com/jackiieee/image/upload/v1747199401/icon-192x192_c5cnz1.png" alt="Logo" width="100" height="100"/>
+          <div style="margin: 0 auto; text-align: center;">
+            <img src="https://res.cloudinary.com/jackiieee/image/upload/v1747199401/icon-192x192_c5cnz1.png" alt="Logo" width="80" height="80"/>
+          </div>
           <h2 style="color:rgb(29, 29, 29); text-align: center;">Order Confirmed</h2>
           <p style="font-size: 16px; color: #333;">Dear User,</p>
           <p style="font-size: 16px; color: #333;">Thank you for shopping with us also do check out new arrivals on our store.</p>
           <div style="text-align: center; margin: 20px 0;">
-            <span style="display: inline-block; font-size: 24px; font-weight: bold; color:rgb(105, 105, 105); padding: 10px 20px; border: 1px solidrgb(101, 128, 202); border-radius: 5px; background-color: #e8f5e9;">
+            <span style="display: inline-block; font-size: 24px; font-weight: bold; color:rgb(105, 105, 105); padding: 10px 20px; border: 1px solid
+            rgb(101, 128, 202); border-radius: 5px; backg+round-color: #e8f5e9;">
               ${orderId}
             </span>
           </div>
