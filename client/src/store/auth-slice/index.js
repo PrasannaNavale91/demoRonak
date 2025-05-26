@@ -9,7 +9,6 @@ export const registerUser = createAsyncThunk(
       "https://ecommerce-app-xg3v.onrender.com/api/auth/register",
       formData,
       {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json"
         },
