@@ -36,14 +36,13 @@ function AuthRegister() {
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: data?.payload?.message,
+          title: data?.payload?.message || "You registered successfully"
         });
-        
         sendWelcomeEmail(formData.email, formData.userName);
         navigate("/auth/login");
       } else {
         toast({
-          title: data?.payload?.message,
+          title: data?.payload?.message || "Registration failed",
           variant: "destructive",
         });
       }

@@ -4,18 +4,22 @@ import axios from "axios";
 export const registerUser = createAsyncThunk(
   "/auth/register",
 
-  async (formData) => {
-    const response = await axios.post(
-      "https://ecommerce-app-xg3v.onrender.com/api/auth/register",
-      formData,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        },
-      }
-    );
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "https://ecommerce-app-xg3v.onrender.com/api/auth/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    return response.data.message;
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+    }
   }
 );
 

@@ -21,8 +21,8 @@ const sendOTP = async (email, otp) => {
               ${otp}
             </span>
           </div>
-          <p style="font-size: 16px; color: #333;">Please use this code to verify your email address. The code will expire in 10 minutes.</p>
-          <p style="font-size: 16px; color: #333;">If you did not request this, please ignore this email.</p>
+          <p style="font-size: 16px; color: #333;">Please use this code to verify your email address. The verification code will expire in 10 minutes.</p>
+          <p style="font-size: 16px; color: #333;">If you did not request this, please ignore this email. Please do not share this mail with any others.</p>
           <footer style="margin-top: 20px; text-align: center; font-size: 14px; color: #999;">
             <p>Thank you,<br>TrendCrave Team</p>
             <p style="font-size: 12px; color: #aaa;">This is an automated message. Please do not reply to this email.</p>

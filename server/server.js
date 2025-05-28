@@ -27,7 +27,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: "https://www.trendcrave.it.com",
+  origin: ["https://www.trendcrave.it.com", "http://localhost:5173"],
   methods: ["GET", "POST", "DELETE", "PUT"],
   allowedHeaders: [ "Content-Type", "Authorization", "Cache-Control", "Expires", "Pragma",],
   credentials: true,
