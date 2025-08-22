@@ -145,6 +145,7 @@ function ProductImageUpload({
                     src={url}
                     alt={`Uploaded ${index}`}
                     className="w-24 h-24 object-cover border rounded"
+                    loading="lazy"
                   />
                 ))}
               </div>

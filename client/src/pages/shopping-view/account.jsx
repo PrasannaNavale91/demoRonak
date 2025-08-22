@@ -9,6 +9,7 @@ function ShoppingAccount() {
       <div className="relative h-[300px] w-full overflow-hidden">
         <img
           src={accImg}
+          alt="account"
           className="h-full w-full object-cover object-center"
           loading="lazy"
         />

@@ -50,6 +50,7 @@ function AdminDashboard() {
               <div className="relative">
                 <img
                   src={featureImgItem.image}
+                  alt=""
                   className="w-full h-[300px] object-cover rounded-t-lg"
                   loading="lazy"
                 />

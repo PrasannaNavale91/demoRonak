@@ -7,6 +7,7 @@ function Loader() {
         src={Logo}
         alt="Loading..."
         className="w-20 h-20 animate-bounce shadow-lg"
+        loading="lazy"
       />
     </div>
   );

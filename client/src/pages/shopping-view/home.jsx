@@ -183,6 +183,7 @@ function ShoppingHome() {
                 className={`${
                   index === currentSlide ? "opacity-100" : "opacity-0"
                 } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+                alt="banner"
                 loading="lazy"
               />
             ))
@@ -248,7 +249,7 @@ function ShoppingHome() {
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <img src={collectionItem.image} alt="" width={100} height={100} loading="lazy" />
+                  <img src={collectionItem.image} alt="collection_Image" width={100} height={100} loading="lazy" />
                   <span className="font-bold">{collectionItem.label}</span>
                 </CardContent>
               </Card>
