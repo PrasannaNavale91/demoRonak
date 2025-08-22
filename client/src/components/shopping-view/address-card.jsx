@@ -22,7 +22,7 @@ function AddressCard({
           : "border-black"
       }`}
     >
-      <CardContent className="grid p-4 gap-4">
+      <CardContent className="grid w-[100%] p-4 gap-4">
         <Label>Address: {addressInfo?.address}</Label>
         <Label>City: {addressInfo?.city}</Label>
         <Label>pincode: {addressInfo?.pincode}</Label>
